@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: SAC
+        psr4_prefix: SAC
+        src_path: app
