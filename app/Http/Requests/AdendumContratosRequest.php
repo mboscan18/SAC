@@ -26,7 +26,7 @@ class AdendumContratosRequest extends Request
         return [
             'fecha_inicio'          => 'required|date',
             'fecha_fin'             => 'required|date|after:fecha_inicio',
-            'fecha_firma'           => 'required|date|before:fecha_inicio',
+            'fecha_firma'           => 'required|date',
                         
         ];
     }
