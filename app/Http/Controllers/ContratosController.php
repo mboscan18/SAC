@@ -158,6 +158,8 @@ class ContratosController extends Controller
         $nroAdendum = OrdenServicio::ordenAdendum($id_contrato);
         $partidas = Presupuestos::partidas($id_contrato);
 
+
+
         if($nroAdendum < $contrato->orden_adendum){
             $nroAdendum ++;
 

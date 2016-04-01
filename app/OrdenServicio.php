@@ -41,13 +41,32 @@ class OrdenServicio extends Model
          return $partidas;    
 	}
 
-	public static function ordenServicio($contrato, $nroAdendum)
+    public static function ordenServicio($contrato, $nroAdendum)
+    {
+         $data = DB::table('OrdenServicio')
+             ->select('*')
+             ->where([
+                        'contrato_id' => $contrato,
+                        'orden_adendum' =>  $nroAdendum
+                    ])
+             ->whereNull('deleted_at')
+             ->get();
+         if ($data != null) {
+            $ordenServ = OrdenServicio::find($data[0]->id);   
+         }else{
+            return null;
+         }
+
+         return $ordenServ;    
+    } 
+
+	public static function fechaFirmaContrato($contrato)
 	{
 		 $data = DB::table('OrdenServicio')
              ->select('*')
              ->where([
                         'contrato_id' => $contrato,
-                        'orden_adendum' =>  $nroAdendum
+                        'orden_adendum' =>  0
                     ])
              ->whereNull('deleted_at')
              ->get();

@@ -22,7 +22,7 @@
         @include('alerts.warnings')
 
         <?php
-            Session::flash('valuacion',$valuacion);
+            Session::put('valuacion',$valuacion);
         ?>
         <!-- page start-->
         <div class="col-lg-12 col-md-12 col-sm-12">
