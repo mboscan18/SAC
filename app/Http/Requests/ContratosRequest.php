@@ -23,8 +23,6 @@ class ContratosRequest extends Request
      */
     public function rules()
     {          
-        $fecha_inicio = $this->fecha_inicio;
-        $fecha = date('m/d/Y', strtotime($fecha_inicio. ' + 1 days'));                    
         return [
             'cod_Proyecto'          => 'required|unique:Contratos,cod_Proyecto,'.$this->id.',id,nro_Contrato,'.$this->nro_Contrato,
             'nro_Contrato'          => 'required',
@@ -32,7 +30,7 @@ class ContratosRequest extends Request
             'moneda_contrato'       => 'required',
             'fecha_inicio'          => 'required|date',
             'fecha_fin'             => 'required|date|after:fecha_inicio',
-            'fecha_firma'           => 'required|date|before:'.$fecha,
+            'fecha_firma'           => 'required|date',
                         
         ];
     }

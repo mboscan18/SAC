@@ -90,9 +90,15 @@ class ContratosController extends Controller
         $partidas = Presupuestos::partidas($contrato);
         $valuaciones = Valuaciones::valuaciones($contrato);
         $nroAdendum = OrdenServicio::ordenAdendum($contrato);
+        if ($nroAdendum >= 0) {
+            $valorContratoAnterior = VariacionPresupuesto::valorContratoAdendum($contrato, $nroAdendum);
+            $ordenServicioAnterior = OrdenServicio::ordenServicio($contrato, $nroAdendum);
+        }else{
+            $valorContratoAnterior = 0;
+            $ordenServicioAnterior = 0;
+
+        }
         $valorContrato = Presupuestos::valorContrato($contrato);
-        $valorContratoAnterior = VariacionPresupuesto::valorContratoAdendum($contrato, $nroAdendum-1);
-        $ordenServicioAnterior = OrdenServicio::ordenServicio($contrato, $nroAdendum-1);
 
         $proyectoDescripcion = Procedimientos::stringSeparado($contratos->proyecto->nombre_Proyecto, 115);
         $contratoDescripcion = Procedimientos::stringSeparado($contratos->descripcion, 123);
