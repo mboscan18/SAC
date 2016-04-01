@@ -80,17 +80,17 @@
                       <td style="width:49%">
                           <table style="width:100%">
                                 <tr>
-                                        @if($contratos->proyecto->empresa->logo == null)
-                                           
-                                        @else  
                                     <td style="text-align: center; width:20%; height: 60px; padding-bottom: 5px; padding-top: 5px; padding-left: 10px" class="tabla tabla-sin-borde-right">
+                                        @if($contratos->proyecto->empresa->logo == null)
+                                           &nbsp;
+                                        @else  
                                             @if($anchoCliente > $altoCliente)
                                                 <img src="{{getcwd()}}\archivos\{{$contratos->proyecto->empresa->logo}}" alt="" style=" width: 100px;" />
                                             @else
                                                 <img src="{{getcwd()}}\archivos\{{$contratos->proyecto->empresa->logo}}" alt="" style="height: 60px"/>
                                             @endif
-                                    </td>
                                         @endif  
+                                    </td>
                                     <td style="text-align: left; width:80%" class="tabla col-lg-1 tabla-sin-borde-left tam-9">
                                       {{$contratos->proyecto->empresa->nombre_Empresa}}<br>
                                       RIF: {{$contratos->proyecto->empresa->codIdentificacion_Empresa}}<br>
@@ -104,29 +104,23 @@
                       <td style="width:49%">
                           <table style="width:100%;" >
                                 <tr>  
-                                    @if($contratos->empresaProveedor->logo == null)
-                                    <td></td>
-                                        <td style="text-align: left; width:100%" class="tabla col-lg-1 tabla-sin-borde-left tam-9" >
-                                          {{$contratos->empresaProveedor->nombre_Empresa}}<br>
-                                          RIF: {{$contratos->empresaProveedor->codIdentificacion_Empresa}}<br>
-                                          Tlf: {{$contratos->empresaProveedor->telefono}}<br>
-                                          {{$contratos->empresaProveedor->direccion}}<br>
-                                        </td>
-                                    @else  
-                                        <td style="text-align: center; width:20%; height: 60px; padding-bottom: 5px; padding-top: 5px; padding-left: 10px" class="tabla tabla-sin-borde-right">
-                                              @if($anchoProveedor > $altoProveedor)
-                                                    <img src="{{getcwd()}}\archivos\{{$contratos->empresaProveedor->logo}}" alt="" style=" width: 100px; " />
-                                                @else
-                                                    <img src="{{getcwd()}}\archivos\{{$contratos->empresaProveedor->logo}}" alt="" style="height: 60px"/>
-                                                @endif
-                                        </td>
-                                        <td style="text-align: left; width:80%" class="tabla col-lg-1 tabla-sin-borde-left tam-9" >
-                                          {{$contratos->empresaProveedor->nombre_Empresa}}<br>
-                                          RIF: {{$contratos->empresaProveedor->codIdentificacion_Empresa}}<br>
-                                          Tlf: {{$contratos->empresaProveedor->telefono}}<br>
-                                          {{$contratos->empresaProveedor->direccion}}<br>
-                                        </td>
-                                    @endif 
+                                    <td style="text-align: center; width:20%; height: 60px; padding-bottom: 5px; padding-top: 5px; padding-left: 10px" class="tabla tabla-sin-borde-right">
+                                        @if($contratos->empresaProveedor->logo == null)
+                                            &nbsp;
+                                        @else  
+                                          @if($anchoProveedor > $altoProveedor)
+                                                <img src="{{getcwd()}}\archivos\{{$contratos->empresaProveedor->logo}}" alt="" style=" width: 100px; " />
+                                            @else
+                                                <img src="{{getcwd()}}\archivos\{{$contratos->empresaProveedor->logo}}" alt="" style="height: 60px"/>
+                                            @endif
+                                        @endif 
+                                    </td>
+                                    <td style="text-align: left; width:80%" class="tabla col-lg-1 tabla-sin-borde-left tam-9" >
+                                      {{$contratos->empresaProveedor->nombre_Empresa}}<br>
+                                      RIF: {{$contratos->empresaProveedor->codIdentificacion_Empresa}}<br>
+                                      Tlf: {{$contratos->empresaProveedor->telefono}}<br>
+                                      {{$contratos->empresaProveedor->direccion}}<br>
+                                    </td>
                                 </tr> 
                           </table>
                       </td>
