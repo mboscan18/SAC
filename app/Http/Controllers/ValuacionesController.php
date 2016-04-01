@@ -145,31 +145,48 @@ class ValuacionesController extends Controller
         $descuentosAnticiposTotal = Descuentos::totalDescuentosHastaPeriodo($valuacion->contrato_id,1, $valuacion->nro_Boletin);
         $descuentosAdelantosTotal = Descuentos::totalDescuentosHastaPeriodo($valuacion->contrato_id,2, $valuacion->nro_Boletin);
         
-        $montoAnticiposTotal_Anterior = Anticipos::totalAnticipoHastaPeriodo($valuacion->contrato_id,1, $valuacion->nro_Boletin-1);
-        $montoAdelantosTotal_Anterior = Anticipos::totalAnticipoHastaPeriodo($valuacion->contrato_id,2, $valuacion->nro_Boletin-1);
-        $descuentosAnticiposTotal_Anterior = Descuentos::totalDescuentosHastaPeriodo($valuacion->contrato_id,1, $valuacion->nro_Boletin-1);
-        $descuentosAdelantosTotal_Anterior = Descuentos::totalDescuentosHastaPeriodo($valuacion->contrato_id,2, $valuacion->nro_Boletin-1);
 
-        $valuacion_Anterior = Valuaciones::valuacionPorBoletin($valuacion->contrato_id, $valuacion->nro_Boletin-1);
+        if ($valuacion->nro_Boletin > 1) {
+            $valuacion_Anterior = Valuaciones::valuacionPorBoletin($valuacion->contrato_id, $valuacion->nro_Boletin-1);
+            
+            $montoAnticiposTotal_Anterior = Anticipos::totalAnticipoHastaPeriodo($valuacion->contrato_id,1, $valuacion->nro_Boletin-1);
+            $montoAdelantosTotal_Anterior = Anticipos::totalAnticipoHastaPeriodo($valuacion->contrato_id,2, $valuacion->nro_Boletin-1);
+            $descuentosAnticiposTotal_Anterior = Descuentos::totalDescuentosHastaPeriodo($valuacion->contrato_id,1, $valuacion->nro_Boletin-1);
+            $descuentosAdelantosTotal_Anterior = Descuentos::totalDescuentosHastaPeriodo($valuacion->contrato_id,2, $valuacion->nro_Boletin-1);
+            
+            $montoAnticiposValuacion_Anterior = Anticipos::totalAnticipoValuacion($valuacion_Anterior->id,1);
+            $montoAdelantosValuacion_Anterior = Anticipos::totalAnticipoValuacion($valuacion_Anterior->id,2);
+            $descuentosAnticiposValuacion_Anterior = Descuentos::totalDescuentosValuacion($valuacion_Anterior->id,1);
+            $descuentosAdelantosValuacion_Anterior = Descuentos::totalDescuentosValuacion($valuacion_Anterior->id,2);
+
+            $diferenciaAnticipos_Anterior = $montoAnticiposTotal_Anterior - $descuentosAnticiposTotal_Anterior;
+            $diferenciaAdelantos_Anterior = $montoAdelantosTotal_Anterior - $descuentosAdelantosTotal_Anterior;
+            
+            $diferenciaAdelantosValuacion_Anterior = $montoAdelantosValuacion_Anterior - $descuentosAdelantosValuacion_Anterior;
+        }else{
+            $montoAnticiposTotal_Anterior = 0;
+            $montoAdelantosTotal_Anterior = 0;
+            $descuentosAnticiposTotal_Anterior = 0;
+            $descuentosAdelantosTotal_Anterior = 0;
+            
+            $montoAnticiposValuacion_Anterior = 0;
+            $montoAdelantosValuacion_Anterior = 0;
+            $descuentosAnticiposValuacion_Anterior = 0;
+            $descuentosAdelantosValuacion_Anterior = 0;
+
+            $diferenciaAnticipos_Anterior = 0;
+            $diferenciaAdelantos_Anterior = 0;
+            
+            $diferenciaAdelantosValuacion_Anterior = 0;
+        }
         
         $montoAnticiposValuacion = Anticipos::totalAnticipoValuacion($valuacion->id,1);
         $montoAdelantosValuacion = Anticipos::totalAnticipoValuacion($valuacion->id,2);
         $descuentosAnticiposValuacion = Descuentos::totalDescuentosValuacion($valuacion->id,1);
         $descuentosAdelantosValuacion = Descuentos::totalDescuentosValuacion($valuacion->id,2);
 
-        $montoAnticiposValuacion_Anterior = Anticipos::totalAnticipoValuacion($valuacion_Anterior->id,1);
-        $montoAdelantosValuacion_Anterior = Anticipos::totalAnticipoValuacion($valuacion_Anterior->id,2);
-        $descuentosAnticiposValuacion_Anterior = Descuentos::totalDescuentosValuacion($valuacion_Anterior->id,1);
-        $descuentosAdelantosValuacion_Anterior = Descuentos::totalDescuentosValuacion($valuacion_Anterior->id,2);
-
-
-        $diferenciaAnticipos_Anterior = $montoAnticiposTotal_Anterior - $descuentosAnticiposTotal_Anterior;
-        $diferenciaAdelantos_Anterior = $montoAdelantosTotal_Anterior - $descuentosAdelantosTotal_Anterior;
-
         $diferenciaAnticipos = $montoAnticiposTotal - $descuentosAnticiposTotal;
         $diferenciaAdelantos = $montoAdelantosTotal - $descuentosAdelantosTotal;
-
-        $diferenciaAdelantosValuacion_Anterior = $montoAdelantosValuacion_Anterior - $descuentosAdelantosValuacion_Anterior;
 
         $diferenciaAdelantosValuacion = $montoAdelantosValuacion - $descuentosAdelantosValuacion;
 
