@@ -42,7 +42,7 @@ class DetalleValuacionController extends Controller
     { 
         $valuaciones        = Valuaciones::find($valuacion);
         $detalleValuacion  = DetalleValuacion::detalleVal($valuacion);
-        $cc                 = CentrosCosto::all();
+        $cc                 = CentrosCosto::allCC();
         $valorContrato = Presupuestos::valorContrato($valuaciones->contrato_id);
 
         $contrato = $valuaciones->contrato;

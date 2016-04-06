@@ -25,6 +25,16 @@ class CentrosCosto extends Model
      * ---------------------
      */
 
+    public static function allCC(){
+        $data = DB::table('CentrosCosto')
+             ->select('*')
+             ->orderBy('cod_CC','asc')
+             ->whereNull('deleted_at')
+             ->get();
+
+         return $data;
+    }
+
 	public static function CC($cc_id){
 		$data = DB::table('CentrosCosto')
              ->select('*')

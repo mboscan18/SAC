@@ -88,7 +88,7 @@ Diseño y Desrrollo por Miguel A. Boscan S.
                                 <p >Nombre Completo de la Empresa</p>
                             </li>
                             <li>
-                                <a href="#"><i class="icon_key_alt"></i>Elejir Empresa Preferida</a>
+                                <a href="#"><i class="icon_key_alt"></i>Elegir Empresa Preferida</a>
                             </li>
                             <li>
                                 <a ></a>
