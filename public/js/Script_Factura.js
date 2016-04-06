@@ -43,7 +43,7 @@ function calcularMontoTotal()
             }else{
                 var porc = (monto_IVA * porcentaje)/100;
             }
-                var montoretencion = porc + sustraendo;
+                var montoretencion = porc - sustraendo;
             $('#montoRetenido_'+i+'_hidden').val(montoretencion);
             $('#montoRetenido_'+i).val(montoretencion.formatMoney(2, ',', '.'));
 

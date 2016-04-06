@@ -104,7 +104,7 @@
                       <td style="width:49%">
                           <table style="width:100%;" >
                                 <tr>  
-                                    <td style="text-align: center; width:20%; height: 60px; padding-bottom: 5px; padding-top: 5px; padding-left: 10px" class="tabla tabla-sin-borde-right">
+                                    <td style="text-align: center; width:20%; height: 70px; padding-bottom: 5px; padding-top: 5px; padding-left: 10px" class="tabla tabla-sin-borde-right">
                                         @if($contratos->empresaProveedor->logo == null)
                                             &nbsp;
                                         @else  
