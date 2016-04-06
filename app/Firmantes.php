@@ -28,6 +28,17 @@ class Firmantes extends Model
      * ---------------------
      */
 
+    public static function allFirmantes()
+    {
+        $data = DB::table('Firmantes')
+             ->select('*')
+             ->orderBy('nombre','asc')
+             ->whereNull('deleted_at')
+             ->get();
+
+         return $data;
+    } 
+
     public static function nroFirmantesContrato($idContrato)
     {
     	$contrato = Contratos::find($idContrato);

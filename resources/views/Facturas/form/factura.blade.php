@@ -34,10 +34,11 @@
 	@if($cantRetenciones == 0)
   		<div class="col-lg-12 col-md-12 col-sm-12" style="text-align: center">
   			No tiene Retenciones Cargadas para este Contrato.<br><br>
+			<div class="col-lg-3 col-md-3 col-sm-3 "></div>
 
 			<div class="col-lg-6 col-md-6 col-sm-6 ">
-				<a href="{!!URL::to('/RetencionesContrato/'.$valuacion->contrato->id)!!}"  class="boton boton-danger col-lg-6 col-md-6 col-sm-6" style="width:100%; text-align: center">
-				  <i class="fa fa-arrow-left fa-lg"></i> Ir a Retenciones del Contrato
+				<a href="{!!URL::to('/RetencionesContrato/'.$valuacion->contrato->id)!!}"  class="boton  col-lg-6 col-md-6 col-sm-6" style="width:100%; text-align: center">
+				  <i class="fa fa-arrow-right fa-lg"></i> Ir a Retenciones del Contrato
 				</a>
 			</div>
   		</div>	

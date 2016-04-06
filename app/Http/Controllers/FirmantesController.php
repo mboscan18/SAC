@@ -45,7 +45,7 @@ class FirmantesController extends Controller
 
         $contrato = Contratos::find($id_contrato);
         $valorContrato = Presupuestos::valorContrato($id_contrato);
-        $firmantes = Firmantes::all();
+        $firmantes = Firmantes::allFirmantes();
         $firmantesOrdenServicio = FirmasOrdenServicio::firmasOrdenServicio($id_contrato);
         $firmantes_cliente_OS = array();
         $firmantes_proveedor_OS = array();
