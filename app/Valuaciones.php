@@ -4,6 +4,9 @@ namespace SAC;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;	
+use SAC\DetalleValuacion;
+use SAC\Anticipos;
+use SAC\Descuentos;
 
 use DB;
 
@@ -38,12 +41,12 @@ class Valuaciones extends Model
 	 *	Consultas Estáticas
 	 */
 
-	/*
-	 * Devuelve todas las valuaciones de un contrato ordenando por numero de Boletin
-	 */ 
-	public static function valuaciones($contrato)
-	{
-		 $data = DB::table('Valuacion')
+    /*
+     * Devuelve todas las valuaciones de un contrato ordenando por numero de Boletin
+     */ 
+    public static function valuaciones($contrato)
+    {
+         $data = DB::table('Valuacion')
              ->select('*')
              ->where('contrato_id', $contrato)
              ->orderBy('nro_Boletin')
@@ -51,7 +54,81 @@ class Valuaciones extends Model
              ->get();
 
          return $data;    
+    }
+
+	/*
+	 * Devuelve el monto a pagar en un Boletin
+	 */ 
+	public static function montoBoletin($id_valuacion)
+	{
+		$valuacion = Valuaciones::find($id_valuacion); 
+
+        $detallesValuacion = $valuacion->detallesValuacion;
+        $monto_Valuado = 0;
+        foreach ($detallesValuacion as $key) {
+            $monto_Valuado = $monto_Valuado + $key->monto;
+        }
+
+        $descuentos = $valuacion->descuentos;
+        $monto_Descuentos = 0;
+        foreach ($descuentos as $key) {
+            $monto_Descuentos = $monto_Descuentos + $key->monto_Deduccion;
+        }
+
+        $adelantos = $valuacion->anticipos;
+        $monto_Adelanto = 0;
+        foreach ($adelantos as $key) {
+            $monto_Adelanto = $monto_Adelanto + $key->monto_Anticipo;
+        }
+        
+        $monto_Neto = $monto_Valuado + $monto_Adelanto - $monto_Descuentos;
+
+         return $monto_Neto;    
 	}	
+
+    /*
+     * Devuelve 0 si la valuacion no ha sido trabajada
+     * Devuelve 1 si la valuacion no ha sido enviada a pagar
+     * Devuelve 2 si la valuacion fue enviada a pagar
+     * Devuelve 3 si la valuacion fue abonada
+     * Devuelve 4 si la valuacion fue pagada en su totalidad
+     */ 
+    public static function estadoValuacion($valuacion)
+    {
+        $valuacion = Valuaciones::find($valuacion);
+        $valuacionIsTrabajada = Valuaciones::valuacionIsTrabajada($valuacion->id);
+
+        $factura = $valuacion->factura;
+
+        if ($valuacionIsTrabajada > 0) {
+            $i=1;
+        }else{
+            $i = 0;
+        }
+
+        if ($factura != null) {
+            $i = 2;
+        }
+
+         return $i;    
+    }
+
+    /*
+     * Devuelve 0 si la valuacion no ha sido enviada a pagar, mayor que 0 en caso contrario
+     */ 
+    public static function valuacionIsFirmada($valuacion)
+    {
+        $valuacion = Valuaciones::find($valuacion);
+
+        $factura = $valuacion->factura;
+        $i=0;
+
+        if ($factura != null) {
+            $i++;
+        }
+
+         return $i;    
+    }
 
 	/*
 	 * Devuelve 0 si la valuacion no ha sido trabajada, mayor que 0 en caso contrario
@@ -60,10 +137,11 @@ class Valuaciones extends Model
 	{
 		 $valuacion = Valuaciones::find($valuacion);
 
-		$detallesValuacion = $valuacion->detallesValuacion;
+        $i=0;
+
+        $detallesValuacion = $valuacion->detallesValuacion;
         $descuentos = $valuacion->descuentos;
         $adelantos = $valuacion->anticipos;
-        $i=0;
 
         foreach ($detallesValuacion as $key) {
             $i++;
@@ -209,5 +287,10 @@ class Valuaciones extends Model
     public function anticipos()
     {
         return $this->hasMany('SAC\Anticipos', 'valuacion_id');
+    }
+
+    public function factura()
+    {
+        return $this->hasOne('SAC\Facturas', 'valuacion_id');
     }
 }

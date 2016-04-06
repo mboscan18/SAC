@@ -95,7 +95,7 @@
                       <div class="" >
                             <br>
                             <div class="presupuestos">
-                              <table class="table" id="table_valuacion" class="display">
+                              <table class="table" id="table_valuacion" >
                                   <thead>
                                     <th>Nro de Boletín</th>
                                     <th>Nro de Valuacion</th>
@@ -110,6 +110,7 @@
                                       <th>Operaciones</th>
                                     @endif  
                                   </thead>
+                                  <?php $i=0;  ?>
                                 @foreach($valuaciones as $datos)
                                   <tbody>
                                     <td>{{$datos->nro_Boletin}}</td>
@@ -117,7 +118,24 @@
                                     <td>{{date('d-m-Y', strtotime($datos->fecha_Inicio_Periodo))}} {{date('d-m-Y', strtotime($datos->fecha_Fin_Periodo))}}</td>
                                     <td>{{number_format($datos->avance_fisico, 2, ',','.')}} %</td>
                                     <td>{{number_format($datos->avance_financiero, 2, ',','.')}} %</td>
-                                    <td>No Pagado</td>
+                                    <td style="text-align: center">
+                                      @if($estadoValuacion[$i] == 0)
+                                        <span class="glyphicon glyphicon-info-sign tam-22 icon-reorder tooltips" data-original-title="Este Boletín no ha sido Trabajado" data-placement="bottom" style="margin-top: -3px;color: #d04a4a;"></span>
+                                        <br>Pendiente
+                                      @elseif($estadoValuacion[$i] == 1)
+                                        <span class="glyphicon glyphicon-info-sign tam-22 icon-reorder tooltips" data-original-title="Pendiente por Enviar a Pagar" data-placement="bottom" style="margin-top: -3px;color: #6a954d;"></span>
+                                        <br>Pendiente
+                                      @elseif($estadoValuacion[$i] == 2)
+                                        <span class="glyphicon glyphicon-send tam-22 icon-reorder tooltips" data-original-title="Enviado a Pagar" data-placement="bottom" style="margin-top: -3px;color: #4a8ee2;"></span>
+                                        <br>Enviado
+                                      @elseif($estadoValuacion[$i] == 3)
+                                        <span class="fa fa-money tam-24 icon-reorder tooltips" data-original-title="Pagada Parcialmente" data-placement="bottom" style="margin-top: -3px;color: #b96c3e;"></span>
+                                        <br>Abonada
+                                      @elseif($estadoValuacion[$i] == 4)
+                                        <span class="fa fa-money tam-24 icon-reorder tooltips" data-original-title="Pagada Completamente" data-placement="bottom" style="margin-top: -3px;color: #6a954d;"></span>
+                                        <br>Pagada
+                                      @endif
+                                    </td>
                                     @if(Auth::user()->rol_Usuario == 'administrador')
                                       <td>
                                         | {{$datos->updated_at}}
@@ -133,6 +151,7 @@
                                         </td>
                                   @endif
                                   </tbody>
+                                  <?php $i++;  ?>
                                 @endforeach
                               </table>
                           </div>

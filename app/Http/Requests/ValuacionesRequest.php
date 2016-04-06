@@ -49,7 +49,7 @@ class ValuacionesRequest extends Request
             'contrato_id.required'          => 'El contrato es un dato obligatorio.',
             'IVA.required'                  => 'El Impuesto (IVA) es un dato obligatorio.',
 
-            'fecha_Inicio_Periodo.after'   => 'El contrato se firmó en la Fecha '.date('F d \o\f Y', strtotime($ordenServicio->fecha_firma)).'. La Fecha de Inicio de Período debe ser una fecha posterior a la Fecha de Firma del Contrato',
+            'fecha_Inicio_Periodo.after'   => 'El contrato se firmó el '.date('d \d\e\l \m\e\s m \d\e\l \a\ñ\o Y', strtotime($ordenServicio->fecha_firma)).'. La Fecha de Inicio de Período debe ser una fecha posterior a la Fecha de Firma del Contrato',
             'fecha_Fin_Periodo.after'   => 'La Fecha de Fin de Período debe ser una fecha posterior a la Fecha de Inicio de Período',
             'fecha_Pago.after'         => 'La Fecha de Pago debe ser una fecha posterior a la Fecha de Fin de Período',
 

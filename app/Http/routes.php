@@ -194,6 +194,7 @@ Route::resource('FirmasValuacion','FirmasValuacionController');
 |-------------------------------------------------------------------------- 
 */
 Route::resource('Facturas','FacturasController');
+Route::get('OrdenarPago/{id_valuacion}','FacturasController@ordenarPago');
 
 /* 
 |--------------------------------------------------------------------------

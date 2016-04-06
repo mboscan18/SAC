@@ -51,6 +51,13 @@ class ValuacionesController extends Controller
         $nroLastBoletin = Valuaciones::nroUltimoBoletin($id_contrato);
         $valorContrato = Presupuestos::valorContrato($id_contrato);
 
+        $estadoValuacion = array();
+        $i = 0;
+        foreach ($valuaciones as $key) {
+            $estadoValuacion[$i] = Valuaciones::estadoValuacion($key->id);
+            $i++;
+        }
+
         $IVA = $contrato->IVA;
 
         $nroAdendum = OrdenServicio::ordenAdendum($id_contrato);
@@ -75,7 +82,7 @@ class ValuacionesController extends Controller
             $nroBoletin = $nroLastBoletin[0]->nro_Boletin + 1;            
         } 
 
-        return view('Valuaciones.valuacionesContrato', compact('contrato','valuaciones','nroBoletin','IVA','valorContrato'));     
+        return view('Valuaciones.valuacionesContrato', compact('contrato','valuaciones','nroBoletin','IVA','valorContrato','estadoValuacion'));     
     }
 
     public function firmarValuacion($id_valuacion)
@@ -90,6 +97,7 @@ class ValuacionesController extends Controller
         $valorContrato = Presupuestos::valorContrato($valuacion->contrato->id);
         
         $valuacionIsTrabajada = Valuaciones::valuacionIsTrabajada($id_valuacion);
+        $valuacionIsFirmada = Valuaciones::valuacionIsFirmada($id_valuacion);
         $nroAdendum = OrdenServicio::ordenAdendum($contrato->id);
 
         $detalleIsTrabajado = Valuaciones::detalleIsTrabajado($id_valuacion);
@@ -115,8 +123,9 @@ class ValuacionesController extends Controller
             }
 
     // Validar si hay Valuacion pendiente por enviar a Pagar
+            //return $valuacionIsFirmada.'  -  '.$valuacionIsTrabajada;
 
-        if ($valuacionIsTrabajada > 0) {
+        if (($valuacionIsTrabajada > 0) && ($valuacionIsFirmada == 0)) {
             Session::flash('message-warning_2','firmar-valuacion');
             Session::flash('origen',1);
         }

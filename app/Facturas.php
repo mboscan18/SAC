@@ -34,7 +34,6 @@ class Facturas extends Model
          $data = DB::table('Recibo_Factura')
              ->select('*')
              ->where('valuacion_id', $valuacion)
-             ->groupBy('cc_id')
              ->whereNull('deleted_at')
              ->get();
 
