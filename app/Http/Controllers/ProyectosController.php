@@ -50,7 +50,6 @@ class ProyectosController extends Controller
                 $i++;
             }
         }       
-        return $proyectos;
         return view('Proyectos.index',compact('proyectos'));
     }
 
