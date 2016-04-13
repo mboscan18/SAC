@@ -156,7 +156,14 @@
 
   .tabla-sin-borde-bottom{
       border-bottom-style: none;
-  }       
+  } 
+
+  .tabla-sin-borde{
+      border-left-style: none;
+      border-right-style: none;
+      border-top-style: none;
+      border-bottom-style: none;
+  }      
 
   .fuente{
       font-family: 'Calibri', sans-serif;

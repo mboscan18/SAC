@@ -11,6 +11,7 @@ use SAC\Monedas;
 use SAC\TiposContratos;
 use SAC\Valuaciones;
 use SAC\Presupuestos;
+use SAC\RetencionesContrato;
 use SAC\FirmasValuacion;
 use SAC\FirmasOrdenServicio;
 use SAC\VariacionPresupuesto;
@@ -243,18 +244,40 @@ class ContratosController extends Controller
         $contrato = Contratos::find($id_contrato);
         $valuaciones = Valuaciones::valuaciones($id_contrato);
         $nombreReporte = 'Contrato ('.$contrato->nro_Contrato.') - Resumen de Valuaciones';
+        $IVA = $contrato->IVA;
 
         $valorContrato = Presupuestos::valorContrato($id_contrato);
+        $valorContrato_IVA = ($valorContrato * $IVA)/100;
+        $valorContrato_Total = $valorContrato + $valorContrato_IVA;
         $valorContratoInicial = VariacionPresupuesto::valorContratoAdendum($id_contrato, 0);
+        $valorContratoInicial_IVA = ($valorContratoInicial * $IVA)/100;
+        $valorContratoInicial_Total = $valorContratoInicial + $valorContratoInicial_IVA;
 
         $proyectoDescripcion = Procedimientos::stringSeparado($contrato->proyecto->nombre_Proyecto, 115);
         $contratoDescripcion = Procedimientos::stringSeparado($contrato->descripcion, 123);
+
+        $retencionesContrato = RetencionesContrato::retencionesContrato($id_contrato);
+        $cantRetencion = 0;
+        foreach ($retencionesContrato as $key) {
+            $cantRetencion++;
+        }
 
         $pdf = \PDF::loadHTML(
             view('Reportes.resumenContrato')
                 ->with('contrato',$contrato)
                 ->with('valuaciones',$valuaciones)
                 ->with('nombreReporte',$nombreReporte)
+                ->with('IVA',$IVA)
+
+                ->with('valorContrato',$valorContrato)
+                ->with('valorContrato_IVA',$valorContrato_IVA)
+                ->with('valorContrato_Total',$valorContrato_Total)
+                ->with('valorContratoInicial',$valorContratoInicial)
+                ->with('valorContratoInicial_IVA',$valorContratoInicial_IVA)
+                ->with('valorContratoInicial_Total',$valorContratoInicial_Total)
+
+                ->with('retencionesContrato',$retencionesContrato)
+                ->with('cantRetencion',$cantRetencion)
 
                 ->with('proyectoDescripcion',$proyectoDescripcion)
                 ->with('contratoDescripcion',$contratoDescripcion)

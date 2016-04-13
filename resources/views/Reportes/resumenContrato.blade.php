@@ -22,7 +22,7 @@
           $aumentoHeader = $aumentoHeader + (($tamContrato-1) * 15);
         }
 
-        $pos_header = 190 + $aumentoHeader;
+        $pos_header = 270 + $aumentoHeader;
         $tam_header = $pos_header - 20;
         $margin_header = $pos_header + 45;
 
@@ -99,8 +99,8 @@
         <div style="width=: 100%; height: 8px"></div>
         <table style="width: 100%;" >
             <tr>
-              <th style="width: 6%; border-top-style: double; border-bottom-style: double; border-top-width: 3px; border-bottom-width: 3px" class="tabla fuente tam-9 tabla-sin-borde-right ">&nbsp;PROYECTO:</th>
-              <td style="width: 94%; border-top-style: double; border-bottom-style: double; border-top-width: 3px; border-bottom-width: 3px; padding-left: 3px" class="tabla fuente tam-9 tabla-sin-borde-left">
+              <th style="width: 6%; border-top-style: double; border-top-width: 3px; border-bottom-width: 1px" class="tabla fuente tam-9 tabla-sin-borde-right ">&nbsp;PROYECTO:</th>
+              <td style="width: 94%; border-top-style: double; border-top-width: 3px; border-bottom-width: 1px; padding-left: 3px" class="tabla fuente tam-9 tabla-sin-borde-left">
                   @foreach($proyectoDescripcion as $descripcion)
                       {{strtoupper($descripcion)}}
                   @endforeach
@@ -109,15 +109,155 @@
         </table>  
         <table style="width: 100%;">
             <tr>
-              <th style="width: 13%; margin-left: 3px; border-bottom-style: double; border-bottom-width: 3px" class="tabla fuente tam-9 tabla-sin-borde-right tabla-sin-borde-top">&nbsp;OBJETO DEL CONTRATO:</th>
-              <td style="width: 87%; border-bottom-style: double; border-bottom-width: 3px; padding-left: 3px" class="tabla fuente tam-9 tabla-sin-borde-left tabla-sin-borde-top">
+              <th style="width: 13%; margin-left: 3px; border-bottom-width: 1px" class="tabla fuente tam-9 tabla-sin-borde-right tabla-sin-borde-top">&nbsp;OBJETO DEL CONTRATO:</th>
+              <td style="width: 87%;  border-bottom-width: 1px; padding-left: 1px" class="tabla fuente tam-9 tabla-sin-borde-left tabla-sin-borde-top">
                   @foreach($contratoDescripcion as $descripcion)
                       {{strtoupper($descripcion)}}
                   @endforeach
               </td>
             </tr>
         </table>
+        <table style="width: 100%;">
+            <tr>
+              <th style="width: 13%; margin-left: 3px; border-bottom-style: double; border-bottom-width: 3px" class="tabla fuente tam-9 tabla-sin-borde-right tabla-sin-borde-top">&nbsp;CLIENTE:</th>
+              <td style="width: 57%; border-bottom-style: double; border-bottom-width: 3px; padding-left: 3px" class="tabla fuente tam-9 tabla-sin-borde-left tabla-sin-borde-top">
+                  {{$contrato->proyecto->empresa->nombre_Empresa}}
+              </td>
+              <th style="width: 8%; border-bottom-style: double; tabla-sin-borde-right; border-bottom-width: 3px; padding-left: 3px" class="tabla fuente tam-9 tabla-sin-borde-right tabla-sin-borde-left tabla-sin-borde-top">
+                  RIF:
+              </th>
+              <td style="width: 22%; border-bottom-style: double; border-bottom-width: 3px; padding-left: 3px" class="tabla fuente tam-9 tabla-sin-borde-left tabla-sin-borde-top">
+                  {{$contrato->proyecto->empresa->codIdentificacion_Empresa}}
+              </td>
+            </tr>
+        </table>
         <!-- FIN NOMBRE PROYECTO -->
+
+        <div style="width=: 100%; height: 25px"></div>
+
+        <!-- VALOR DEL CONTRATO -->
+
+        <table style="width: 100%" class="fuente tam-8">
+          <tr>
+            <th class="tabla fuente tam-8 tabla-sin-borde" style="height: 15px; width: 47%; text-align: center">&nbsp;</th>
+            <th class="tabla fuente tam-8 tabla-sin-borde" style="height: 15px; width: 16%; text-align: center">CONDICIONES DEL CONTRATO</th>
+            <?php 
+                $tam = $cantRetencion * 6;
+                $restante = 37 - $tam;
+            ?>
+            <th class="tabla fuente tam-8 tabla-sin-borde-bottom" style="height: 15px; width: {{$tam}}%; text-align: center">RETENCIONES</th>
+            @if($restante >= 0)
+                <th class="tabla fuente tam-8 tabla-sin-borde tabla-sin-borde-top" style="height: 15px; width: {{$restante}}%; text-align: center">{{$restante}}</th>
+            @endif
+          </tr>
+        </table> 
+
+        <table style="width: 100%" class="fuente tam-8">
+            <thead>
+                <tr>
+                    <th class="tabla fuente tam-8 tabla-sin-borde" style="width: 5%; text-align: center">&nbsp;</th>
+                    <th style="width: 10%; text-align: center">
+                      <table style="width: 100%; text-align: center">
+                        <tr>
+                            <td></td>
+                            <th  style="height: 26px; text-align: center" class="tabla fuente tam-8 tabla-sin-borde">&nbsp;</th>
+                        </tr>
+                        <tr>
+                            <th style="height: 25px; width: 100%; text-align: center" class="tabla fuente tam-8 tabla-sin-borde-right">VALOR DEL CONTRATO ORIGINAL:</th>                                    
+                        </tr>
+                      </table> 
+                    </th>
+                    <th  style="width: 8%; text-align: center">
+                      <table style="width: 100%; text-align: center">
+                        <tr>
+                            <td></td>
+                            <th  style="height: 25px; text-align: center" class="tabla fuente tam-8 tabla-sin-borde-right">{{$contrato->moneda->symbol}} sin IVA</th>
+                        </tr>
+                        <tr>
+                            <th style="height: 25px; width: 100%; text-align: center" class="tabla fuente tam-9 tabla-sin-borde-right">{{number_format($valorContratoInicial, 2, ',','.')}}</th>                                    
+                        </tr>
+                      </table> 
+                    </th>
+                    <th  style="width: 8%; text-align: center">
+                      <table style="width: 100%; text-align: center">
+                        <tr>
+                            <td></td>
+                            <th  style="height: 25px; text-align: center" class="tabla fuente tam-8 tabla-sin-borde-right">IVA ({{number_format($IVA, 2, ',','.')}}%)</th>
+                        </tr>
+                        <tr>
+                            <th style=" height: 25px; width: 100%; text-align: center" class="tabla fuente tam-9 tabla-sin-borde-right">{{number_format($valorContratoInicial_IVA, 2, ',','.')}}</th>                                    
+                        </tr>
+                      </table> 
+                    </th>
+                    <th  style="width: 8%; text-align: center">
+                      <table style="width: 100%; text-align: center">
+                        <tr>
+                            <td></td>
+                            <th  style="height: 25px; text-align: center" class="tabla fuente tam-8 ">Total con IVA</th>
+                        </tr>
+                        <tr>
+                            <th style="height: 25px; width: 100%; text-align: center" class="tabla fuente tam-9 ">{{number_format($valorContratoInicial_Total, 2, ',','.')}}</th>                                    
+                        </tr>
+                      </table> 
+                    </th>
+                    <th class="tabla fuente tam-8 tabla-sin-borde" style="width: 8%; text-align: center"></th>
+                    <th class="tabla fuente tam-8" style="width: 8%; text-align: center">MONTO SIN IVA</th>
+                    <th class="tabla fuente tam-8" style="width: 8%; text-align: center">IVA</th>
+                    @foreach($retencionesContrato as $key)
+                    <th  style="width: 6%; text-align: center">
+                      <table style="width: 100%; text-align: center">
+                        <tr>
+                            <td></td>
+                            <th  style="height: 25px; text-align: center" class="tabla fuente tam-8 tabla-sin-borde-right">{{$key->retencion->descripcion}}</th>
+                        </tr>
+                        <tr>
+                            <th style="height: 25px; width: 100%; text-align: center" class="tabla fuente tam-9 tabla-sin-borde-right">{{number_format($key->porcentaje, 2, ',','.')}}%</th>                                    
+                        </tr>
+                      </table> 
+                    </th>
+                    @endforeach
+                    <th class="tabla fuente tam-8" style="width: 8%; text-align: center">NETO A PAGAR</th>
+                    <?php 
+                        $tam = 29 - ($cantRetencion * 6);
+
+                    ?>
+                    @if($tam >= 0)
+                      <th class="tabla fuente tam-8 tabla-sin-borde" style="width: {{$tam}}%; text-align: center">{{$tam}}</th>
+                    @endif  
+                </tr>
+            </thead>
+        </table>
+        <table style="width: 100%" class="fuente tam-8">
+            <thead>
+                <tr>
+                    <th class="tabla fuente tam-8 tabla-sin-borde" style="width: 5%; text-align: center">&nbsp;</th>
+                    <th style="height: 25px; width: 10%; text-align: center" class="tabla fuente tam-8 tabla-sin-borde-right tabla-sin-borde-top">VALOR DEL CONTRATO ACTUAL:</th>                                    
+                    <th style="height: 25px; width: 8%; text-align: center" class="tabla fuente tam-9 tabla-sin-borde-right tabla-sin-borde-top">{{number_format($valorContrato, 2, ',','.')}}</th>                                    
+                    <th style=" height: 25px; width: 8%; text-align: center" class="tabla fuente tam-9 tabla-sin-borde-right tabla-sin-borde-top">{{number_format($valorContrato_IVA, 2, ',','.')}}</th>                                    
+                    <th style="height: 25px; width: 8%; text-align: center" class="tabla fuente tam-9 tabla-sin-borde-top">{{number_format($valorContrato_Total, 2, ',','.')}}</th>                                    
+                    
+                    <th class="tabla fuente tam-8 tabla-sin-borde" style="width: 8%; text-align: center "></th>
+                    <th class="tabla fuente tam-8 tabla-sin-borde-top" style="width: 8%; text-align: center">{{number_format($valorContrato, 2, ',','.')}}</th>
+                    <td class="tabla fuente tam-8 tabla-sin-borde-top" style="width: 8%; text-align: center">{{number_format($valorContrato_IVA, 2, ',','.')}}</td>
+                   
+                    @foreach($retencionesContrato as $key)
+                      <td style="height: 25px; width: 6%; text-align: center" class="tabla fuente tam-9 tabla-sin-borde-right tabla-sin-borde-top">{{number_format($key->porcentaje, 2, ',','.')}}%</td>                                    
+                    @endforeach
+                   
+                    <td class="tabla fuente tam-8 tabla-sin-borde-top" style="width: 8%; text-align: center">NETO A PAGAR</td>
+                    <?php 
+                        $tam = 29 - ($cantRetencion * 6);
+
+                    ?>
+                    @if($tam >= 0)
+                      <th class="tabla fuente tam-8 tabla-sin-borde tabla-sin-borde-top" style="width: {{$tam}}%; text-align: center">{{$tam}}</th>
+                    @endif  
+                </tr>
+            </thead>
+        </table>
+
+        <!-- FIN VALOR DEL CONTRATO -->
+
      </div>
 <!--  - - - - - - FIN CABECERA - - - - - -  -->
 <!--  - - - - - - - - - - - - - - - - - - - -->
@@ -131,78 +271,62 @@
 <!--  - - - - - - FIN PIE - - - - - -  -->
 <!--  - - - - - - - - - - - - - - - - - -->
 
+      <table style="width: 100%" class="fuente tam-8">
+          <tr>
+            <th class="tabla fuente tam-8 tabla-sin-borde" style="height: 15px; width: 32%; text-align: center">&nbsp;</th>
+            <?php 
+                $tam = ($cantRetencion * 5);
+                $restante = 54 - $tam;
+            ?>
+            <th class="tabla fuente tam-8 tabla-sin-borde-bottom" style="height: 15px; width: {{$tam}}%; text-align: center">RETENCIONES</th>
+            @if($restante >= 0)
+                <th class="tabla fuente tam-8 tabla-sin-borde " style="height: 15px; width: {{$restante}}%; text-align: center">{{$restante}}</th>
+            @endif
+            <th class="tabla fuente tam-8 tabla-sin-borde-bottom" style="height: 15px; width: 14%; text-align: center">PAGOS REALIZADOS</th>
+
+          </tr>
+      </table> 
 
       <table style="width: 100%" class="fuente tam-8">
           <thead>
             <tr >
-                <th class="tabla fuente tam-8" style="width: 5%; text-align: center">NRO BOLETIN</th>
-                <th class="tabla fuente tam-8" style="width: 5%; text-align: center">NRO VALUACION</th>
+                <th class="tabla fuente tam-8" style="width: 4.5%; text-align: center">NRO BOLETIN</th>
+                <th class="tabla fuente tam-8 tabla-sin-borde-right" style="width: 5.5%; text-align: center">NRO VALUACION</th>
                 <th style="width: 10%; text-align: center">
                   <table style="width: 100%; text-align: center">
                     <tr>
                         <td></td>
-                        <th colspan="2" style="text-align: center" class="tabla fuente tam-8 tabla-sin-borde-right">PERIODOS BOLETIN<br>&nbsp;</th>
+                        <th colspan="2" style="height: 24px; text-align: center" class="tabla fuente tam-8 tabla-sin-borde-right">PERIODOS BOLETIN</th>
                     </tr>
                     <tr>
-                        <th style="width: 50%; text-align: center" class="tabla fuente tam-8 tabla-sin-borde-right">DESDE</th>                                    
-                        <th style="width: 50%; text-align: center" class="tabla fuente tam-8 tabla-sin-borde-right">HASTA</th>                                    
+                        <th style="height: 12px; width: 50%; text-align: center" class="tabla fuente tam-8 tabla-sin-borde-right">DESDE</th>                                    
+                        <th style="height: 12px; width: 50%; text-align: center" class="tabla fuente tam-8 tabla-sin-borde-right">HASTA</th>                                    
                     </tr>
                   </table> 
                 </th>
                 <th class="tabla fuente tam-8" style="width: 7%; text-align: center">MONTO SIN IVA</th>
                 <th class="tabla fuente tam-8" style="width: 5%; text-align: center">IVA</th>
-                <th style="width: 5%; text-align: center">
-                  <table style="width: 100%; text-align: center">
-                    <tr>
-                        <td></td>
-                        <th style="text-align: center" class="tabla fuente tam-8 tabla-sin-borde-right">IVA<br>&nbsp;</th>
-                    </tr>
-                    <tr>
-                        <th style=" text-align: center" class="tabla fuente tam-8 tabla-sin-borde-right">75%</th>                                    
-                    </tr>
-                  </table> 
-                </th>
-                <th style="width: 5%; text-align: center">
-                  <table style="width: 100%; text-align: center">
-                    <tr>
-                        <td></td>
-                        <th style="text-align: center" class="tabla fuente tam-8 tabla-sin-borde-right">IMPUESTO MUNICIPAL</th>
-                    </tr>
-                    <tr>
-                        <th style="; text-align: center" class="tabla fuente tam-8 tabla-sin-borde-right">0,75%</th>                                    
-                    </tr>
-                  </table> 
-                </th>
-                <th style="width: 5%; text-align: center">
-                  <table style="width: 100%; text-align: center">
-                    <tr>
-                        <td></td>
-                        <th style="text-align: center" class="tabla fuente tam-8 tabla-sin-borde-right">I.S.L.R<br>&nbsp;</th>
-                    </tr>
-                    <tr>
-                        <th style="; text-align: center" class="tabla fuente tam-8 tabla-sin-borde-right">2%</th>                                    
-                    </tr>
-                  </table> 
-                </th>
+                @foreach($retencionesContrato as $key)
+                    <th  style="width: 5%; text-align: center">
+                      <table style="width: 100%; text-align: center">
+                        <tr>
+                            <td></td>
+                            <th  style="height: 24px; text-align: center" class="tabla fuente tam-8 tabla-sin-borde-right">{{$key->retencion->descripcion}}</th>
+                        </tr>
+                        <tr>
+                            <th style=" height: 12px; width: 100%; text-align: center" class="tabla fuente tam-8 tabla-sin-borde-right">{{number_format($key->porcentaje, 2, ',','.')}}%</th>                                    
+                        </tr>
+                      </table> 
+                    </th>
+                @endforeach
                 <th style="width: 7%; text-align: center">
                   <table style="width: 100%; text-align: center">
                     <tr>
                         <td></td>
-                        <th style="text-align: center" class="tabla fuente tam-8 tabla-sin-borde-right">ANTICIPO DE OBRA</th>
+                        <th style="height: 24px; text-align: center" class="tabla fuente tam-8 tabla-sin-borde-right">ANTICIPO DE OBRA</th>
                     </tr>
                     <tr>
-                        <th style="; text-align: center" class="tabla fuente tam-8 tabla-sin-borde-right">30%</th>                                    
-                    </tr>
-                  </table> 
-                </th>
-                <th style="width: 6%; text-align: center">
-                  <table style="width: 100%; text-align: center">
-                    <tr>
-                        <td></td>
-                        <th style="text-align: center" class="tabla fuente tam-8 tabla-sin-borde-right">ADELANTOS<br>&nbsp;</th>
-                    </tr>
-                    <tr>
-                        <th style=" text-align: center" class="tabla fuente tam-8 tabla-sin-borde-right">X Valuacion</th>                                    
+                        <th style="height: 12px;  text-align: center" class="tabla fuente tam-8 tabla-sin-borde-right">30%</th>                                    
                     </tr>
                   </table> 
                 </th>
@@ -210,17 +334,31 @@
                   <table style="width: 100%; text-align: center">
                     <tr>
                         <td></td>
-                        <th style="text-align: center" rows=2 class="tabla fuente tam-8 tabla-sin-borde-right">DESCUENTOS<br>&nbsp;</th>
+                        <th style="height: 24px; text-align: center" class="tabla fuente tam-8 tabla-sin-borde-right">ADELANTOS</th>
                     </tr>
                     <tr>
-                        <th style=" text-align: center" class="tabla fuente tam-8 tabla-sin-borde-right">X Valuacion</th>                                    
+                        <th style="height: 12px;  text-align: center" class="tabla fuente tam-8 tabla-sin-borde-right">X Valuacion</th>                                    
+                    </tr>
+                  </table> 
+                </th>
+                <th style="width: 6%; text-align: center">
+                  <table style="width: 100%; text-align: center">
+                    <tr>
+                        <td></td>
+                        <th style="height: 24px; text-align: center" rows=2 class="tabla fuente tam-8 tabla-sin-borde-right">DESCUENTOS</th>
+                    </tr>
+                    <tr>
+                        <th style="height: 12px;  text-align: center" class="tabla fuente tam-8 tabla-sin-borde-right">X Valuacion</th>                                    
                     </tr>
                   </table> 
                 </th>
                 <th class="tabla fuente tam-8" style="width: 7%; text-align: center; background-color: #c6d9f1">NETO A PAGAR</th>
                 <th class="tabla fuente tam-8" style="width: 7%; text-align: center">SALDO CONTRATO</th>
-
-                <th class="tabla fuente tam-8" style="width: 6%; text-align: center">&nbsp;</th>
+                <?php 
+                    $tam = ($cantRetencion * 5);
+                    $restante = 21 - $tam;
+                ?>
+                <th class="tabla fuente tam-8 tabla-sin-borde" style="width: {{$restante}}%; text-align: center">&nbsp;</th>
 
                 <th class="tabla fuente tam-8" style="width: 7%; text-align: center">MONTO PAGADO</th>
                 <th class="tabla fuente tam-8" style="width: 7%; text-align: center">DIFERENCIA</th>

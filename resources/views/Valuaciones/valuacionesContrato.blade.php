@@ -97,22 +97,25 @@
                             <div class="presupuestos">
                               <table class="table" id="table_valuacion" >
                                   <thead>
-                                    <th>Nro de Boletín</th>
-                                    <th>Nro de Valuacion</th>
-                                    <th>Periodo de Valuación</th>
-                                    <th>Avance Físico</th>
-                                    <th>Avance Financiero</th>
-                                    <th>Estado</th>
-                                    @if(Auth::user()->rol_Usuario == 'administrador')
-                                      <th>Ultima Modificacion</th>
-                                    @endif  
-                                    @if((Auth::user()->rol_Usuario == 'administrador') || (Auth::user()->rol_Usuario == 'residente'))
-                                      <th>Operaciones</th>
-                                    @endif  
+                                    <tr>
+                                        <th>Nro de Boletín</th>
+                                        <th>Nro de Valuacion</th>
+                                        <th>Periodo de Valuación</th>
+                                        <th>Avance Físico</th>
+                                        <th>Avance Financiero</th>
+                                        <th>Estado</th>
+                                        @if(Auth::user()->rol_Usuario == 'administrador')
+                                          <th>Ultima Modificacion</th>
+                                        @endif  
+                                        @if((Auth::user()->rol_Usuario == 'administrador') || (Auth::user()->rol_Usuario == 'residente'))
+                                          <th>Operaciones</th>
+                                        @endif  
+                                    </tr>
                                   </thead>
                                   <?php $i=0;  ?>
-                                @foreach($valuaciones as $datos)
                                   <tbody>
+                                @foreach($valuaciones as $datos)
+                                <tr>
                                     <td>{{$datos->nro_Boletin}}</td>
                                     <td>{{$datos->nro_Valuacion}}</td>
                                     <td>{{date('d-m-Y', strtotime($datos->fecha_Inicio_Periodo))}} {{date('d-m-Y', strtotime($datos->fecha_Fin_Periodo))}}</td>
@@ -150,9 +153,10 @@
                                             </div>
                                         </td>
                                   @endif
-                                  </tbody>
+                                </tr>
                                   <?php $i++;  ?>
                                 @endforeach
+                                  </tbody>
                               </table>
                           </div>
                       </div>
