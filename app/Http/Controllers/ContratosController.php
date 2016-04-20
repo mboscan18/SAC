@@ -262,11 +262,23 @@ class ContratosController extends Controller
             $cantRetencion++;
         }
 
+        $resumenValuaciones = array();
+        $i = 0;
+        foreach ($valuaciones as $key) {
+            if ($key->lista == 'S') {
+                $resumenValuaciones[$i] = Valuaciones::resumenValuacion($key->id);
+                $i++;
+            }
+        }
+
+        //return $resumenValuaciones;
+
         $pdf = \PDF::loadHTML(
             view('Reportes.resumenContrato')
                 ->with('contrato',$contrato)
                 ->with('valuaciones',$valuaciones)
                 ->with('nombreReporte',$nombreReporte)
+                ->with('resumenValuaciones',$resumenValuaciones)
                 ->with('IVA',$IVA)
 
                 ->with('valorContrato',$valorContrato)

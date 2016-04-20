@@ -56,12 +56,12 @@ class Valuaciones extends Model
          return $data;    
     }
 
-	/*
-	 * Devuelve el monto a pagar en un Boletin
-	 */ 
-	public static function montoBoletin($id_valuacion)
-	{
-		$valuacion = Valuaciones::find($id_valuacion); 
+    /*
+     * Devuelve el monto a pagar en un Boletin
+     */ 
+    public static function montoBoletin($id_valuacion)
+    {
+        $valuacion = Valuaciones::find($id_valuacion); 
 
         $detallesValuacion = $valuacion->detallesValuacion;
         $monto_Valuado = 0;
@@ -84,6 +84,128 @@ class Valuaciones extends Model
         $monto_Neto = $monto_Valuado + $monto_Adelanto - $monto_Descuentos;
 
          return $monto_Neto;    
+    }
+
+	/*
+	 * Devuelve el resumen de un boletin de valuacion
+	 */ 
+	public static function resumenValuacion($id_valuacion)
+	{
+		$valuacion = Valuaciones::find($id_valuacion); 
+
+        $detallesValuacion = $valuacion->detallesValuacion;
+        $monto_Valuado = 0;
+        foreach ($detallesValuacion as $key) {
+            $monto_Valuado = $monto_Valuado + $key->monto;
+        }
+
+        $descuentos = $valuacion->descuentos;
+        $monto_Descuentos = 0;
+        $monto_Amortizado = 0;
+        foreach ($descuentos as $key) {
+            if ($key->tipo_Deduccion == 1) {
+                $monto_Amortizado = $monto_Amortizado + $key->monto_Deduccion;
+            }elseif ($key->tipo_Deduccion == 2) {
+                $monto_Descuentos = $monto_Descuentos + $key->monto_Deduccion;
+            }
+        }
+
+        $adelantos = $valuacion->anticipos;
+        $monto_Adelanto = 0;
+        $monto_Anticipo = 0;
+        foreach ($adelantos as $key) {
+            if ($key->tipo_Anticipo == 1) {
+                $monto_Anticipo = $monto_Anticipo + $key->monto_Anticipo;
+            }elseif ($key->tipo_Anticipo == 2) {
+                $monto_Adelanto = $monto_Adelanto + $key->monto_Anticipo;
+            }
+        }
+        $estadoAnticipo = $monto_Anticipo - $monto_Amortizado;
+
+        $IVA = ($monto_Valuado * $valuacion->IVA) / 100;
+        $factura = $valuacion->factura;
+        //return $factura;
+
+        if ($factura != null) {
+            $retencionesAplicadas = $factura->retenciones;
+        }
+
+        $retenciones = $valuacion->contrato->retenciones;
+
+
+        $jD =   '{ "nro_Boletin":"'.$valuacion->nro_Boletin.
+                '", "nro_Valuacion":"'.$valuacion->nro_Valuacion.
+                '", "periodo_inicio":"'.$valuacion->fecha_Inicio_Periodo.
+                '", "periodo_fin":"'.$valuacion->fecha_Fin_Periodo.
+                '", "monto_Valuado":"'.$monto_Valuado.
+                '", "monto_IVA":"'.$IVA;
+
+        $jR = array();
+        $acumRetenciones = 0;
+        $i = 0;
+        foreach ($retenciones as $retencion) {
+            $montoRetenido = 0;
+            foreach ($retencionesAplicadas as $retencionAplicada) {
+                if ($retencionAplicada->retenciones_id == $retencion->retenciones_id) {
+                    $montoRetenido = $retencionAplicada->monto_Retenido;
+                }
+            }
+            $jR[$i] = '","retencion_'.$i.'":"'.$montoRetenido;
+            $i++;
+
+            $acumRetenciones = $acumRetenciones + $montoRetenido;
+        }
+
+        $neto_Pagar = $monto_Valuado + $IVA + $monto_Anticipo + $monto_Adelanto - $monto_Amortizado - $monto_Descuentos - $acumRetenciones;
+
+        $jF =   '","anticipo":"'.$estadoAnticipo.
+                '","adelantos":"'.$monto_Adelanto.
+                '","descuentos":"'.$monto_Descuentos.
+                '","neto_Pagar":"'.$neto_Pagar.'"}';  
+
+        $j1 = $jD;
+
+        foreach ($jR as $key) {
+            $j1 = $j1.$key;
+        }
+
+        $j1 = $j1.$jF;
+
+        for ($i = 0; $i <= 31; ++$i) { 
+            $j1 = str_replace(chr($i), "", $j1); 
+        }
+        $j1 = str_replace(chr(127), "", $j1);
+
+        if (0 === strpos(bin2hex($j1), 'efbbbf')) {
+           $j1 = substr($j1, 3);
+        }
+        $json = json_decode( $j1 );
+
+        $error = json_last_error();
+        //return $j1;
+        switch(json_last_error()) {
+            case JSON_ERROR_NONE:
+                return $json;
+            break;
+            case JSON_ERROR_DEPTH:
+                return ' - Excedido tamaño máximo de la pila';
+            break;
+            case JSON_ERROR_STATE_MISMATCH:
+                return ' - Desbordamiento de buffer o los modos no coinciden';
+            break;
+            case JSON_ERROR_CTRL_CHAR:
+                return ' - Encontrado carácter de control no esperado';
+            break;
+            case JSON_ERROR_SYNTAX:
+                return ' - Error de sintaxis, JSON mal formado';
+            break;
+            case JSON_ERROR_UTF8:
+                return ' - Caracteres UTF-8 malformados, posiblemente están mal codificados';
+            break;
+            default:
+                return ' - Error desconocido';
+            break;
+        }
 	}	
 
     /*

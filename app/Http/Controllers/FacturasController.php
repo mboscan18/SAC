@@ -115,6 +115,8 @@ class FacturasController extends Controller
     public function store(Request $request)
     {
         $valuacion = Valuaciones::find(Input::get('valuacion'));
+        $valuacion->lista = 'S';
+        $valuacion->save();
 
         $detallesValuacion = $valuacion->detallesValuacion;
         $monto_Valuado = 0;

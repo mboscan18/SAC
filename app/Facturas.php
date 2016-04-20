@@ -60,4 +60,9 @@ class Facturas extends Model
     {
         return $this->hasMany('SAC\Pagos', 'factura_id');
     }
+
+    public function retenciones()
+    {
+        return $this->hasMany('SAC\RetencionesFactura', 'factura_id');
+    }
 }

@@ -147,7 +147,7 @@
             ?>
             <th class="tabla fuente tam-8 tabla-sin-borde-bottom" style="height: 15px; width: {{$tam}}%; text-align: center">RETENCIONES</th>
             @if($restante >= 0)
-                <th class="tabla fuente tam-8 tabla-sin-borde tabla-sin-borde-top" style="height: 15px; width: {{$restante}}%; text-align: center">{{$restante}}</th>
+                <th class="tabla fuente tam-8 tabla-sin-borde tabla-sin-borde-top" style="height: 15px; width: {{$restante}}%; text-align: center">&nbsp;</th>
             @endif
           </tr>
         </table> 
@@ -201,8 +201,8 @@
                       </table> 
                     </th>
                     <th class="tabla fuente tam-8 tabla-sin-borde" style="width: 8%; text-align: center"></th>
-                    <th class="tabla fuente tam-8" style="width: 8%; text-align: center">MONTO SIN IVA</th>
-                    <th class="tabla fuente tam-8" style="width: 8%; text-align: center">IVA</th>
+                    <th class="tabla fuente tam-8" style="width: 8%; text-align: center">MONTO SIN IVA <br>{{$contrato->moneda->symbol}}</th>
+                    <th class="tabla fuente tam-8" style="width: 8%; text-align: center">IVA <br>({{number_format($IVA, 2, ',','.')}}%)</th>
                     @foreach($retencionesContrato as $key)
                     <th  style="width: 6%; text-align: center">
                       <table style="width: 100%; text-align: center">
@@ -216,13 +216,13 @@
                       </table> 
                     </th>
                     @endforeach
-                    <th class="tabla fuente tam-8" style="width: 8%; text-align: center">NETO A PAGAR</th>
+                    <th class="tabla fuente tam-8" style="width: 8%; text-align: center">NETO A PAGAR <br>{{$contrato->moneda->symbol}}</th>
                     <?php 
                         $tam = 29 - ($cantRetencion * 6);
 
                     ?>
                     @if($tam >= 0)
-                      <th class="tabla fuente tam-8 tabla-sin-borde" style="width: {{$tam}}%; text-align: center">{{$tam}}</th>
+                      <th class="tabla fuente tam-8 tabla-sin-borde" style="width: {{$tam}}%; text-align: center">&nbsp;</th>
                     @endif  
                 </tr>
             </thead>
@@ -239,18 +239,41 @@
                     <th class="tabla fuente tam-8 tabla-sin-borde" style="width: 8%; text-align: center "></th>
                     <th class="tabla fuente tam-8 tabla-sin-borde-top" style="width: 8%; text-align: center">{{number_format($valorContrato, 2, ',','.')}}</th>
                     <td class="tabla fuente tam-8 tabla-sin-borde-top" style="width: 8%; text-align: center">{{number_format($valorContrato_IVA, 2, ',','.')}}</td>
-                   
+                   <?php
+                        $Total_Retener = 0;
+                   ?>
                     @foreach($retencionesContrato as $key)
-                      <td style="height: 25px; width: 6%; text-align: center" class="tabla fuente tam-9 tabla-sin-borde-right tabla-sin-borde-top">{{number_format($key->porcentaje, 2, ',','.')}}%</td>                                    
+                      <?php
+                          if ($key->retencion->tipo == 1) {
+                            $montoRetencion = ($valorContrato * $key->porcentaje) / 100;
+                          }elseif ($key->retencion->tipo == 2) {
+                            $montoRetencion = ($valorContrato_IVA * $key->porcentaje) / 100;
+                          }
+
+                          $sustraendo = 0;
+                          foreach ($valuaciones as $val) {
+                              if ($val->nro_Valuacion != null) {
+                                  $sustraendo = $sustraendo + $key->sustraendo;
+                              }
+                          }
+                          //echo 'Sus '.$sustraendo;
+
+                          $montoRetenido = $montoRetencion - $sustraendo;
+
+                          $Total_Retener = $Total_Retener + $montoRetenido;
+                      ?>
+                      <td style="height: 25px; width: 6%; text-align: center" class="tabla fuente tam-9 tabla-sin-borde-right tabla-sin-borde-top">{{number_format($montoRetenido, 2, ',','.')}}</td>                                    
+                    
                     @endforeach
-                   
-                    <td class="tabla fuente tam-8 tabla-sin-borde-top" style="width: 8%; text-align: center">NETO A PAGAR</td>
+
                     <?php 
                         $tam = 29 - ($cantRetencion * 6);
+                        $total_Pagar = $valorContrato_Total - $Total_Retener;
 
                     ?>
+                    <td class="tabla fuente tam-8 tabla-sin-borde-top" style="width: 8%; text-align: center">{{number_format($total_Pagar, 2, ',','.')}}</td>
                     @if($tam >= 0)
-                      <th class="tabla fuente tam-8 tabla-sin-borde tabla-sin-borde-top" style="width: {{$tam}}%; text-align: center">{{$tam}}</th>
+                      <th class="tabla fuente tam-8 tabla-sin-borde tabla-sin-borde-top" style="width: {{$tam}}%; text-align: center">&nbsp;</th>
                     @endif  
                 </tr>
             </thead>
@@ -271,6 +294,7 @@
 <!--  - - - - - - FIN PIE - - - - - -  -->
 <!--  - - - - - - - - - - - - - - - - - -->
 
+      <!--  - - - - - - Cabecera de tabla - - - - - -  -->
       <table style="width: 100%" class="fuente tam-8">
           <tr>
             <th class="tabla fuente tam-8 tabla-sin-borde" style="height: 15px; width: 32%; text-align: center">&nbsp;</th>
@@ -280,7 +304,7 @@
             ?>
             <th class="tabla fuente tam-8 tabla-sin-borde-bottom" style="height: 15px; width: {{$tam}}%; text-align: center">RETENCIONES</th>
             @if($restante >= 0)
-                <th class="tabla fuente tam-8 tabla-sin-borde " style="height: 15px; width: {{$restante}}%; text-align: center">{{$restante}}</th>
+                <th class="tabla fuente tam-8 tabla-sin-borde " style="height: 15px; width: {{$restante}}%; text-align: center">&nbsp;</th>
             @endif
             <th class="tabla fuente tam-8 tabla-sin-borde-bottom" style="height: 15px; width: 14%; text-align: center">PAGOS REALIZADOS</th>
 
@@ -366,6 +390,122 @@
             </tr>    
           </thead>       
       </table>
+      <!--  - - - - - - Fin Cabecera de tabla - - - - - -  -->
+
+      <!--  - - - - - - Cuerpo de tabla - - - - - -  -->
+      <?php
+          $saldoContrato = $total_Pagar;
+          $acumPagado = 0;
+          $acumAnticipo = 0;
+          $acumValuado = 0;
+          $acumPagar = 0;
+          $acumDiferencia = 0;
+          $acumIVA = 0;
+          $acumRetencion = array();
+          $acumAdelanto = 0;
+          $acumDescuento = 0;
+
+          for ($i=0; $i < $cantRetencion; $i++) { 
+            $acumRetencion[$i] = 0;
+          }
+      ?>
+     @foreach($resumenValuaciones as $key)
+        <table style="width: 100%" class="fuente tam-8">
+          <thead>
+            <tr >
+                <td class="tabla fuente tam-8 tabla-sin-borde-top tabla-sin-borde-right" style="width: 4.5%; text-align: center">{{$key->nro_Boletin}}</td>
+                <td class="tabla fuente tam-8 tabla-sin-borde-top tabla-sin-borde-right" style="width: 5.5%; text-align: center">{{$key->nro_Valuacion}}</td>
+                <td class="tabla fuente tam-8 tabla-sin-borde-top tabla-sin-borde-right" style="width: 5%; text-align: center">{{date('d-m-Y', strtotime($key->periodo_inicio))}}</td>
+                <td class="tabla fuente tam-8 tabla-sin-borde-top tabla-sin-borde-right" style="width: 5%; text-align: center">{{date('d-m-Y', strtotime($key->periodo_fin))}}</td>
+                <td class="tabla fuente tam-8 tabla-sin-borde-top tabla-sin-borde-right" style="width: 7%; text-align: center">{{number_format($key->monto_Valuado, 2, ',','.')}}</td>
+                <td class="tabla fuente tam-8 tabla-sin-borde-top tabla-sin-borde-right" style="width: 5%; text-align: center">{{number_format($key->monto_IVA, 2, ',','.')}}</td>
+                <?php
+                    $i=0;
+                    $str = 'retencion_';
+                ?>
+                @foreach($retencionesContrato as $ret)
+                    <?php
+                        $retencion = $str.$i;
+                        $acumRetencion[$i] = $acumRetencion[$i] + $key->$retencion;
+                        $i++;
+                    ?>
+                    @if($key->$retencion == 0)
+                      <td class="tabla fuente tam-8 tabla-sin-borde-top tabla-sin-borde-right" style="width: 5%; text-align: center"> - </td>
+                    @else
+                      <td class="tabla fuente tam-8 tabla-sin-borde-top tabla-sin-borde-right" style="width: 5%; text-align: center">{{number_format($key->$retencion, 2, ',','.')}}</td>
+                    @endif  
+
+               @endforeach
+                <td class="tabla fuente tam-8 tabla-sin-borde-top tabla-sin-borde-right" style="width: 7%; text-align: center">{{number_format($key->anticipo, 2, ',','.')}}</td>
+                <td class="tabla fuente tam-8 tabla-sin-borde-top tabla-sin-borde-right" style="width: 6%; text-align: center">{{number_format($key->adelantos, 2, ',','.')}}</td>
+                <td class="tabla fuente tam-8 tabla-sin-borde-top tabla-sin-borde-right" style="width: 6%; text-align: center">{{number_format(($key->descuentos * -1), 2, ',','.')}}</td>
+                
+                <td class="tabla fuente tam-8 tabla-sin-borde-top tabla-sin-borde-right" style="width: 7%; text-align: center">{{number_format($key->neto_Pagar, 2, ',','.')}}</td>
+                <?php
+                    $total_Pagado = 0;
+                    $diferencia = $key->neto_Pagar - $total_Pagado;
+
+                  // Totales
+                    $saldoContrato = $saldoContrato - $key->neto_Pagar;
+                    $acumPagar = $acumPagar + $key->neto_Pagar;
+                    $acumAnticipo = $acumAnticipo + $key->anticipo;
+                    $acumValuado = $acumValuado + $key->monto_Valuado;
+                    $acumPagado = $acumPagado + $total_Pagado;
+                    $acumDiferencia = $acumDiferencia + $diferencia;
+                    $acumIVA = $acumIVA + $key->monto_IVA;
+                    $acumAdelanto = $acumAdelanto + $key->adelantos;
+                    $acumDescuento = $acumDescuento + ($key->descuentos * -1);
+                ?>
+                <td class="tabla fuente tam-8 tabla-sin-borde-top" style="width: 7%; text-align: center">{{number_format($saldoContrato, 2, ',','.')}}</td>
+                <?php 
+                    $tam = ($cantRetencion * 5);
+                    $restante = 21 - $tam;
+                ?>
+                <td class="tabla fuente tam-8 tabla-sin-borde" style="width: {{$restante}}%; text-align: center">&nbsp;</td>
+
+                <td class="tabla fuente tam-8 tabla-sin-borde-top tabla-sin-borde-right" style="width: 7%; text-align: center">{{number_format($total_Pagado, 2, ',','.')}}</td>
+                <td class="tabla fuente tam-8 tabla-sin-borde-top " style="height: 20px; width: 7%; text-align: center">{{number_format($diferencia, 2, ',','.')}}</td>
+                
+            </tr>    
+          </thead>       
+        </table>
+     @endforeach
+      <!--  - - - - - - Fin Cuerpo de tabla - - - - - -  -->
+
+      <table style="width: 100%" class="fuente tam-8">
+          <thead>
+            <tr >
+                <td class="tabla fuente tam-8 tabla-sin-borde" style="width: 20%; text-align: center">&nbsp;</td>
+                <td class="tabla fuente tam-8 " style="width: 7%; text-align: center; background-color: #c6d9f1">{{number_format($acumValuado, 2, ',','.')}}</td>
+                <td class="tabla fuente tam-8 " style="width: 5%; text-align: center; background-color: #c6d9f1">{{number_format($acumIVA, 2, ',','.')}}</td>
+                <?php 
+                    $tam = ($cantRetencion * 5);
+                    $restante = 21 - $tam + 7;
+                    $i = 0;
+                ?>
+                @foreach($retencionesContrato as $ret)
+                    @if($acumRetencion[$i] == 0)
+                      <td class="tabla fuente tam-8  " style="width: 5%; text-align: center; background-color: #c6d9f1"> - </td>
+                    @else
+                      <td class="tabla fuente tam-8  " style="width: 5%; text-align: center; background-color: #c6d9f1">{{number_format($acumRetencion[$i], 2, ',','.')}}</td>
+                    @endif  
+                    <?php
+                        $i++;
+                    ?>
+               @endforeach
+                
+                <td class="tabla fuente tam-8 " style="width: 7%; text-align: center; background-color: #c6d9f1">{{number_format($acumAnticipo, 2, ',','.')}}</td>
+                <td class="tabla fuente tam-8 " style="width: 6%; text-align: center; background-color: #c6d9f1">{{number_format($acumAdelanto, 2, ',','.')}}</td>
+                <td class="tabla fuente tam-8 " style="width: 6%; text-align: center; background-color: #c6d9f1">{{number_format($acumDescuento, 2, ',','.')}}</td>
+                <td class="tabla fuente tam-8 " style="width: 7%; text-align: center; background-color: #c6d9f1">{{number_format($acumPagar, 2, ',','.')}}</td>
+
+                <td class="tabla fuente tam-8 tabla-sin-borde" style="width: {{$restante}}%; text-align: center">&nbsp;</td>
+                <td class="tabla fuente tam-8 " style="width: 7%; text-align: center; background-color: #c6d9f1">{{number_format($acumPagado, 2, ',','.')}}</td>
+                <td class="tabla fuente tam-8 " style="height: 20px; width: 7%; text-align: center; background-color: #c6d9f1">{{number_format($acumDiferencia, 2, ',','.')}}</td>
+                
+            </tr>    
+          </thead>       
+        </table>
     
     
   </body>

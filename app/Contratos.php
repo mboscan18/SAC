@@ -116,4 +116,9 @@ class Contratos extends Model
         return $this->hasMany('SAC\FirmasValuacion', 'contrato_id');
     }
 
+    public function retenciones()
+    {
+        return $this->hasMany('SAC\RetencionesContrato', 'contrato_id');
+    }
+
 }
