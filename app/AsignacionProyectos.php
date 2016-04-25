@@ -38,7 +38,7 @@ class AsignacionProyectos extends Model
          $i = 0;  
          foreach ($data as $key) {
              	$temp = AsignacionProyectos::find($key->id);
-                if ($temp->proyecto->deleted_at == nul) {
+                if ($temp->proyecto->deleted_at == null) {
                     $response[$i] = $temp;
                     $i++;
                 }
