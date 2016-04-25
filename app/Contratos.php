@@ -28,7 +28,8 @@ class Contratos extends Model
                                 'porcentajeAnticipo',       /* Indica el porcentaje que se deberá descontar en cada valuación, 
                                                                 referente a un anticipo entregado al iniciar el contrato.  */
                                 'usuario',  
-								'IVA', 	                    // Es el impuesto que se debe cargar sobre cada valuacion.
+                                'IVA',                      // Es el impuesto que se debe cargar sobre cada valuacion.
+								'forma_pago', 	            // Indica la forma de pago que se llevará a cabo en el contrato.
 							];
 
 	protected $dates = ['deleted_at'];							
@@ -119,6 +120,11 @@ class Contratos extends Model
     public function retenciones()
     {
         return $this->hasMany('SAC\RetencionesContrato', 'contrato_id');
+    }
+
+    public function valuaciones()
+    {
+        return $this->hasMany('SAC\Valuaciones', 'contrato_id');
     }
 
 }

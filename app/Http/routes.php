@@ -168,6 +168,14 @@ Route::get('RestoreDescuentos/{id}', 'DescuentosController@restore');
 
 /* 
 |--------------------------------------------------------------------------
+| Rutas de Pagos
+|-------------------------------------------------------------------------- 
+*/
+Route::resource('Pagos','PagosController');
+Route::get('PagosProyecto/{idProyecto}','PagosController@pagosProyecto');
+
+/* 
+|--------------------------------------------------------------------------
 | Rutas de Firmantes 
 |-------------------------------------------------------------------------- 
 */

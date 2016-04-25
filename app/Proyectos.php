@@ -56,4 +56,9 @@ class Proyectos extends Model
         return $this->belongsTo('SAC\Empresas', 'empresa_id');
     }
 
+    public function contratos()
+    {
+        return $this->hasMany('SAC\Contratos', 'cod_Proyecto');
+    }
+
 }

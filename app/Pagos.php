@@ -4,6 +4,7 @@ namespace SAC;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use SAC\Contratos;
 use DB;
 
 class Pagos extends Model
@@ -16,9 +17,10 @@ class Pagos extends Model
 								'nroComprobante',		// Es el nro de comprobante de deposito o transferencia.
 								'fechaEmision', 		// Es la fecha en la que se realizo el pago.
 								'monto_Pago',			// Es el monto que se pago.
-								'factura_id',			// Es el nro de factura sobre la cual se realiza el pago.
-								'tiposPago_id',			// Indica el tipo de Pago que se lleva a cabo
-								'datosBancarios_id', 	//Son los datos bancarios de la empresa a la cual se le va a hacer el pago.
+								'comprobante',          // Es el comprobante de que se realizó el pago
+                                'factura_id',           // Es el nro de factura sobre la cual se realiza el pago.
+                                'tiposPago_id',         // Indica el tipo de Pago que se lleva a cabo
+                                'datosBancarios_id',    //Son los datos bancarios de la empresa a la cual se le va a hacer el pago.
 								'usuario', 				// Es el usuario que agrega la entrada en la tabla.
 							];
 
@@ -28,20 +30,26 @@ class Pagos extends Model
 	 *	Consultas Estáticas
 	 */
 
-	public static function pagos($contrato)
+	public static function pagosContrato($contrato_id)
 	{
-		 $data = DB::table('Pagos')
-             ->select('*')
-             ->where('contrato_id', $contrato)
-             ->get();
+        $contrato = Contratos::find($contrato_id);
+        $valuaciones = $contrato->valuaciones;
 
-         $pagos = array();
-         $i = 0;    
-         foreach ($data as $key) {
-             $pagos[$i] = Pagos::find($key->id);
-             $i++;
-         }    
-         return $pagos;    
+        $facturas = array();
+        $i = 0;
+        foreach ($valuaciones as $key) {
+            $facturas[$i] = $key->factura;
+            $i++;
+        }
+
+        $acumuladoPagos = 0;
+        foreach ($facturas as $key) {
+            $pagos = $key->pagos;
+            foreach ($pagos as $pago) {
+                $acumuladoPagos = $acumuladoPagos + $pago->monto_Pago;
+            }
+        }
+        return $acumuladoPagos;  
 	} 	
 
 
@@ -54,9 +62,9 @@ class Pagos extends Model
         return $this->belongsTo('SAC\User', 'usuario');
     }
 
-    public function contrato()
+    public function factura()
     {
-        return $this->belongsTo('SAC\Contratos', 'contrato_id');
+        return $this->belongsTo('SAC\Facturas', 'factura_id');
     }
     
     public function tipoPago()

@@ -515,23 +515,27 @@
                   <table style="width: 100%;">
                       <tr>
                           <td></td>
-                        @if($montoAnticiposValuacion_Anterior == 0)
+                        @if($montoAnticiposTotal_Anterior == 0)
                           <td class=" fuente tam-9 tabla-sin-borde-right col-lg-1" style="text-align: right">-</td>
                         @else  
-                          <td class=" fuente tam-9 tabla-sin-borde-right" style="text-align: right">{{number_format($montoAnticiposValuacion_Anterior, 2, ',','.')}}</td>
+                          <td class=" fuente tam-9 tabla-sin-borde-right" style="text-align: right">{{number_format($montoAnticiposTotal_Anterior, 2, ',','.')}}</td>
                         @endif
                           
                       </tr>
                       <tr>
-                        @if($descuentosAnticiposValuacion_Anterior == 0)
+                        @if($descuentosAnticiposTotal_Anterior == 0)
                           <td class=" fuente tam-9 tabla-sin-borde-right col-lg-1" style="text-align: right">-</td>
                         @else  
-                          <td class=" fuente tam-9 tabla-sin-borde-right" style="text-align: right">-{{number_format($descuentosAnticiposValuacion_Anterior, 2, ',','.')}}</td>
+                          <td class=" fuente tam-9 tabla-sin-borde-right" style="text-align: right">-{{number_format($descuentosAnticiposTotal_Anterior, 2, ',','.')}}</td>
                         @endif
                           
                       </tr>
                       <tr>
-                          <td class=" fuente tam-9 tabla-sin-borde-right" style="text-align: right">&nbsp;</td>
+                          @if($diferenciaAnticipos_Anterior == 0)
+                            <td class="fuente tam-9 tabla-sin-borde-right col-lg-1" style="text-align: right">-</td>
+                          @else 
+                            <th class=" fuente tam-9 tabla-sin-borde-right" style="text-align: right">{{number_format($diferenciaAnticipos_Anterior, 2, ',','.')}}</th>
+                          @endif
                       </tr>
                   </table> 
               </td>
@@ -612,24 +616,24 @@
                   <table style="width: 100%;">
                       <tr>
                           <td></td>
-                          @if($montoAdelantosValuacion_Anterior == 0)
+                          @if($montoAdelantosTotal_Anterior == 0)
                             <td class=" fuente tam-9 tabla-sin-borde-right col-lg-1" style="text-align: right">-</td>
                           @else 
-                            <td class=" fuente tam-9 tabla-sin-borde-right" style="text-align: right">{{number_format($montoAdelantosValuacion_Anterior, 2, ',','.')}}</td>
+                            <td class=" fuente tam-9 tabla-sin-borde-right" style="text-align: right">{{number_format($montoAdelantosTotal_Anterior, 2, ',','.')}}</td>
                           @endif
                       </tr>
                       <tr>
-                          @if($descuentosAdelantosValuacion_Anterior == 0)
+                          @if($descuentosAdelantosTotal_Anterior == 0)
                             <td class="tabla fuente tam-9 tabla-sin-borde-right tabla-sin-borde-left tabla-sin-borde-top col-lg-1" style="text-align: right">-</td>
                           @else 
-                            <td class="tabla fuente tam-9 tabla-sin-borde-right tabla-sin-borde-left tabla-sin-borde-top" style="text-align: right">-{{number_format($descuentosAdelantosValuacion_Anterior, 2, ',','.')}}</td>
+                            <td class="tabla fuente tam-9 tabla-sin-borde-right tabla-sin-borde-left tabla-sin-borde-top" style="text-align: right">-{{number_format($descuentosAdelantosTotal_Anterior, 2, ',','.')}}</td>
                           @endif
                       </tr>
                       <tr>
-                          @if($diferenciaAdelantosValuacion_Anterior == 0)
+                          @if($diferenciaAdelantos_Anterior == 0)
                             <td class="fuente tam-9 tabla-sin-borde-right col-lg-1" style="text-align: right">-</td>
                           @else 
-                            <td class=" fuente tam-9 tabla-sin-borde-right" style="text-align: right">{{number_format($diferenciaAdelantosValuacion_Anterior, 2, ',','.')}}</td>
+                            <td class=" fuente tam-9 tabla-sin-borde-right" style="text-align: right">{{number_format($diferenciaAdelantos_Anterior, 2, ',','.')}}</td>
                           @endif
                       </tr>
                   </table> 
@@ -646,7 +650,7 @@
                       </tr>
                       <tr>
                           @if($descuentosAdelantosValuacion == 0)
-                            <td class=" fuente tam-9 tabla-sin-borde-right col-lg-1" style="text-align: right">-</td>
+                            <td class="tabla fuente tam-9 tabla-sin-borde-right tabla-sin-borde-left tabla-sin-borde-top col-lg-1" style="text-align: right">-</td>
                           @else 
                             <td class="tabla fuente tam-9 tabla-sin-borde-right tabla-sin-borde-left tabla-sin-borde-top" style="text-align: right">-{{number_format($descuentosAdelantosValuacion, 2, ',','.')}}</td>
                           @endif

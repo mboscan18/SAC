@@ -106,7 +106,9 @@ class AnticiposController extends Controller
 
         $valuacion = Valuaciones::find(Input::get('valuacion_id'));
         $avanceFinanciero = Presupuestos::avanceFinanciero($valuacion->contrato_id);
+        $avanceFisico = Presupuestos::avanceFisico($valuacion->contrato_id);
         $valuacion->avance_financiero = $avanceFinanciero;
+        $valuacion->avance_fisico = $avanceFisico;
         $valuacion->save();
 
         if (Input::get('tipo_Anticipo') == 1) {
