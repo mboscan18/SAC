@@ -111,7 +111,7 @@ class Proyectos extends Model
         $json = json_decode( $j1 );
 
         $error = json_last_error();
-     //   return $j1;
+        return $j1;
         switch(json_last_error()) {
             case JSON_ERROR_NONE:
                 return $json;

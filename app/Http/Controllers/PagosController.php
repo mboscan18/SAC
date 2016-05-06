@@ -42,6 +42,7 @@ class PagosController extends Controller
             $resumenProyectos[$i] = Proyectos::reumenProyecto($key->id);
             $i++;
         }
+        return $resumenProyectos;
 
         return view('Pagos.index')
                 ->with('resumenProyectos',$resumenProyectos)
