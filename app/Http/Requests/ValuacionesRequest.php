@@ -26,11 +26,13 @@ class ValuacionesRequest extends Request
     {
         $fecha_inicio = $this->fecha_Inicio_Periodo;
         $fecha = date('m/d/Y', strtotime($fecha_inicio. ' - 1 days')); 
-
+        
         $ordenServicio = OrdenServicio::fechaFirmaContrato($this->contrato_id);
+        $fecha_inicio = date('m/d/Y', strtotime($ordenServicio->fecha_firma. ' - 1 days')); 
+
         return [
             'nro_Boletin'           => 'required|min:1|unique:Valuacion,nro_Boletin,'.$this->id.',id,contrato_id,'.$this->contrato_id,
-            'fecha_Inicio_Periodo'  => 'required|date|after:'.$ordenServicio->fecha_firma,
+            'fecha_Inicio_Periodo'  => 'required|date|after:'.$fecha_inicio,
             'fecha_Fin_Periodo'     => 'required|date|after:'.$fecha,
             'fecha_Pago'            => 'required|date',
             'contrato_id'           => 'required',

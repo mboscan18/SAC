@@ -79,7 +79,7 @@ class Proyectos extends Model
         foreach ($resumenContratos as $key) {
             
             $valor_Proyecto = $valor_Proyecto + $key->valor_Contrato;
-            return $valor_Proyecto;
+           // return $valor_Proyecto;
             $monto_Pagar_Proyecto = $monto_Pagar_Proyecto + $key->monto_Pagar_Contrato;
             $enviado_Pagar_Proyecto = $enviado_Pagar_Proyecto + $key->enviado_Pagar_Contrato;
             $faltante_Enviar_Pagar_Proyecto = $faltante_Enviar_Pagar_Proyecto + $key->faltante_Enviar_Pagar_Contrato;
@@ -112,7 +112,7 @@ class Proyectos extends Model
         $json = json_decode( $j1 );
 
         $error = json_last_error();
-        return $j1;
+        //return $j1;
         switch(json_last_error()) {
             case JSON_ERROR_NONE:
                 return $json;
