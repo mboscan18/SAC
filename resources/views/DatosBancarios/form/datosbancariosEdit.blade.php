@@ -1,15 +1,21 @@
-<div class="row">
+ <div class="row">
 	<div class="form-group col-lg-6 col-md-6 col-sm-6 round-input">
 		{!!Form::label('empresa','Empresa Asociada:')!!}
 		<div class=" col-lg-11 col-md-11 col-sm-11 " style=" margin-left: -15px; padding-right: 0px">
 			<select class="form-control" name="empresa_id" id="moneda">
-	            	<option  value="">
-	            		Seleccione la Empresa Asociada a la Cuenta
-	            	</option>
 	            @foreach($empresas as $option)
-	            	<option  value="{{$option->id}}">
-	            		{{$option->nombre_Empresa}}
-	            	</option>
+	            	@if($datos->empresa_id == $option->id)
+		            	<option  value="{{$option->id}}">
+		            		{{$option->nombre_Empresa}}
+		            	</option>
+	            	@endif
+	            @endforeach	
+	            @foreach($empresas as $option)
+	            	@if($datos->empresa_id != $option->id)
+		            	<option  value="{{$option->id}}">
+		            		{{$option->nombre_Empresa}}
+		            	</option>
+	            	@endif
 	            @endforeach
 	        </select>
 		</div>
@@ -27,13 +33,19 @@
 		{!!Form::label('id','Nombre del Banco:')!!}
 		<div class=" col-lg-11 col-md-11 col-sm-11 " style=" margin-left: -15px; padding-right: 0px">
 			<select class="form-control" name="banco_id" id="moneda">
-	            	<option  value="">
-	            		Seleccione el Banco
-	            	</option>
 	            @foreach($bancos as $option)
-	            	<option  value="{{$option->id}}">
-	            		{{$option->nombreBanco}}
-	            	</option>
+	            	@if($datos->banco_id == $option->id)
+		            	<option  value="{{$option->id}}">
+		            		{{$option->nombreBanco}}
+		            	</option>
+	            	@endif
+	            @endforeach	
+	            @foreach($bancos as $option)
+	            	@if($datos->banco_id != $option->id)
+		            	<option  value="{{$option->id}}">
+		            		{{$option->nombreBanco}}
+		            	</option>
+	            	@endif
 	            @endforeach
 	        </select>
 		</div>
@@ -73,13 +85,19 @@
 		{!!Form::label('empresa','Tipo de Cuenta:')!!}
 		<div class=" col-lg-11 col-md-11 col-sm-11 " style=" margin-left: -15px; padding-right: 0px">
 			<select class="form-control" name="tipoCuenta_id" id="moneda">
-	            	<option  value="">
-	            		Seleccione el tipo de Cuenta
-	            	</option>
 	            @foreach($tiposCuenta as $option)
-	            	<option  value="{{$option->id}}">
-	            		{{$option->descripcion}}
-	            	</option>
+	            	@if($datos->tipoCuenta_id == $option->id)
+		            	<option  value="{{$option->id}}">
+		            		{{$option->descripcion}}
+		            	</option>
+	            	@endif
+	            @endforeach	
+	            @foreach($tiposCuenta as $option)
+	            	@if($datos->tipoCuenta_id != $option->id)
+		            	<option  value="{{$option->id}}">
+		            		{{$option->descripcion}}
+		            	</option>
+	            	@endif
 	            @endforeach
 	        </select>
 		</div>
@@ -102,4 +120,4 @@
 <br>
 
 {!!Form::hidden('id',null,null)!!}
-{!!Form::hidden('usuario',Auth::user()->id,null)!!}
+{!!Form::hidden('usuario',Auth::user()->id,null)!!}           

@@ -4,6 +4,10 @@ namespace SAC\Http\Controllers;
 
 use Illuminate\Http\Request;
 use SAC\Proyectos;
+use SAC\Contratos;
+use SAC\Valuaciones;
+use SAC\Presupuestos;
+use SAC\TiposPago;
 use SAC\Pagos;
 use Session;
 use Redirect;
@@ -32,22 +36,15 @@ class PagosController extends Controller
     {
         $proyectos = Proyectos::all();
 
+        $resumenProyectos = array();
+        $i = 0;
+        foreach ($proyectos as $key) {
+            $resumenProyectos[$i] = Proyectos::reumenProyecto($key->id);
+            $i++;
+        }
+
         return view('Pagos.index')
-                ->with('contrato',$contrato)
-                ->with('valorContrato',$valorContrato)
-
-                ->with('firmantes',$firmantes)
-                ->with('firmantes_cliente_VAL',$firmantes_cliente_VAL)
-                ->with('firmantes_proveedor_VAL',$firmantes_proveedor_VAL)
-                ->with('firmantes_cliente_OS',$firmantes_cliente_OS)
-                ->with('firmantes_proveedor_OS',$firmantes_proveedor_OS)
-
-                ->with('nroFirmantes_OS',$nroFirmantes_OS)
-                ->with('cant_MAX_OS',$cant_MAX_OS)
-
-                ->with('nroFirmantes_VAL',$nroFirmantes_VAL)
-                ->with('cant_MAX_VAL',$cant_MAX_VAL)
-                
+                ->with('resumenProyectos',$resumenProyectos)
                 ->render();
     }
 
@@ -56,27 +53,50 @@ class PagosController extends Controller
         $proyecto = Proyectos::find($idProyecto);
         $contratos = $proyecto->contratos;
 
-        foreach ($contratos as $key) {
-            $pagos = Pagos::pagosContrato($key->id);
-            return $pagos;
+        $resumenProyecto = Proyectos::reumenContratos($idProyecto);
+
+
+        return view('Pagos.pagosProyecto')
+                ->with('resumenProyecto',$resumenProyecto)
+                ->with('proyecto',$proyecto)
+                
+                ->render();
+    }
+
+    public function pagosContrato($idContrato)
+    {
+        $contrato = Contratos::find($idContrato);
+        $valuaciones = $contrato->valuaciones;
+
+        $resumenValuaciones = array();
+        $i = 0;
+        foreach ($valuaciones as $key) {
+            $resumenValuaciones[$i] = Valuaciones::resumenValuacion($key->id);
+            $i++;
         }
 
-
-        return view('Pagos.index')
+        return view('Pagos.pagosContrato')
+                ->with('resumenValuaciones',$resumenValuaciones)
                 ->with('contrato',$contrato)
+                
+                ->render();
+    }
+
+    public function pagosBoletin($idBoletin)
+    {
+        $valuacion = Valuaciones::find($idBoletin);
+        $contrato = $valuacion->contrato;
+        $factura = $valuacion->factura;
+        $pagos = $factura->pagos;
+
+        $valorContrato = Presupuestos::valorContrato($contrato->id);
+
+        return view('Pagos.pagosBoletin')
                 ->with('valorContrato',$valorContrato)
-
-                ->with('firmantes',$firmantes)
-                ->with('firmantes_cliente_VAL',$firmantes_cliente_VAL)
-                ->with('firmantes_proveedor_VAL',$firmantes_proveedor_VAL)
-                ->with('firmantes_cliente_OS',$firmantes_cliente_OS)
-                ->with('firmantes_proveedor_OS',$firmantes_proveedor_OS)
-
-                ->with('nroFirmantes_OS',$nroFirmantes_OS)
-                ->with('cant_MAX_OS',$cant_MAX_OS)
-
-                ->with('nroFirmantes_VAL',$nroFirmantes_VAL)
-                ->with('cant_MAX_VAL',$cant_MAX_VAL)
+                ->with('valuacion',$valuacion)
+                ->with('contrato',$contrato)
+                ->with('pagos',$pagos)
+                ->with('factura',$factura)
                 
                 ->render();
     }
@@ -86,9 +106,35 @@ class PagosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function crearPago($idBoletin)
     {
-        //
+        $valuacion = Valuaciones::find($idBoletin);
+        $factura = $valuacion->factura;
+        $retenciones = $factura->retenciones;
+        $montoRetenciones = 0;
+        foreach ($retenciones as $key) {
+            $montoRetenciones = $montoRetenciones + $key->monto_Retenido;
+        }
+        $resumenValuacion = Valuaciones::resumenValuacion($idBoletin);
+
+        $totalPagar = $montoRetenciones + $factura->monto_Total;
+        $contrato = $valuacion->contrato;
+        $valorContrato = Presupuestos::valorContrato($contrato->id);
+        $datosBancarios = $contrato->empresaProveedor->datosBancarios;
+        $tiposPago = TiposPago::all();
+
+        return view('Pagos.create')
+                ->with('valorContrato',$valorContrato)
+                ->with('valuacion',$valuacion)
+                ->with('contrato',$contrato)
+                ->with('factura',$factura)
+                ->with('montoRetenciones',$montoRetenciones)
+                ->with('resumenValuacion',$resumenValuacion)
+
+                ->with('datosBancarios',$datosBancarios)
+                ->with('tiposPago',$tiposPago)
+                
+                ->render();
     }
 
     /**
@@ -99,7 +145,11 @@ class PagosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Pagos::create($request->all());
+        Session::flash('message-sucess','Pago Creado Correctamente');
+        $valuacion = Session::get('valuacion');
+
+        return Redirect::to('/PagosBoletin/'.$valuacion);  
     }
 
     /**

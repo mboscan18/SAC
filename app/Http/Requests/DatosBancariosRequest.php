@@ -27,10 +27,11 @@ class DatosBancariosRequest extends Request
             'nroCuentaBancario' => 'required|size:20|unique:DatosBancarios,nroCuentaBancario,'.$this->id,
             'nombreContacto'   => 'required',
             'identificacionTitular'=> 'required',
-            'nombreBanco'       => 'required',
+            'banco_id'       => 'required',
             'telefono'          => 'required|numeric',
             'email'             => 'required|email',
-            'tipoCuenta'        => 'required',
+            'tipoCuenta_id'        => 'required',
+            'empresa_id'        => 'required',
                         
         ];
     }
@@ -39,12 +40,13 @@ class DatosBancariosRequest extends Request
     {
         return [
             'nombreProveedor.required'      => 'El Nombre del Titular es obligatorio.',
-            'nombreBanco.required'          => 'El Nombre del Banco es obligatorio.',
+            'banco_id.required'          => 'El Nombre del Banco es obligatorio.',
             'telefono.required'             => 'El campo Telefono es obligatorio.',
             'email.required'                => 'El campo Email es obligatorio.',
-            'tipoCuenta.required'           => 'El Tipo de Cuenta es obligatorio.',
+            'tipoCuenta_id.required'           => 'El Tipo de Cuenta es obligatorio.',
             'nroCuentaBancario.required'    => 'El Numero de Cuenta es un dato obligatorio.',
             'identificacionTitular.required'   => 'La Identificacion del Titular es un dato obligatorio.',
+            'empresa_id.required'   => 'La Empresa es un dato obligatorio.',
 
             'nroCuentaBancario.unique'  => 'Ya existe un Contacto Bancario con ese Numero de Cuenta',
             'nroCuentaBancario.numeric' => 'El Numero de Cuenta debe ser de tipo Numerico',

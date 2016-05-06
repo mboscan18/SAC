@@ -20,6 +20,7 @@ use SAC\Procedimientos;
 use SAC\CentrosCosto;
 use SAC\Capitulos;
 use SAC\DetalleValuacion;
+use SAC\Pagos;
 use Input;
 use Session;
 use Redirect;

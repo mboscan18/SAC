@@ -62,6 +62,14 @@ Route::get('RestoreDatoBancario/{id}', 'DatosBancariosController@restore');
 
 /*
 |--------------------------------------------------------------------------
+| Rutas de Bancos
+|--------------------------------------------------------------------------
+*/
+Route::resource('Bancos','BancosController');
+Route::get('deleteFileBanco/{id}','BancosController@deleteFile');
+
+/*
+|--------------------------------------------------------------------------
 | Rutas de Proyectos
 |--------------------------------------------------------------------------
 */
@@ -172,7 +180,10 @@ Route::get('RestoreDescuentos/{id}', 'DescuentosController@restore');
 |-------------------------------------------------------------------------- 
 */
 Route::resource('Pagos','PagosController');
+Route::get('CrearPago/{idBoletin}','PagosController@crearPago');
 Route::get('PagosProyecto/{idProyecto}','PagosController@pagosProyecto');
+Route::get('PagosContrato/{idContrato}','PagosController@pagosContrato');
+Route::get('PagosBoletin/{idBoletin}','PagosController@pagosBoletin');
 
 /* 
 |--------------------------------------------------------------------------
@@ -225,6 +236,20 @@ Route::resource('RetencionesContratos','RetencionesContratoController');
 |-------------------------------------------------------------------------- 
 */
 Route::resource('RetencionesFactura','RetencionesFacturaController');
+
+/* 
+|--------------------------------------------------------------------------
+| Rutas de Tipos de Cuenta
+|-------------------------------------------------------------------------- 
+*/
+Route::resource('TiposCuenta','TiposCuentaController');
+
+/* 
+|--------------------------------------------------------------------------
+| Rutas de Tipos de Pago
+|-------------------------------------------------------------------------- 
+*/
+Route::resource('TiposPago','TiposPagoController');
 
 
 

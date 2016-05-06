@@ -93,6 +93,9 @@ class EmpresasController extends Controller
                 case 3:
                     return Redirect::to('/Contratos/create');
 
+                case 4:
+                    return Redirect::to('/DatosBancarios/create');
+
                 default: 
                     return Redirect::to('/Empresas');    
             }

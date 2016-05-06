@@ -128,12 +128,18 @@ class Valuaciones extends Model
 
         if ($factura != null) {
             $retencionesAplicadas = $factura->retenciones;
+            $pagos = $factura->pagos;
+            $monto_pagado = 0;
+            foreach ($pagos as $pago) {
+                $monto_pagado = $monto_pagado + $pago->monto_Pago;
+            }
         }
 
         $retenciones = $valuacion->contrato->retenciones;
 
 
-        $jD =   '{ "nro_Boletin":"'.$valuacion->nro_Boletin.
+        $jD =   '{ "id":"'.$valuacion->id.
+                '", "nro_Boletin":"'.$valuacion->nro_Boletin.
                 '", "nro_Valuacion":"'.$valuacion->nro_Valuacion.
                 '", "periodo_inicio":"'.$valuacion->fecha_Inicio_Periodo.
                 '", "periodo_fin":"'.$valuacion->fecha_Fin_Periodo.
@@ -157,11 +163,14 @@ class Valuaciones extends Model
         }
 
         $neto_Pagar = $monto_Valuado + $IVA + $monto_Anticipo + $monto_Adelanto - $monto_Amortizado - $monto_Descuentos - $acumRetenciones;
+        $diferencia_pago = $neto_Pagar - $monto_pagado;
 
         $jF =   '","anticipo":"'.$estadoAnticipo.
                 '","adelantos":"'.$monto_Adelanto.
                 '","descuentos":"'.$monto_Descuentos.
-                '","neto_Pagar":"'.$neto_Pagar.'"}';  
+                '","neto_Pagar":"'.$neto_Pagar.
+                '","monto_pagado":"'.$monto_pagado.
+                '","diferencia_pago":"'.$diferencia_pago.'"}';  
 
         $j1 = $jD;
 

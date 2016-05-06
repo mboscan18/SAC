@@ -3,7 +3,7 @@
 namespace SAC\Http\Controllers;
 
 use Illuminate\Http\Request;
-use SAC\Bancos;
+use SAC\TiposPago;
 use Session;
 use Redirect;
 use DB;
@@ -12,7 +12,7 @@ use SAC\Http\Requests;
 use SAC\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\Guard;
 
-class BancosController extends Controller
+class TiposPagoController extends Controller
 {
     public function __construct(Guard $auth)
     {
@@ -26,9 +26,8 @@ class BancosController extends Controller
      */
     public function index()
     {
-        
-        $bancos = Bancos::all();
-        return view('Bancos.index',compact('bancos'));
+        $tiposPago = TiposPago::all();
+        return view('TiposPago.index',compact('tiposPago'));
     }
 
     /**
@@ -38,7 +37,7 @@ class BancosController extends Controller
      */
     public function create()
     {
-        return view('Bancos.create');
+        return view('TiposPago.create');
     }
 
     /**
@@ -49,25 +48,26 @@ class BancosController extends Controller
      */
     public function store(Request $request)
     {
-        Bancos::create($request->all());
+        TiposPago::create($request->all());
+        Session::flash('message-sucess','Tipo de PAgo Creado Correctamente');
 
-        Session::flash('message-sucess','Banco Creado Correctamente');
-        if(Session::has('origen_banco')){
-            $origen = Session::get('origen_banco');
+        if(Session::has('origen_tipoPago')){
+            $origen = Session::get('origen_tipoPago');
+            $valuacion = Session::get('valuacion');
         }else{
             $origen = 0;
         }
 
         switch ($origen) {
                 case 1:
-                    return Redirect::to('/Bancos');
+                    return Redirect::to('/TiposPago');
                 
                 case 2:
-                    return Redirect::to('/DatosBancarios/create');
+                    return Redirect::to('/CrearPago/'.$valuacion);
 
                 default: 
-                    return Redirect::to('/Bancos');    
-            }
+                    return Redirect::to('/TiposPago');    
+            }  
     }
 
     /**
@@ -89,9 +89,8 @@ class BancosController extends Controller
      */
     public function edit($id)
     {
-        $banco = Bancos::find($id);
-        return view('Bancos.edit',compact('banco'));
-    }
+        $tipoPago = TiposPago::find($id);
+        return view('TiposPago.edit',compact('tipoPago'));    }
 
     /**
      * Update the specified resource in storage.
@@ -102,14 +101,11 @@ class BancosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $banco = Bancos::find($id);
-        if (($banco->logo != null) && ($request->logo != null)){
-            \Storage::delete($banco->logo);
-        }
-        $banco->fill($request->all());
-        $banco->save();
-        Session::flash('message-sucess','Banco Actualizado Correctamente');
-        return Redirect::to('/Bancos');
+        $tipoPago = TiposPago::find($id);
+        $tipoPago->fill($request->all());
+        $tipoPago->save();
+        Session::flash('message-sucess','Tipo de Pago Actualizado Correctamente');
+        return Redirect::to('/TiposPago');
     }
 
     /**
@@ -120,25 +116,9 @@ class BancosController extends Controller
      */
     public function destroy($id)
     {
-        $banco = Bancos::find($id);
-        if ($banco->logo != null){
-            \Storage::delete($banco->logo);
-        }
-        $banco->delete();  
-        Session::flash('message-sucess','Banco Eliminado Correctamente');
-        return Redirect::to('/Bancos');
-    }
-
-    public function deleteFile($id)
-    {
-    //    return $request['logo'];
-        $banco = Bancos::find($id);
-        if ($banco->logo != null){
-            $banco->logo = null;
-            $banco->usuario = $this->auth->user()->id;
-            $banco->save();
-            \Storage::delete($banco->logo);
-        }
-        return Redirect::to('/Bancos/'.$id.'/edit');
+        $tipoPago = TiposPago::find($id);
+        $tipoPago->delete();
+        Session::flash('message-sucess','Tipo de Pago Eliminado Correctamente');
+        return Redirect::to('/TiposPago');
     }
 }

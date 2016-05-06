@@ -304,18 +304,12 @@ Diseño y Desrrollo por Miguel A. Boscan S.
                     </a>
                 </li>
 
-                <li class="sub-menu">                     
-                    <a href="javascript:;" class="">
+                  
+                <li class="sub-menu">
+                    <a href="{!!URL::to('/Pagos')!!}" class="">
                         <i class="fa fa-credit-card"></i>
                         <span>Pagos</span>
-                        <span class="menu-arrow arrow_carrot-right"></span>
                     </a>
-                    <ul class="sub">
-                        <li><a class="" href="#GenerarPago">Crear Pago</a></li>
-                        <li><a class="" href="#ConsultarPago">Consultar Pagos</a></li>
-                        <li><a class="" href="#FacturarValuacion">Facturar Valuacion</a></li>
-                    </ul>
-                                       
                 </li>
                 <li class="sub-menu ">
                     <a href="javascript:;" class="">
@@ -324,12 +318,17 @@ Diseño y Desrrollo por Miguel A. Boscan S.
                         <span class="menu-arrow arrow_carrot-right"></span>
                     </a>
                     <ul class="sub">                          
+                        <li><a class="" href="{!!URL::to('/Bancos')!!}"><i class=" icon_building"></i> Bancos</a></li>
                         <li><a class="" href="{!!URL::to('/Empresas')!!}"><i class=" icon_building"></i> Empresas</a></li>
                         <li><a class="" href="{!!URL::to('/DatosBancarios')!!}"><i class="fa fa-credit-card"></i> Datos Bancarios</a></li>
                         <li><a class="" href="{!!URL::to('/Capitulos')!!}"><i class="fa fa-book"></i> Capitulos</a></li>
                         <li><a class="" href="{!!URL::to('/CentrosCosto')!!}"><i class="icon_documents"></i> Centros de Costo</a></li>
                         <li><a class="" href="{!!URL::to('/Retenciones')!!}"><i class="icon_tags_alt"></i>Retenciones</a></li>
                         <li><a class="" href="{!!URL::to('/Firmantes')!!}"><i class="fa fa-pencil"></i>Firmantes</a></li>
+                        <li><a class="" href="{!!URL::to('/TiposCuenta')!!}"><i class="fa fa-pencil"></i>Tipos de Cuenta</a></li>
+                        @if((Auth::user()->rol_Usuario == 'contador') || (Auth::user()->rol_Usuario == 'administrador'))
+                            <li><a class="" href="{!!URL::to('/TiposPago')!!}"><i class="fa fa-pencil"></i>Tipos de Pago</a></li>
+                        @endif    
                     </ul>
                 </li>
                 <li class="sub-menu">

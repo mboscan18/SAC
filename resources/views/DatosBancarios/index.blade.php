@@ -13,38 +13,29 @@
   @section('content')
         @include('alerts.messages')
 
-        <div class="col-lg-2 col-md-2 col-sm-2" style="text-align: center;">
-          	<div class="icon-reorder tooltips col-lg-1 col-md-1 col-sm-1" data-original-title="Crear Contacto Bancario" data-placement="bottom" style="height: 45px; width: 30%">
-	      		<a href="{!!URL::to('DatosBancarios/create')!!}" class="" style="text-align: right; ">
-					<img alt="" src="{!!URL::asset('/img/icon_add.png')!!}" style="height: 45px; width: 45px">
-	            </a>
-            </div>	
- 			<div class="icon-reorder tooltips col-lg-1 col-md-1 col-sm-1" data-original-title="Exportar a Excel" data-placement="bottom" style="height: 45px; width: 30%">
-	            <a href="" class="" style="text-align: right; ">
-					<img alt="" src="{!!URL::asset('/img/icon_excel.png')!!}" style="height: 45px; width: 45px">
-	            </a>
-            </div>
-            <div class="icon-reorder tooltips col-lg-1 col-md-1 col-sm-1" data-original-title="Exportar a PDF" data-placement="bottom" style="height: 45px; width: 30%">
-	            <a href="" class="" style="text-align: right; ">
-					<img alt="" src="{!!URL::asset('/img/icon_pdf.png')!!}" style="height: 45px; width: 45px">
-	            </a>
-            </div>
-          </div>
-          @if(Auth::user()->rol_Usuario == 'administrador')
-	          <div class="col-lg-8 col-md-8 col-sm-8"> </div>
-	          	<div class="icon-reorder tooltips col-lg-1 col-md-1 col-sm-1" data-original-title="Mostrar Datos Bancarios Eliminados" data-placement="bottom" style="height: 45px; text-align: right">
-		      		<a href="{!!URL::to('DatosBancariosDeleted')!!}" class="" style="text-align: right; ">
-						<img alt="" src="{!!URL::asset('/img/icon_datosEliminados.png')!!}" style="height: 45px; width: 45px">
-		            </a>
-		        </div>	
-		  @endif 
-          <br><br><br>
-          <div class="col-lg-1 col-md-1 col-sm-1"></div>
+
+          <div class="col-lg-1 col-md-1 col-sm-1"><br></div>
           <div class="col-lg-10 col-md-10 col-sm-10">
             <div class="panel panel-primary">
-                <div class="panel-heading " style="background-color: #1a2732; color: #9cd5eb">Contactos Bancarios</div>
+                <div class="panel-heading " style="background-color: #1a2732; color: #9cd5eb">
+                	Contactos Bancarios
+                </div>
                 <div class="panel-body" >
-	              		<div class="datoBancario">
+		              <div class="empresas">
+		              	<div class="col-lg-12 col-md-12 col-sm-12"><br></div>
+                      <div class="col-lg-9 col-md-9 col-sm-9">
+                          <h4 class="">Contactos Bancarios</h4>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-3" style="padding-bottom: 10px">
+                          <a  href="{!!URL::to('/DatosBancarios/create')!!}">
+	                      	<div class="boton tam-13" style="width: 100%; heigth: 80%; text-align: center">
+	                            Agregar Contacto Bancario
+	                      	</div>
+                          </a>
+                      </div> 
+                      <div style="background-color: #688a7e; height: 16px" class="col-lg-12 col-md-12 col-sm-12"></div>
+                      <div class="col-lg-12 col-md-12 col-sm-12"><br></div>
+						<div class="datoBancario">
 							<table class="table">
 					      		<thead>
 					      			<th>Empresa Asociada</th>
@@ -67,7 +58,7 @@
 						          <td>{{$datosB->nroCuentaBancario}}</td>
 						          <td>{{$datosB->nombreContacto}}</td>
 						          <td>{{$datosB->identificacionTitular}}</td>
-						          <td>{{$datosB->nombreBanco}}</td>
+						          <td>{{$datosB->banco->nombreBanco}}</td>
 						          <td>{{$datosB->telefono}}</td>
 						          <td>{{$datosB->email}}</td>
 						          @if(Auth::user()->rol_Usuario == 'administrador')
@@ -88,10 +79,10 @@
 						      @endforeach
 						    </table>
 						</div>
+					</div>
                 </div>
             </div>
           </div>
-          <div class="col-lg-1 col-md-1 col-sm-1"></div>
             <!-- page start-->
               
             <!-- page end-->

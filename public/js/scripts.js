@@ -314,6 +314,54 @@ jQuery(document).ready(function(){
             }
     });
 
+    $('#tabla_Proyectos').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'excel',
+                text: 'Exportar a Excel',
+                exportOptions: {
+                    columns: [ ':visible' ]
+                }
+            },
+            {
+                extend: 'colvis',
+                text: 'Ocultar Columnas',
+                postfixButtons: [ 
+                    {
+                        extend: 'colvisRestore', 
+                        text: 'Restaurar Columnas'
+                    } 
+                ]
+            }
+        ],
+        language: 
+            {
+                "decimal":        "",
+                "emptyTable":     "No hay datos disponibles en la tabla",
+                "info":           "Mostrando del _START_ al _END_ de un total de _TOTAL_ Registros",
+                "infoEmpty":      "Mostrando 0 Registros.",
+                "infoFiltered":   "(Filtrado de un total de _MAX_ Registros)",
+                "infoPostFix":    "",
+                "thousands":      ",",
+                "lengthMenu":     "Ver _MENU_ registros",
+                "loadingRecords": "Cargando...",
+                "processing":     "Procesando...",
+                "search":         "Buscar:",
+                "zeroRecords":    "No se encontraron registros coincidentes",
+                "paginate": {
+                    "first":      "Primero",
+                    "last":       "Último",
+                    "next":       "Siguiente",
+                    "previous":   "Anterior"
+                },
+                "aria": {
+                    "sortAscending":  ": activar ordenamiento ascendente",
+                    "sortDescending": ": activar ordenamiento descendiente"
+                }
+            }
+    });
+
 
     
 });

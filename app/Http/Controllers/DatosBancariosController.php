@@ -5,6 +5,8 @@ namespace SAC\Http\Controllers;
 use Illuminate\Http\Request;
 use SAC\DatosBancarios;
 use SAC\Empresas;
+use SAC\TiposCuenta;
+use SAC\Bancos;
 use Session;
 use Redirect;
 use DB;
@@ -40,7 +42,9 @@ class DatosBancariosController extends Controller
      */
     public function create()
     {
-        $empresas = Empresas::lists('nombre_Empresa', 'id');
+        $empresas = Empresas::all();
+        $tiposCuenta = TiposCuenta::all();
+        $bancos = Bancos::all();
         $cont1=0;
         foreach ($empresas as $var) {
             $cont1++;
@@ -49,7 +53,7 @@ class DatosBancariosController extends Controller
             Session::flash('message-error','Es necesario tener Empresas Creadas para crear Datos Bancarios');
             return Redirect::to('/Contratos');
         }
-        return view('DatosBancarios.create',compact('empresas'));
+        return view('DatosBancarios.create',compact('empresas','tiposCuenta','bancos'));
     }
 
     /**
@@ -62,7 +66,24 @@ class DatosBancariosController extends Controller
     {
         DatosBancarios::create($request->all());
         Session::flash('message-sucess','Dato Bancario Creado Correctamente');
-        return Redirect::to('/DatosBancarios');
+
+         if(Session::has('origen_DatosBancarios')){
+            $origen = Session::get('origen_DatosBancarios');
+            $valuacion = Session::get('valuacion');
+        }else{
+            $origen = 0;
+        }
+
+        switch ($origen) {
+                case 1:
+                    return Redirect::to('/DatosBancarios');
+                
+                case 2:
+                    return Redirect::to('/CrearPago/'.$valuacion);
+
+                default: 
+                    return Redirect::to('/DatosBancarios');    
+            }
     }
 
     /**
@@ -85,8 +106,17 @@ class DatosBancariosController extends Controller
     public function edit($id)
     {
         $datos = DatosBancarios::find($id);
-        $empresas = Empresas::lists('nombre_Empresa', 'id');
-        return view('DatosBancarios.edit',['datos'=>$datos, 'empresas'=>$empresas]);
+        $empresas = Empresas::all();
+        $tiposCuenta = TiposCuenta::all();
+        $bancos = Bancos::all();
+
+        return view('DatosBancarios.edit')
+            ->with('datos',$datos)
+            ->with('empresas',$empresas)
+            ->with('bancos',$bancos)
+            ->with('tiposCuenta',$tiposCuenta)
+
+            ->render();
     }
 
     /**

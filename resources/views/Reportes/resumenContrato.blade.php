@@ -269,7 +269,6 @@
                     <?php 
                         $tam = 29 - ($cantRetencion * 6);
                         $total_Pagar = $valorContrato_Total - $Total_Retener;
-
                     ?>
                     <td class="tabla fuente tam-8 tabla-sin-borde-top" style="width: 8%; text-align: center">{{number_format($total_Pagar, 2, ',','.')}}</td>
                     @if($tam >= 0)
@@ -442,16 +441,13 @@
                 
                 <td class="tabla fuente tam-8 tabla-sin-borde-top tabla-sin-borde-right" style="width: 7%; text-align: center">{{number_format($key->neto_Pagar, 2, ',','.')}}</td>
                 <?php
-                    $total_Pagado = 0;
-                    $diferencia = $key->neto_Pagar - $total_Pagado;
-
                   // Totales
                     $saldoContrato = $saldoContrato - $key->neto_Pagar;
                     $acumPagar = $acumPagar + $key->neto_Pagar;
                     $acumAnticipo = $acumAnticipo + $key->anticipo;
                     $acumValuado = $acumValuado + $key->monto_Valuado;
-                    $acumPagado = $acumPagado + $total_Pagado;
-                    $acumDiferencia = $acumDiferencia + $diferencia;
+                    $acumPagado = $acumPagado + $key->monto_pagado;
+                    $acumDiferencia = $acumDiferencia + $key->diferencia_pago;
                     $acumIVA = $acumIVA + $key->monto_IVA;
                     $acumAdelanto = $acumAdelanto + $key->adelantos;
                     $acumDescuento = $acumDescuento + ($key->descuentos * -1);
@@ -463,8 +459,8 @@
                 ?>
                 <td class="tabla fuente tam-8 tabla-sin-borde" style="width: {{$restante}}%; text-align: center">&nbsp;</td>
 
-                <td class="tabla fuente tam-8 tabla-sin-borde-top tabla-sin-borde-right" style="width: 7%; text-align: center">{{number_format($total_Pagado, 2, ',','.')}}</td>
-                <td class="tabla fuente tam-8 tabla-sin-borde-top " style="height: 20px; width: 7%; text-align: center">{{number_format($diferencia, 2, ',','.')}}</td>
+                <td class="tabla fuente tam-8 tabla-sin-borde-top tabla-sin-borde-right" style="width: 7%; text-align: center">{{number_format($key->monto_pagado, 2, ',','.')}}</td>
+                <td class="tabla fuente tam-8 tabla-sin-borde-top " style="height: 20px; width: 7%; text-align: center">{{number_format($key->diferencia_pago, 2, ',','.')}}</td>
                 
             </tr>    
           </thead>       

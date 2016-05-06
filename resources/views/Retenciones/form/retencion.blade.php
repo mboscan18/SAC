@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="form-group col-lg-12 col-md-2 col-sm-12 round-input">
+	<div class="form-group col-lg-12 col-md-12 col-sm-12 round-input">
 		{!!Form::label('apellido','Descripción de la Retención:')!!}
 		{!!Form::text('descripcion',null,['class'=>'form-control','placeholder'=>'Ingresa la Descripción de la Retención'])!!}
 	</div>
