@@ -34,7 +34,7 @@
          @page { margin-bottom: {{$margin_footer}}px; margin-top: {{$margin_header}}px }
          #header { position: fixed; left: 0px; background-color: transparent; top: -{{$pos_header}}px; right: 0px; height: {{$tam_header}}px;}
          #footer { position: fixed; left: 0px; background-color: transparent; bottom: -{{$pos_footer}}px; right: 0px; height: {{$tam_footer}}px; padding-bottom: 20px;}
-         #footer .page:after { content: counter(page, upper); }
+         #header .page_text:before { content: counter(page) }
       </style>
   </head>
 
@@ -49,7 +49,7 @@
                       <td></td>
                       <td style="text-align: center; width:80%"></td>
                       <td style="text-align: center; width:10%" class="tabla tabla-sin-borde-right tabla-sin-borde-bottom" colspan="2">Página</td>
-                      <td style="text-align: center; width:10%" class="tabla tabla-sin-borde-left tabla-sin-borde-bottom" colspan="2">1 </td>
+                      <td style="text-align: center; width:10%" class="tabla tabla-sin-borde-left tabla-sin-borde-bottom page_text" colspan="2"> </td>
                   </tr>
               </table>
                   <table   style="width: 100%;">
