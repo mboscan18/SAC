@@ -49,7 +49,8 @@
                       <td></td>
                       <td style="text-align: center; width:80%"></td>
                       <td style="text-align: center; width:10%" class="tabla tabla-sin-borde-right tabla-sin-borde-bottom" colspan="2">Página</td>
-                      <td style="text-align: center; width:10%" class="tabla tabla-sin-borde-left tabla-sin-borde-bottom page_text" colspan="2"> </td>
+
+                      <td style="text-align: center; width:10%" class="tabla tabla-sin-borde-left tabla-sin-borde-bottom page_text" colspan="2"></td>
                   </tr>
               </table>
                   <table   style="width: 100%;">
