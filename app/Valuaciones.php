@@ -161,9 +161,11 @@ class Valuaciones extends Model
 
             $acumRetenciones = $acumRetenciones + $montoRetenido;
         }
-
-        $neto_Pagar = $monto_Valuado + $IVA + $monto_Anticipo + $monto_Adelanto - $monto_Amortizado - $monto_Descuentos - $acumRetenciones;
-        $diferencia_pago = $neto_Pagar - $monto_pagado;
+        
+        if ($factura != null) {
+            $neto_Pagar = $monto_Valuado + $IVA + $monto_Anticipo + $monto_Adelanto - $monto_Amortizado - $monto_Descuentos - $acumRetenciones;
+            $diferencia_pago = $neto_Pagar - $monto_pagado;
+        }
 
         $jF =   '","anticipo":"'.$estadoAnticipo.
                 '","adelantos":"'.$monto_Adelanto.

@@ -17,7 +17,7 @@
           $aumentoHeader = $aumentoHeader + (($tamContrato-1) * 18);
         }
 
-        $pos_header = 325 + $aumentoHeader;
+        $pos_header = 345 + $aumentoHeader;
         $tam_header = $pos_header - 20;
         $margin_header = $pos_header + 45;
 
@@ -55,7 +55,7 @@
                   <tr>
                       <td style="text-align: center; width:70%"></td>
                       <td style="text-align: center; width:15%" class="tabla" colspan="2">F-DO-P&H-151</td>
-                      <td style="text-align: center; width:15%" class="tabla" colspan="2">3/28/2016</td>
+                      <td style="text-align: center; width:15%" class="tabla" colspan="2">28/03/2016</td>
                   </tr>
               </table>
               <div><br></div>
