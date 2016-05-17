@@ -5,6 +5,7 @@ namespace SAC\Http\Controllers;
 use Illuminate\Http\Request;
 use SAC\Valuaciones;
 use SAC\Anticipos;
+use SAC\Descuentos;
 use SAC\Presupuestos;
 use SAC\OrdenServicio;
 use Session;
@@ -44,6 +45,8 @@ class AnticiposController extends Controller
         $montoEjecutado = Presupuestos::montoEjecutadoContrato($valuacion->contrato_id);
         $montoAnticipos = Anticipos::totalAnticipo($valuacion->contrato_id,1);
         $montoAdelantos = Anticipos::totalAnticipo($valuacion->contrato_id,2);
+        $montoAmortizaciones = Descuentos::totalDescuentosHastaPeriodo($valuacion->contrato_id,1,$valuacion->nro_Boletin);
+        $montoDescuentos = Descuentos::totalDescuentosHastaPeriodo($valuacion->contrato_id,2,$valuacion->nro_Boletin);
 
         $contrato = $valuacion->contrato;
         $nroAdendum = OrdenServicio::ordenAdendum($contrato->id);
@@ -61,7 +64,7 @@ class AnticiposController extends Controller
                 Session::flash('origen',6);
             }
 
-        $montoFaltante = $valorContrato - ($montoEjecutado + $montoAnticipos + $montoAdelantos);
+        $montoFaltante = $valorContrato - ($montoEjecutado + $montoAnticipos + $montoAdelantos - $montoAmortizaciones - $montoDescuentos);
         $porcentajeFaltante = ($montoFaltante * 100) / $valorContrato;
 
         $sw = 0;
