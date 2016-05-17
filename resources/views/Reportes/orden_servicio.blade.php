@@ -27,7 +27,7 @@
       ?> 
       <style>
          @page { margin-bottom: 135px; margin-top: {{$margin_header}}px }
-         #header { position: fixed; left: 0px; background-color: transparent; top: -{{$pos_header}}px; right: 0px; height: {{$tam_header}}px; }
+         #header { position: fixed; left: 0px; background-color: transparent; top: -{{($pos_header+40)}}px; right: 0px; height: {{$tam_header}}px; }
          #footer { position: fixed; left: 0px; background-color: transparent; bottom: -{{$pos_footer}}px; right: 0px; height: {{$tam_footer}}px; padding-bottom: 20px;}
          #header .page_text:before { content: counter(page) }
       </style>
@@ -48,6 +48,19 @@
               <table class=" col-lg-12" style="width:100%">
                   <tr>
                       <td></td>
+                      <td style="text-align: center; width:70%"></td>
+                      <th style="text-align: center; width:15%" class="tabla  tabla-sin-borde-bottom" colspan="2">Número</th>
+                      <th style="text-align: center; width:15%" class="tabla  tabla-sin-borde-bottom" colspan="2">Vigencia</th>
+                  </tr>
+                  <tr>
+                      <td style="text-align: center; width:70%"></td>
+                      <td style="text-align: center; width:15%" class="tabla" colspan="2">F-DO-P&H-151</td>
+                      <td style="text-align: center; width:15%" class="tabla" colspan="2">3/28/2016</td>
+                  </tr>
+              </table>
+              <div><br></div>
+              <table class=" col-lg-12" style="width:100%">
+                  <tr>
                       <td style="text-align: center; width:80%"></td>
                       <td style="text-align: center; width:10%" class="tabla tabla-sin-borde-right tabla-sin-borde-bottom" colspan="2">Página</td>
                       <td style="text-align: center; width:10%" class="tabla tabla-sin-borde-left tabla-sin-borde-bottom page_text" colspan="2"></td>

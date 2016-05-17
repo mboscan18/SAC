@@ -17,6 +17,51 @@
 @endsection
 
     @section('content')
+
+
+      @if($sw == 0) 
+          <input type="hidden" id="sw" value="0">
+          
+
+      @else
+          <input type="hidden" id="sw" value="1">
+          <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="detalleEdit" class="modal fade ">
+            <div class="modal-dialog " role="document">
+                <div class="modal-content">
+                    <div class="panel-heading" style="background-color: #1a2732; color: #9cd5eb;">
+                        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                        <h4 class="modal-title">Editar Movimiento de Partida</h4>
+                    </div>
+
+                      
+                    <div class="modal-body">
+                        @include('alerts.request')
+                        {!!Form::model($detalle,['id'=>'form_datalle', 'route'=>['DetallesValuacion.update',$detalle],'method'=>'PUT'])!!}
+                            @include('ValuacionesDetalle.form.detalleValEdit')
+                            <div id="submitAddDetalle_EDIT">
+                                <div class="col-lg-6 col-md-6 col-sm-6" style="text-align:center">
+                                    <button type="button" class="boton boton-danger" data-dismiss="modal" style="width:100%"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar</button>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6" style="text-align:center" >
+                                    <button type="submit" class="boton" style="width:100%"><i class="icon_floppy"></i> Guardar</button>
+                                </div>
+                            </div>  
+                            <div id="submitAddDetalleDisabel_EDIT">
+                                <div class="col-lg-12 col-md-12 col-sm-12" style="text-align:center">
+                                    <button type="button" class="boton boton-danger" data-dismiss="modal" style="width:100%"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar</button>
+                                </div>
+                            </div>
+                            </div>
+                        {!!Form::close()!!}
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+      @endif
+      
         @include('alerts.messages')
         @include('alerts.errors')
         @include('alerts.info')

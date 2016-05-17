@@ -73,6 +73,10 @@ class AnticiposController extends Controller
                 ->with('montoFaltante',$montoFaltante)
                 ->with('porcentajeFaltante',$porcentajeFaltante)
                 
+                ->with('montoEjecutado',$montoEjecutado)
+                ->with('montoAnticipos',$montoAnticipos)
+                ->with('montoAdelantos',$montoAdelantos)
+                
                 ->render();
 
     }
