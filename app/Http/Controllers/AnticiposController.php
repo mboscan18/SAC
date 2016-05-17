@@ -63,6 +63,8 @@ class AnticiposController extends Controller
 
         $montoFaltante = $valorContrato - ($montoEjecutado + $montoAnticipos + $montoAdelantos);
         $porcentajeFaltante = ($montoFaltante * 100) / $valorContrato;
+
+        $sw = 0;
     
         return view('Anticipos.anticipoValuacion')
                 ->with('contrato',$contrato)
@@ -72,10 +74,11 @@ class AnticiposController extends Controller
                 ->with('anticipos',$anticipos)
                 ->with('montoFaltante',$montoFaltante)
                 ->with('porcentajeFaltante',$porcentajeFaltante)
-                
+
                 ->with('montoEjecutado',$montoEjecutado)
                 ->with('montoAnticipos',$montoAnticipos)
                 ->with('montoAdelantos',$montoAdelantos)
+                ->with('sw',$sw)
                 
                 ->render();
 
