@@ -21,6 +21,9 @@
 		{!!Form::label('periodo','Monto Faltante por Pagar:')!!}
 	</div>
 	<div class="form-group col-lg-4 col-md-4 col-sm-4" >
+		<b>{{$valuacion->contrato->moneda->symbol}}</b> {!!Form::label('cant',number_format($montoEjecutado, 2, ',', '.'),[ 'id'=>''])!!}
+		<b>{{$valuacion->contrato->moneda->symbol}}</b> {!!Form::label('cant',number_format($montoAnticipos, 2, ',', '.'),[ 'id'=>''])!!}
+		<b>{{$valuacion->contrato->moneda->symbol}}</b> {!!Form::label('cant',number_format($montoAdelantos, 2, ',', '.'),[ 'id'=>''])!!}
 		<b>{{$valuacion->contrato->moneda->symbol}}</b> {!!Form::label('cant',number_format($montoFaltante, 2, ',', '.'),[ 'id'=>''])!!}
 		  {!!Form::hidden('montoFaltantePagar',$montoFaltante,['id'=>'montoFaltantePagar'])!!}
 	</div>
