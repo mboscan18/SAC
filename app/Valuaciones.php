@@ -174,6 +174,13 @@ class Valuaciones extends Model
 
         $j1 = $jD;
 
+
+
+
+
+
+
+
         foreach ($jR as $key) {
             $j1 = $j1.$key;
         }
