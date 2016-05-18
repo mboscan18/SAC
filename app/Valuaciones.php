@@ -125,7 +125,7 @@ class Valuaciones extends Model
         $IVA = ($monto_Valuado * $valuacion->IVA) / 100;
         $factura = $valuacion->factura;
         //return $factura;
-        $retencionesAplicadas = 0;
+      //  $retencionesAplicadas = 0;
         if ($factura != null) {
             $retencionesAplicadas = $factura->retenciones;
             $pagos = $factura->pagos;
@@ -162,10 +162,8 @@ class Valuaciones extends Model
             $acumRetenciones = $acumRetenciones + $montoRetenido;
         }
 
-        if ($factura != null) {
             $neto_Pagar = $monto_Valuado + $IVA + $monto_Anticipo + $monto_Adelanto - $monto_Amortizado - $monto_Descuentos - $acumRetenciones;
             $diferencia_pago = $neto_Pagar - $monto_pagado;
-        }
 
         $jF =   '","anticipo":"'.$estadoAnticipo.
                 '","adelantos":"'.$monto_Adelanto.
