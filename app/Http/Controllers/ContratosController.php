@@ -106,7 +106,7 @@ class ContratosController extends Controller
         $contratoDescripcion = Procedimientos::stringSeparado($contratos->descripcion, 123);
         $contratoObservaciones = Procedimientos::stringSeparado($contratos->observaciones, 123);
       // return $contratoObservaciones;
-        $nombreReporte = 'Contrato ('.$contratos->nro_Contrato.') - Orden de Servicio '.$nroAdendum;
+        $nombreReporte = 'Contrato ('.$contratos->nro_Contrato.') - Orden de Servicio '.($nroAdendum+2);
 
         $firmasOrdenServicio = FirmasOrdenServicio::firmasOrdenServicio($contrato);
         $firmantes_cliente = array();
@@ -153,6 +153,70 @@ class ContratosController extends Controller
         return $pdf->setPaper('letter')->setOrientation('portrait')->stream($nombreReporte.'.pdf');  
     }
 
+    public function generarOrdenServicioAdendum($contrato, $nroAdendum){
+        $contratos = Contratos::find($contrato);
+        $partidas = VariacionPresupuesto::partidasFirmadas($contrato, $nroAdendum);
+        $valuaciones = Valuaciones::valuaciones($contrato);
+
+        if ($nroAdendum >= 0) {
+            $valorContratoAnterior = VariacionPresupuesto::valorContratoAdendum($contrato, $nroAdendum-1);
+            $ordenServicioAnterior = OrdenServicio::ordenServicio($contrato, $nroAdendum-1);
+        }else{
+            $valorContratoAnterior = 0;
+            $ordenServicioAnterior = 0;
+        }
+
+        $valorContrato = VariacionPresupuesto::valorContratoAdendum($contrato, $nroAdendum);
+
+        $proyectoDescripcion = Procedimientos::stringSeparado($contratos->proyecto->nombre_Proyecto, 115);
+        $contratoDescripcion = Procedimientos::stringSeparado($contratos->descripcion, 123);
+        $contratoObservaciones = Procedimientos::stringSeparado($contratos->observaciones, 123);
+      // return $contratoObservaciones;
+        $nombreReporte = 'Contrato ('.$contratos->nro_Contrato.') - Orden de Servicio '.($nroAdendum+1);
+
+        $firmasOrdenServicio = FirmasOrdenServicio::firmasOrdenServicio($contrato);
+        $firmantes_cliente = array();
+        $firmantes_proveedor = array();
+        $i = -1;
+        $j = -1;
+        foreach ($firmasOrdenServicio as $key) {
+            if ($key->empresa == 1) {
+                $i++;
+                $firmantes_cliente[$i] = $key;
+            }elseif ($key->empresa == 2) {
+                $j++;
+                $firmantes_proveedor[$j] = $key;
+            }
+        }
+
+        if (($firmantes_cliente == null) || ($firmantes_proveedor == null)) {
+            Session::flash('message-warning','Debe cargar Firmantes sobre la Orden de Servicio.');
+            return Redirect::to('/FirmasContrato/'.$contrato);
+        }
+
+
+        $pdf = \PDF::loadHTML(
+            view('Reportes.orden_servicio_adendum')
+                ->with('contratos',$contratos)
+                ->with('partidas',$partidas)
+                ->with('valorContrato',$valorContrato)
+                ->with('proyectoDescripcion',$proyectoDescripcion)
+                ->with('contratoDescripcion',$contratoDescripcion)
+                ->with('contratoObservaciones',$contratoObservaciones)
+                ->with('nroAdendum',$nroAdendum)
+
+                ->with('valorContratoAnterior',$valorContratoAnterior)
+                ->with('ordenServicioAnterior',$ordenServicioAnterior)
+                ->with('nombreReporte',$nombreReporte)
+
+                ->with('firmantes_cliente',$firmantes_cliente)
+                ->with('firmantes_proveedor',$firmantes_proveedor)
+                ->render()
+            );
+        $y = 1;
+
+        return $pdf->setPaper('letter')->setOrientation('portrait')->stream($nombreReporte.'.pdf');  
+    }
 
     public function firmarContrato($id_contrato, $lugar)
     {
@@ -237,6 +301,22 @@ class ContratosController extends Controller
                     return Redirect::to('/Descuento/'.$valuacion->id);
             }    
         
+    }
+
+    public function otrosReportes($id_contrato){
+
+
+        $contrato = Contratos::find($id_contrato);
+        $nroAdendum = OrdenServicio::ordenAdendum($id_contrato);
+        $valorContrato = Presupuestos::valorContrato($id_contrato);
+
+        return view('Contratos.otrosReportes')
+                ->with('contrato',$contrato)
+                ->with('valorContrato',$valorContrato)
+
+                ->with('nroAdendum',$nroAdendum)
+                
+                ->render();
     }
 
     public function generarResumenContrato($id_contrato)

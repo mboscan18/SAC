@@ -203,7 +203,7 @@
                                 <div class="count" >Otros</div>
                                 <div class="title" >Otros Reportes sobre el Contrato</div> 
                           </div>
-                          <a href=""  > 
+                          <a href="{!!URL::to('/OtrosReportes/'.$contrato->id)!!}"  > 
                           <div class="botn " style="margin-top: -40px; width: 100%">
                             Ver Otros Reportes
                           </div>

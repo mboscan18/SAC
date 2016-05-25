@@ -89,7 +89,9 @@ Route::get('Contrato/{proyecto_id}', 'ContratosController@showContratos');
 Route::get('FirmarContrato/{id_contrato}/{lugar}', 'ContratosController@firmarContrato');
 Route::get('ResumenContrato/{id_contrato}', 'ContratosController@generarResumenContrato');
 Route::get('OpcionesContrato/{id_contrato}', 'ContratosController@opcionesContrato');
+Route::get('OrdenDeServicioAdendum/{contrato}/{nroAdendum}', 'ContratosController@generarOrdenServicioAdendum');
 Route::get('OrdenDeServicio/{contrato}', 'ContratosController@generarOrdenServicio');
+Route::get('OtrosReportes/{id_contrato}', 'ContratosController@otrosReportes');
 Route::get('ContratosDeleted', 'ContratosController@showDeletes');
 Route::get('RestoreContrato/{id}', 'ContratosController@restore');
 
