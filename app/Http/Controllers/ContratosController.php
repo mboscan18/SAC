@@ -166,11 +166,12 @@ class ContratosController extends Controller
             $ordenServicioAnterior = 0;
         }
 
+        $ordenServicioActual = OrdenServicio::ordenServicio($contrato, $nroAdendum);
         $valorContrato = VariacionPresupuesto::valorContratoAdendum($contrato, $nroAdendum);
 
         $proyectoDescripcion = Procedimientos::stringSeparado($contratos->proyecto->nombre_Proyecto, 115);
-        $contratoDescripcion = Procedimientos::stringSeparado($contratos->descripcion, 123);
-        $contratoObservaciones = Procedimientos::stringSeparado($contratos->observaciones, 123);
+        $contratoDescripcion = Procedimientos::stringSeparado($ordenServicioActual->descripcion, 123);
+        $contratoObservaciones = Procedimientos::stringSeparado($ordenServicioActual->observaciones, 123);
       // return $contratoObservaciones;
         $nombreReporte = 'Contrato ('.$contratos->nro_Contrato.') - Orden de Servicio '.($nroAdendum+1);
 
@@ -207,6 +208,7 @@ class ContratosController extends Controller
 
                 ->with('valorContratoAnterior',$valorContratoAnterior)
                 ->with('ordenServicioAnterior',$ordenServicioAnterior)
+                ->with('ordenServicioAnterior',$ordenServicioActual)
                 ->with('nombreReporte',$nombreReporte)
 
                 ->with('firmantes_cliente',$firmantes_cliente)

@@ -200,13 +200,13 @@
                     </tr>    
                     <tr>
                         <td style="text-align: center;" class="tabla tam-10">ACTUAL</td>
-                        <th style="text-align: center;" class="tabla fuente tam-10">{{date('d-m-Y', strtotime($contratos->fecha_inicio))}}</th>
-                        <th style="text-align: center;" class="tabla fuente tam-10">{{date('d-m-Y', strtotime($contratos->fecha_fin))}}</th>
+                        <th style="text-align: center;" class="tabla fuente tam-10">{{date('d-m-Y', strtotime($ordenServicioActual->fecha_inicio))}}</th>
+                        <th style="text-align: center;" class="tabla fuente tam-10">{{date('d-m-Y', strtotime($ordenServicioActual->fecha_fin))}}</th>
                         <th style="text-align: center; " class="tabla fuente tam-10">{{number_format($valorContrato, 2, ',','.')}}</th>
                         <td class="col-lg-1" style="width:2%"></td>
                         <th style="text-align: center;" class="tabla tam-14">{{$nroAdendum+1}}</th>
                         <th style="text-align: center;" class="tabla tam-14">{{$nroAdendum}}</th>
-                        <td style="text-align: center;" class="tabla fuente tam-10">{{date('d-m-Y', strtotime($contratos->fecha_firma))}}</td>
+                        <td style="text-align: center;" class="tabla fuente tam-10">{{date('d-m-Y', strtotime($ordenServicioActual->fecha_firma))}}</td>
                     </tr> 
               </table>
               <br>

@@ -71,8 +71,8 @@ class DetalleValuacionController extends Controller
             $monto = DetalleValuacion::montoTrabajadaPartidaTotal($key->id);
             $cantidadesDisponibles[$i] = $key->cantidad - $cant;
             $montosDisponibles[$i] = $key->monto_Total - $monto;
+        //return $cantidadesDisponibles[$i];
             $i++;
-        //return $cant;
         }
 
 
