@@ -208,7 +208,7 @@ class ContratosController extends Controller
 
                 ->with('valorContratoAnterior',$valorContratoAnterior)
                 ->with('ordenServicioAnterior',$ordenServicioAnterior)
-                ->with('ordenServicioAnterior',$ordenServicioActual)
+                ->with('ordenServicioActual',$ordenServicioActual)
                 ->with('nombreReporte',$nombreReporte)
 
                 ->with('firmantes_cliente',$firmantes_cliente)
