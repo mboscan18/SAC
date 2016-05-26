@@ -39,11 +39,11 @@ class PagosController extends Controller
 
         $resumenProyectos = array();
         $i = 0;
-        foreach ($proyectos as $key) {
-            $resumenProyectos[$i] = Proyectos::reumenProyecto($proyectos[$i]->id);
+       // foreach ($proyectos as $key) {
+            $resumenProyectos[$i] = Proyectos::reumenProyecto($proyectos[10]->id);
        // return $resumenProyectos[$i];
             $i++;
-       }
+      // }
 
         return view('Pagos.index')
                 ->with('resumenProyectos',$resumenProyectos)
