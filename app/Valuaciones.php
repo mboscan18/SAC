@@ -126,10 +126,10 @@ class Valuaciones extends Model
         $factura = $valuacion->factura;
         //return $factura;
       //  $retencionesAplicadas = 0;
+            $monto_pagado = 0;
         if ($factura != null) {
             $retencionesAplicadas = $factura->retenciones;
             $pagos = $factura->pagos;
-            $monto_pagado = 0;
             foreach ($pagos as $pago) {
                 $monto_pagado = $monto_pagado + $pago->monto_Pago;
             }
