@@ -39,7 +39,7 @@ class PagosController extends Controller
         $resumenProyectos = array();
         $i = 0;
         foreach ($proyectos as $key) {
-            $resumenProyectos[$i] = Proyectos::reumenProyecto($proyectos[6]->id);
+            $resumenProyectos[$i] = Proyectos::reumenProyecto($proyectos[8]->id);
         return $resumenProyectos[$i];
             $i++;
         }
