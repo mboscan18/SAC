@@ -36,6 +36,7 @@ class PagosController extends Controller
     {
         $proyectos = Proyectos::all();
 
+
         $resumenProyectos = array();
         $i = 0;
       //  foreach ($proyectos as $key) {
