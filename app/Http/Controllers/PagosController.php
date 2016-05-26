@@ -91,7 +91,7 @@ class PagosController extends Controller
         if ($factura){
             $pagos = $factura->pagos;
         }else{
-            $pagos = null;
+            $pagos = [];
         }
 
         $valorContrato = Presupuestos::valorContrato($contrato->id);
