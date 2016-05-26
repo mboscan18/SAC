@@ -88,7 +88,11 @@ class PagosController extends Controller
         $valuacion = Valuaciones::find($idBoletin);
         $contrato = $valuacion->contrato;
         $factura = $valuacion->factura;
-        $pagos = $factura->pagos;
+        if ($factura){
+            $pagos = $factura->pagos;
+        }else{
+            $pagos = null;
+        }
 
         $valorContrato = Presupuestos::valorContrato($contrato->id);
 
