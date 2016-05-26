@@ -75,7 +75,7 @@ class Proyectos extends Model
         $faltante_Enviar_Pagar_Proyecto = 0;
         $total_Pagado_Proyecto = 0;
         $faltante_Pagar_Proyecto = 0;
-    return $resumenContratos;
+   // return $resumenContratos;
         foreach ($resumenContratos as $key) {
             
             $valor_Proyecto = $valor_Proyecto + $key->valor_Contrato;
