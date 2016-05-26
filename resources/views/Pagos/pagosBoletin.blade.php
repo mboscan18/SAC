@@ -126,7 +126,7 @@
 							        @if(Auth::user()->rol_Usuario == 'administrador')
 						        		<th>Ultima Modificacion</th>
 						        	@endif	
-							        @if((Auth::user()->rol_Usuario == 'administrador') || (Auth::user()->rol_Usuario == 'residente'))
+							        @if((Auth::user()->rol_Usuario == 'administrador') || (Auth::user()->rol_Usuario == 'contador'))
 							        	<th>Operacion</th>
 							        @endif	
 						      	</thead>
@@ -149,7 +149,7 @@
 								          	{{$datos->user->nombre_Usuario}} {{$datos->user->apellido_Usuario}} | {{$datos->updated_at->format('d-m-Y, g:ia')}}
 								          </td>
 								      @endif   
-						            	@if((Auth::user()->rol_Usuario == 'administrador') || (Auth::user()->rol_Usuario == 'residente'))
+						            	@if((Auth::user()->rol_Usuario == 'administrador') || (Auth::user()->rol_Usuario == 'contador'))
 							          		<td class=" col-lg-1" style="text-align: center">
 												<div  style="; text-align: center">
 							                        	<div class="icon-reorder tooltips" data-original-title="Ver Opciones" data-placement="bottom"  >
