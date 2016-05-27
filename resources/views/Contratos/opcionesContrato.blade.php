@@ -214,42 +214,16 @@
 
                       <div class=" col-lg-4 col-md-4 col-sm-12 col-xs-12" style="text-align: center">
                           <div class="info-box green-bg" style="text-align:center">
-                            <i class="fa fa-percent" ></i>
-                            <div class="count" >30 %</div>
-                            <div class="title" >Porcentaje de Anticipo</div> 
+                            <i class="fa fa-bar-chart" ></i>
+                            <div class="count" >Datos</div>
+                            <div class="title" >Datos del Contrato</div> 
                           </div>
-                          <a href="{!!URL::to('/FirmasContrato/'.$contrato->id)!!}"> 
+                          <a href="{!!URL::to('/DatosContrato/'.$contrato->id.'/edit')!!}"> 
                           <div class="botn " style="margin-top: -40px; width: 100%">
-                            Editar
+                            Ver Datos del Contratos
                           </div>
                           </a> 
                       </div>
-                      <div class=" col-lg-4 col-md-4 col-sm-12 col-xs-12" style="text-align:center;">
-                          <div class="info-box green-bg" >
-                            <i class="fa fa-percent"></i>
-                            <div class="count">12 %</div>
-                            <div class="title">Porcentaje del IVA</div>           
-                          </div>
-                          <a href="{!!URL::to('/FirmasContrato/'.$contrato->id)!!}"> 
-                          <div class="botn " style="margin-top: -40px; width: 100%">
-                            Editar
-                          </div>
-                          </a> 
-                      </div>
-                      <div class=" col-lg-4 col-md-4 col-sm-12 col-xs-12" style="text-align:center">
-                          <div class="info-box green-bg">
-                            <i class="fa fa-bar-chart"></i>
-                            <div class="count">Activo</div>
-                            <div class="title">Estado del Contrato</div>           
-                          </div>
-                          <a href="{!!URL::to('/FirmasContrato/'.$contrato->id)!!}"> 
-                          <div class="botn " style="margin-top: -40px; width: 100%">
-                            Editar
-                          </div>
-                          </a> 
-                      </div>
-
-                      <div class="col-lg-12 col-md-12 col-sm-12"><br><br></div>
 
                       <div class=" col-lg-4 col-md-4 col-sm-12 col-xs-12" style="text-align:center">
                           <div class="info-box blue-bg">
@@ -274,20 +248,7 @@
                             Ver Retenciones
                           </div>
                       </div>
-                          </a>       
-
-                      <div class=" col-lg-4 col-md-4 col-sm-12 col-xs-12" style="text-align:center">
-                          <div class="info-box blue-bg">
-                            <i class="icon_documents_alt"></i>
-                            <div class="count">Fianzas</div>
-                            <div class="title">Fianzas del Contrato</div>           
-                          </div>
-                          <a href="{!!URL::to('/FirmasContrato/'.$contrato->id)!!}"> 
-                          <div class="botn " style="margin-top: -40px; width: 100%">
-                            Ver Fianzas
-                          </div>
-                          </a>       
-                      </div>
+                          </a>      
 
                   </div>
               </div>

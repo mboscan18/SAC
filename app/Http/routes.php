@@ -100,6 +100,10 @@ Route::get('Adendum/EditContrato/{id_contrato}', 'ContratosController@adendumEdi
 Route::get('Adendum/EditPartida/{id_contrato}', 'ContratosController@adendumEditarPartida');
 Route::get('Adendum/CrearPartida/{id_contrato}', 'ContratosController@adendumCrearPartida');
 
+Route::resource('DatosContrato', 'DatosContratoController');
+Route::get('ResumenDatosContrato/{id_contrato}', 'DatosContratoController@generarResumenDatosContrato');
+
+
 /*
 |--------------------------------------------------------------------------
 | Rutas de Adendum Contratos
