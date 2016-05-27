@@ -250,13 +250,7 @@
                             $montoRetencion = ($valorContrato_IVA * $key->porcentaje) / 100;
                           }
 
-                          $sustraendo = 0;
-                          foreach ($valuaciones as $val) {
-                              if ($val->nro_Valuacion != null) {
-                                  $sustraendo = $sustraendo + $key->sustraendo;
-                              }
-                          }
-                          //echo 'Sus '.$sustraendo;
+                          $sustraendo = $key->sustraendo * $contrato->nroFacturas;
 
                           $montoRetenido = $montoRetencion - $sustraendo;
 
