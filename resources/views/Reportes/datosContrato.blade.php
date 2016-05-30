@@ -188,7 +188,7 @@
 
         <table style="width: 100%">
             <tr>
-              <th style="text-align: center; width: 50%" class="fuente tam-12 tabla tabla tabla-sin-borde-bottom">MONTO ORIGINAL DEL CONTRATO:</th>
+              <th style="text-align: center; width: 50%" class="fuente tam-12 tabla tabla tabla-sin-borde-bottom">VALOR DEL CONTRATO ACTUAL:</th>
               <td style="text-align: center; width: 50%" class="fuente tam-12 tabla tabla tabla-sin-borde-bottom"> {{number_format($valorContrato, 2, ',','.')}}</td>
             </tr>
         </table> 
@@ -218,6 +218,41 @@
             </tr>
         </table>
         <!-- DATOS DE FACTURACION -->
+        <br><br>
+
+        <!-- RETENCIONES -->
+        <table style="width: 100%">
+            <tr>
+              <th style="text-align: center; background-color: #c6d9f1;" class="fuente tam-13 tabla ">RETENCIONES:</th>
+            </tr>
+        </table>  
+
+        @foreach($retenciones as $key)
+        <table style="width: 100%">
+            <tr>
+              <th style="text-align: center; width: 25%" class="fuente tam-12 tabla tabla tabla-sin-borde-top">{{$key->retencion->descripcion}}</th>
+              <td style="text-align: center; width: 25%" class="fuente tam-12 tabla tabla tabla-sin-borde-top">{{number_format($key->porcentaje, 2, ',','.')}} %</td>
+              <th style="text-align: center; width: 25%" class="fuente tam-12 tabla tabla tabla-sin-borde-top">SUSTRAENDO:</th>
+              <td style="text-align: center; width: 25%" class="fuente tam-12 tabla tabla tabla-sin-borde-top">{{number_format($key->sustraendo, 2, ',','.')}}</td>
+            </tr>
+        </table>
+        @endforeach
+        <!-- RETENCIONES -->
+        <br><br>
+
+        <!-- FORMA DE PAGO -->
+        <table style="width: 100%">
+            <tr>
+              <th style="text-align: center; background-color: #c6d9f1;" class="fuente tam-13 tabla tabla-sin-borde-bottom">FORMA DE PAGO</th>
+            </tr>
+        </table>  
+
+        <table style="width: 100%">
+            <tr>
+              <td style="text-align: center; width: 100%" class="fuente tam-12 tabla tabla ">{{$contrato->forma_pago}}</td>
+            </tr>
+        </table> 
+        <!-- FORMA DE PAGO -->
     
   </body>
 </html>

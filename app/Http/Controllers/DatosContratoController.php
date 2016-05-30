@@ -64,13 +64,15 @@ class DatosContratoController extends Controller
         $contrato = Contratos::find($id_contrato);
         $nombreReporte = 'Contrato ('.$contrato->nro_Contrato.') - Datos del Contrato ';
         $valorContrato = Presupuestos::valorContrato($id_contrato);
+        $retenciones = $contrato->retenciones;
 
         $pdf = \PDF::loadHTML(
             view('Reportes.datosContrato')
                 ->with('contrato',$contrato)
                 ->with('valorContrato',$valorContrato)
                 ->with('nombreReporte',$nombreReporte)
-                
+                ->with('retenciones',$retenciones)
+
                 ->render()
             );
 
