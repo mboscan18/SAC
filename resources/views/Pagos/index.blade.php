@@ -29,7 +29,7 @@
 							        <th>Faltante por Enviar a Pagar</th>
 							        <th>Pagado</th>
 							        <th>Faltante por Pagar</th>
-							        @if((Auth::user()->rol_Usuario == 'administrador') || (Auth::user()->rol_Usuario == 'contador'))
+							        @if((Auth::user()->rol_Usuario == 'administrador') || (Auth::user()->rol_Usuario == 'contador') || (Auth::user()->rol_Usuario == 'supervisor'))
 							        	<th>Operacion</th>
 							        @endif	
 						      	</thead>
@@ -45,7 +45,7 @@
 							          <td>{{number_format($datos->faltante_Enviar_Pagar_Proyecto, 2, ',','.')}}</td>
 							          <td>{{number_format($datos->total_Pagado_Proyecto, 2, ',','.')}}</td>
 							          <td>{{number_format($datos->faltante_Pagar_Proyecto, 2, ',','.')}}</td> 
-						            	@if((Auth::user()->rol_Usuario == 'administrador') || (Auth::user()->rol_Usuario == 'contador'))
+						            	@if((Auth::user()->rol_Usuario == 'administrador') || (Auth::user()->rol_Usuario == 'contador') || (Auth::user()->rol_Usuario == 'supervisor'))
 							          		<td class=" col-lg-1" style="text-align: center">
 												<div  style="; text-align: center">
 							                        	<div class="icon-reorder tooltips" data-original-title="Ver Opciones" data-placement="bottom"  >

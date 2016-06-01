@@ -40,7 +40,7 @@
 							        <th>Enviado a Pagar</th>
 							        <th>Pagado</th>
 							        <th>Faltante por Pagar</th>
-							        @if((Auth::user()->rol_Usuario == 'administrador') || (Auth::user()->rol_Usuario == 'contador'))
+							        @if((Auth::user()->rol_Usuario == 'administrador') || (Auth::user()->rol_Usuario == 'contador') || (Auth::user()->rol_Usuario == 'supervisor'))
 							        	<th>Operacion</th>
 							        @endif	
 						      	</thead>
@@ -54,7 +54,7 @@
 							          <td>{{number_format($datos->neto_Pagar, 2, ',','.')}}</td>
 							          <td>{{number_format($datos->monto_pagado, 2, ',','.')}}</td>
 							          <td>{{number_format($datos->diferencia_pago, 2, ',','.')}}</td>
-						            	@if((Auth::user()->rol_Usuario == 'administrador') || (Auth::user()->rol_Usuario == 'contador'))
+						            	@if((Auth::user()->rol_Usuario == 'administrador') || (Auth::user()->rol_Usuario == 'contador') || (Auth::user()->rol_Usuario == 'supervisor'))
 							          		<td class=" col-lg-1" style="text-align: center">
 												<div  style="; text-align: center">
 							                        	<div class="icon-reorder tooltips" data-original-title="Ver Opciones" data-placement="bottom"  >
