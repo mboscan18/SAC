@@ -22,7 +22,7 @@
           $aumentoHeader = $aumentoHeader + (($tamContrato-1) * 15);
         }
 
-        $pos_header = 270 + $aumentoHeader;
+        $pos_header = 290 + $aumentoHeader;
         $tam_header = $pos_header - 20;
         $margin_header = $pos_header + 45;
 
@@ -34,7 +34,7 @@
       ?> 
       <style>
          @page { margin-bottom: {{$margin_footer}}px; margin-top: {{$margin_header}}px }
-         #header { position: fixed; left: 0px; background-color: transparent; top: -{{$pos_header}}px; right: 0px; height: {{$tam_header}}px;}
+         #header { position: fixed; left: 0px; background-color: transparent; top: -{{($pos_header+40)}}px; right: 0px; height: {{$tam_header}}px;}
          #footer .page:after { content: counter(page, upper); }
       </style>
   </head>
@@ -45,6 +45,20 @@
   <!--  - - - - - - - - - - - - - - - - -  -->
       <div id="header">
           <div class="row col-lg-12">
+            <table class=" " style="width:100%">
+                  <tr>
+                      <td></td>
+                      <td style="text-align: center; width:70%"></td>
+                      <th style="text-align: center; width:15%" class="tabla  tabla-sin-borde-bottom" colspan="2">Número</th>
+                      <th style="text-align: center; width:15%" class="tabla  tabla-sin-borde-bottom" colspan="2">Vigencia</th>
+                  </tr>
+                  <tr>
+                      <td style="text-align: center; width:70%"></td>
+                      <td style="text-align: center; width:15%" class="tabla" colspan="2">F-DO-P&H-155</td>
+                      <td style="text-align: center; width:15%" class="tabla" colspan="2">28/03/2016</td>
+                  </tr>
+              </table>
+              <div><br></div>
                   <table   style="width: 100%;">
                         <tr>
                           <td></td>
@@ -60,7 +74,8 @@
                               {{$contrato->proyecto->empresa->codIdentificacion_Empresa}}<br>
                             </td>
                             <td style="width:30%; text-align: center" class="tabla tam-14">
-                                  RESUMEN GENERAL DE VALUACIONES
+                                  RESUMEN GENERAL DE VALUACIONES <br>
+                                  {{date('d/m/Y')}}
                             </td>
                             <td style="width:30%" class="tabla tabla-sin-borde-left" >
                                 <table style="width: 100%" >
@@ -145,7 +160,9 @@
                 $tam = $cantRetencion * 6;
                 $restante = 37 - $tam;
             ?>
-            <th class="tabla fuente tam-8 tabla-sin-borde-bottom" style="height: 15px; width: {{$tam}}%; text-align: center">RETENCIONES</th>
+            @if($tam != 0)
+              <th class="tabla fuente tam-8 tabla-sin-borde-bottom" style="height: 15px; width: {{$tam}}%; text-align: center">RETENCIONES</th>
+            @endif
             @if($restante >= 0)
                 <th class="tabla fuente tam-8 tabla-sin-borde tabla-sin-borde-top" style="height: 15px; width: {{$restante}}%; text-align: center">&nbsp;</th>
             @endif
@@ -287,6 +304,7 @@
 <!--  - - - - - - FIN PIE - - - - - -  -->
 <!--  - - - - - - - - - - - - - - - - - -->
 
+      <br>
       <!--  - - - - - - Cabecera de tabla - - - - - -  -->
       <table style="width: 100%" class="fuente tam-8">
           <tr>
@@ -295,7 +313,9 @@
                 $tam = ($cantRetencion * 5);
                 $restante = 54 - $tam;
             ?>
-            <th class="tabla fuente tam-8 tabla-sin-borde-bottom" style="height: 15px; width: {{$tam}}%; text-align: center">RETENCIONES</th>
+            @if($tam != 0)
+                <th class="tabla fuente tam-8 tabla-sin-borde-bottom" style="height: 15px; width: {{$tam}}%; text-align: center">RETENCIONES</th>
+            @endif    
             @if($restante >= 0)
                 <th class="tabla fuente tam-8 tabla-sin-borde " style="height: 15px; width: {{$restante}}%; text-align: center">&nbsp;</th>
             @endif

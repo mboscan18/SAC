@@ -22,7 +22,7 @@
           $aumentoHeader = $aumentoHeader + (($tamContrato-1) * 15);
         }
 
-        $pos_header = 190 + $aumentoHeader;
+        $pos_header = 215 + $aumentoHeader;
         $tam_header = $pos_header - 20;
         $margin_header = $pos_header + 45;
 
@@ -32,7 +32,7 @@
       ?> 
       <style>
          @page { margin-bottom: {{$margin_footer}}px; margin-top: {{$margin_header}}px }
-         #header { position: fixed; left: 0px; background-color: transparent; top: -{{$pos_header}}px; right: 0px; height: {{$tam_header}}px;}
+         #header { position: fixed; left: 0px; background-color: transparent; top: -{{($pos_header+40)}}px; right: 0px; height: {{$tam_header}}px;}
          #footer { position: fixed; left: 0px; background-color: transparent; bottom: -{{$pos_footer}}px; right: 0px; height: {{$tam_footer}}px; padding-bottom: 20px;}
          #header .page_text:before { content: counter(page) }
       </style>
@@ -44,6 +44,20 @@
   <!--  - - - - - - - - - - - - - - - - -  -->
       <div id="header">
           <div class="row col-lg-12">
+            <table class=" " style="width:100%">
+                  <tr>
+                      <td></td>
+                      <td style="text-align: center; width:70%"></td>
+                      <th style="text-align: center; width:15%" class="tabla  tabla-sin-borde-bottom" colspan="2">Número</th>
+                      <th style="text-align: center; width:15%" class="tabla  tabla-sin-borde-bottom" colspan="2">Vigencia</th>
+                  </tr>
+                  <tr>
+                      <td style="text-align: center; width:70%"></td>
+                      <td style="text-align: center; width:15%" class="tabla" colspan="2">F-DO-P&H-154</td>
+                      <td style="text-align: center; width:15%" class="tabla" colspan="2">28/03/2016</td>
+                  </tr>
+              </table>
+              <div><br></div>
             <table class=" " style="width:100%">
                   <tr>
                       <td></td>
