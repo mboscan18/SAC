@@ -32,10 +32,10 @@
 	              		<div class="datoBancario">
 							<table class="table" id="tabla_Proyectos">
 					      		<thead>
-					      			<th>Cod Proyecto</th>
-							        <th>Titulo de Proyecto</th>
-							        <th>Valor del Proyecto</th>
-							        <th>Monto a Pagar</th>
+					      			<th>Nro Contrato</th>
+							        <th>Nombre Contratista</th>
+							        <th>Descripción Contrato</th>
+							        <th>Monto Total</th>
 							        <th>Enviado a Pagar</th>
 							        <th>Faltante por Enviar a Pagar</th>
 							        <th>Pagado</th>
@@ -50,7 +50,6 @@
 							          <td>{{$datos->nro_contrato}}</td>
 							          <td>{{$datos->nombre_contratista}}</td>
 							          <td>{{$datos->descripcion_Contrato}}</td>
-							          <td>{{number_format($datos->valor_Contrato, 2, ',','.')}}</td>
 							          <td>{{number_format($datos->monto_Pagar_Contrato, 2, ',','.')}}</td>
 							          <td>{{number_format($datos->enviado_Pagar_Contrato, 2, ',','.')}}</td>
 							          <td>{{number_format($datos->faltante_Enviar_Pagar_Contrato, 2, ',','.')}}</td>

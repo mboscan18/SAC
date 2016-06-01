@@ -95,7 +95,7 @@
         <!-- DATOS DEL CONTRATISTA -->
         <table style="width: 100%">
             <tr>
-              <th style="text-align: center; background-color: #c6d9f1;" class="fuente tam-13 tabla tabla-sin-borde-bottom">DATOS DEL SUBCONTRATISTA:</th>
+              <th style="text-align: center; background-color: #c6d9f1;" class="fuente tam-13 tabla tabla-sin-borde-bottom">DATOS DEL SUBCONTRATISTA</th>
             </tr>
         </table>  
 
@@ -134,7 +134,7 @@
         <!-- DATOS DEL PROYECTO -->
         <table style="width: 100%">
             <tr>
-              <th style="text-align: center; background-color: #c6d9f1;" class="fuente tam-13 tabla tabla-sin-borde-bottom">DATOS DEL PROYECTO:</th>
+              <th style="text-align: center; background-color: #c6d9f1;" class="fuente tam-13 tabla tabla-sin-borde-bottom">DATOS DEL PROYECTO</th>
             </tr>
         </table>  
 
@@ -150,7 +150,7 @@
         <!-- DATOS DEL CONTRATO -->
         <table style="width: 100%">
             <tr>
-              <th style="text-align: center; background-color: #c6d9f1;" class="fuente tam-13 tabla tabla-sin-borde-bottom">DATOS GENERALES DEL CONTRATO:</th>
+              <th style="text-align: center; background-color: #c6d9f1;" class="fuente tam-13 tabla tabla-sin-borde-bottom">DATOS GENERALES DEL CONTRATO</th>
             </tr>
         </table>  
 
@@ -205,7 +205,7 @@
         <!-- DATOS DE FACTURACION -->
         <table style="width: 100%">
             <tr>
-              <th style="text-align: center; background-color: #c6d9f1;" class="fuente tam-13 tabla tabla-sin-borde-bottom">DATOS GENERALES DE FACTURACIÓN:</th>
+              <th style="text-align: center; background-color: #c6d9f1;" class="fuente tam-13 tabla tabla-sin-borde-bottom">DATOS GENERALES DE FACTURACIÓN</th>
             </tr>
         </table>  
 
@@ -223,9 +223,17 @@
         <!-- RETENCIONES -->
         <table style="width: 100%">
             <tr>
-              <th style="text-align: center; background-color: #c6d9f1;" class="fuente tam-13 tabla ">RETENCIONES:</th>
+              <th style="text-align: center; background-color: #c6d9f1;" class="fuente tam-13 tabla ">RETENCIONES</th>
             </tr>
         </table>  
+
+        @if(sizeof($retenciones) == 0)
+            <table style="width: 100%">
+                <tr>
+                  <td style="text-align: center; width: 100%" class="fuente tam-12 tabla tabla ">Sin Retenciones</td>
+                </tr>
+            </table> 
+        @endif
 
         @foreach($retenciones as $key)
         <table style="width: 100%">

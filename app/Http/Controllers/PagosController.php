@@ -38,19 +38,16 @@ class PagosController extends Controller
 
 
         $resumenProyectos = array();
-        $i = 0;
-       // foreach ($proyectos as $key) {
-            $resumenProyectos[$i] = Proyectos::reumenProyecto($proyectos[0]->id);
-            $i++;
-            $resumenProyectos[$i] = Proyectos::reumenProyecto($proyectos[1]->id);
-            $i++;
-            $resumenProyectos[$i] = Proyectos::reumenProyecto($proyectos[2]->id);
-            $i++;
-            $resumenProyectos[$i] = Proyectos::reumenProyecto($proyectos[3]->id);
-            $i++;
-            $resumenProyectos[$i] = Proyectos::reumenProyecto($proyectos[10]->id);
-       // return $resumenProyectos[$i];
-      // }
+        $j = 0;
+        for ($i=0; $i < sizeof($proyectos); $i++) { 
+           if($i != 5){
+                $resumenProyectos[$j] = Proyectos::reumenProyecto($proyectos[$i]->id);
+                $j++;
+           }
+        }
+
+        //return $j;
+        //return $resumenProyectos;
 
         return view('Pagos.index')
                 ->with('resumenProyectos',$resumenProyectos)
@@ -80,8 +77,10 @@ class PagosController extends Controller
         $resumenValuaciones = array();
         $i = 0;
         foreach ($valuaciones as $key) {
-            $resumenValuaciones[$i] = Valuaciones::resumenValuacion($key->id);
-            $i++;
+            if ($key->factura != null) {
+                $resumenValuaciones[$i] = Valuaciones::resumenValuacion($key->id);
+                $i++;
+            }
         }
 
         return view('Pagos.pagosContrato')

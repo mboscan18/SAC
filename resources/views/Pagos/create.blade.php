@@ -1,8 +1,8 @@
 @extends('layouts.principal')
-@section('page-title', 'Empresas - Crear')
+@section('page-title', 'Cargar Pago')
 
 @section('titulo')  
-    <h3 class="page-header"><i class="icon_building"></i>Empresas</h3>
+    <h3 class="page-header"><i class="icon_building"></i>Cargar Pago</h3>
 @endsection
 @section('lugar')
    <li><img alt="" src="{!!URL::asset('/img/icon_project_small.png')!!}" style="width: 15px"><a href="{!!URL::to('/Pagos')!!}">Proyectos</a></li>
@@ -11,7 +11,7 @@
    <li><i class="fa fa-credit-card"></i><a href="{!!URL::to('/PagosBoletin/'.$valuacion->id)!!}">Pagos Realizados</a> </li>
 @endsection
 @section('accion')
-    <li><i class="fa fa-plus"></i>Crear Pago</li>
+    <li><i class="fa fa-plus"></i>Cargar Pago</li>
 @endsection
 
   @section('content')

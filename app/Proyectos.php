@@ -87,8 +87,11 @@ class Proyectos extends Model
             $faltante_Pagar_Proyecto = $faltante_Pagar_Proyecto + $key->faltante_Pagar_Contrato;
 
         }
-
-        $porcentaje_Ejecutado = ($enviado_Pagar_Proyecto * 100) / $monto_Pagar_Proyecto;
+        
+        $porcentaje_Ejecutado = 0;
+        if($monto_Pagar_Proyecto != 0){
+            $porcentaje_Ejecutado = ($enviado_Pagar_Proyecto * 100) / $monto_Pagar_Proyecto;
+        }
 
         $j1 =   '{"id":"'.$proyecto->id.
                 '","cod_Proyecto":"'.$proyecto->cod_Proyecto.

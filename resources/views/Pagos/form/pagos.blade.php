@@ -67,13 +67,33 @@
 		<div class="col-lg-8 col-md-8 col-sm-8">
 			<div style="height: 2px; background-color: #182e3f; width: 100%"></div>
 		</div>
-		<div class="row " style="background-color: #95aec2; margin-left: 0px; margin-right: 0px">
+		<div class="row">
 			<div class="col-lg-6 col-md-6 col-sm-6 round-input" style="text-align: right">
 				<b>Monto Total a Pagar:</b>
 			</div>
 			<div class="col-lg-6 col-md-6 col-sm-6" >
 				<b>{{$valuacion->contrato->moneda->symbol}}</b> {!!Form::label('totalPagar_Form',number_format($resumenValuacion->neto_Pagar, 2, ',','.'),[ 'id'=>'totalPagar_Form', 'style'=>'font-weight: bold;'])!!}
-				{!!Form::hidden('totalPagar_Form_hidden',$resumenValuacion->neto_Pagar,['id'=>'totalPagar_Form_hidden'])!!}
+			</div>  
+		</div>
+		<div class="row">
+			<div class="col-lg-6 col-md-6 col-sm-6 round-input" style="text-align: right">
+				{!!Form::label('periodo','Monto Pagado:')!!}
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-6" >
+				<b>{{$valuacion->contrato->moneda->symbol}}</b> {!!Form::label('montoRetenciones_Form',number_format($resumenValuacion->monto_pagado, 2, ',','.'),[ 'id'=>'montoRetenciones_Form'])!!}
+			</div>  
+		</div>
+		<div class="col-lg-2 col-md-2 col-sm-2"></div>
+		<div class="col-lg-8 col-md-8 col-sm-8">
+			<div style="height: 2px; background-color: #182e3f; width: 100%"></div>
+		</div>
+		<div class="row " style="background-color: #95aec2; margin-left: 0px; margin-right: 0px">
+			<div class="col-lg-6 col-md-6 col-sm-6 round-input" style="text-align: right">
+				<b>Monto Restante por Pagar:</b>
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-6" >
+				<b>{{$valuacion->contrato->moneda->symbol}}</b> {!!Form::label('totalPagar_Form',number_format($resumenValuacion->diferencia_pago, 2, ',','.'),[ 'id'=>'totalPagar_Form', 'style'=>'font-weight: bold;'])!!}
+				{!!Form::hidden('totalPagar_Form_hidden',$resumenValuacion->diferencia_pago,['id'=>'totalPagar_Form_hidden'])!!}
 			</div>  
 		</div>
 	</div> 
@@ -91,7 +111,7 @@
 		  <input id="monto_Total" name="monto_Pago" type="text" class="form-control" autofocus placeholder="Monto del Pago" style="background-color: #d4e2ed; color: #20374a" >
 		</div>
 		<div style="text-align: center;">
-			{!!Form::label('total','El monto del pago no puede ser mayor que el Monto Total a Pagar.',['id'=>'MsjCantPasada',  'class'=>' tam-14'])!!}
+			{!!Form::label('total','El monto del pago no puede ser mayor que el Monto Restante por Pagar.',['id'=>'MsjCantPasada',  'class'=>' tam-14'])!!}
 		</div>	
 	</div>
 
