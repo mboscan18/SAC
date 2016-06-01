@@ -44,7 +44,7 @@
 							        @if(Auth::user()->rol_Usuario == 'administrador')
 						        		<th>Ultima Modificacion</th>
 						        	@endif	
-							        @if((Auth::user()->rol_Usuario == 'administrador') || (Auth::user()->rol_Usuario == 'residente'))
+							        @if((Auth::user()->rol_Usuario == 'administrador') || (Auth::user()->rol_Usuario == 'residente') || (Auth::user()->rol_Usuario == 'supervisor'))
 							        	<th>Operacion</th>
 							        @endif	
 						      	</thead>
@@ -60,7 +60,7 @@
 							          	{{$datos->user->nombre_Usuario}} {{$datos->user->apellido_Usuario}} | {{$datos->updated_at->format('d-m-Y, g:ia')}}
 							          </td>
 							      @endif   
-					            	@if((Auth::user()->rol_Usuario == 'administrador') || (Auth::user()->rol_Usuario == 'residente'))
+					            	@if((Auth::user()->rol_Usuario == 'administrador') || (Auth::user()->rol_Usuario == 'residente') || (Auth::user()->rol_Usuario == 'supervisor') )
 						          		<td class=" col-lg-1" style="text-align: center">
 											<div  style="; text-align: center">
 												<a class="btn btn-primary" href="{!!URL::to('/OpcionesProyecto/'.$datos->id)!!}" class="" style="text-align: center;">

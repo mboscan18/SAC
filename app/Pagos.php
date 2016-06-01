@@ -32,7 +32,8 @@ class Pagos extends Model
 
     public function setLogoAttribute($comprobante){
         if(! empty($comprobante)){
-            $name = 'PAGO-'.$this->attributes['nroComprobante'].'-'
+            $name = 'PAGO-'
+                    .$this->attributes['nroComprobante'].'-'
                     .Carbon::now()->timestamp.'-'
                     .Carbon::now()->second.'-'
                     .$logo->getClientOriginalName();
