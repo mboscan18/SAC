@@ -261,7 +261,7 @@ class Valuaciones extends Model
                 $montoRetenciones = $montoRetenciones + $key->monto_Retenido;
             }
             $montoFactura = $montoFacturado + $montoRetenciones;
-//return $montoPagado;
+            return $montoPagado;
 
             if ($montoPagado > 0) {
                 $i = 3;
