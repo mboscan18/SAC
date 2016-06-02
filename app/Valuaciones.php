@@ -260,7 +260,7 @@ class Valuaciones extends Model
             foreach ($retenciones as $key) {
                 $montoRetenciones = $montoRetenciones + $key->monto_Retenido;
             }
-            $montoFactura = $montoFacturado ;
+            $montoFactura = $montoFacturado - $montoRetenciones;
             return $montoPagado.' - '.$montoFactura;
 
             if ($montoPagado > 0) {
