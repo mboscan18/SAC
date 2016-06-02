@@ -48,8 +48,9 @@
 							        	<th>Operacion</th>
 							        @endif	
 						      	</thead>
-						      @foreach($proyectos as $datos)
 						        <tbody>
+						      @foreach($proyectos as $datos)
+						      <tr>
 						          <td>{{$datos->cod_Proyecto}}</td>
 						          <td>{{$datos->nombre_Proyecto}}</td>
 						          <td>{{$datos->ubicacion_Proyecto}}</td>
@@ -69,8 +70,9 @@
 						                    </div>
 									  	</td>
 								  	@endif
-						        </tbody>
+						      </tr>
 						      @endforeach
+						        </tbody>
 						    </table>
 						</div>
                 </div>

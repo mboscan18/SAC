@@ -132,11 +132,11 @@
                                         <span class="glyphicon glyphicon-send tam-22 icon-reorder tooltips" data-original-title="Enviado a Pagar" data-placement="bottom" style="margin-top: -3px;color: #4a8ee2;"></span>
                                         <br>Enviado
                                       @elseif($estadoValuacion[$i] == 3)
-                                        <span class="fa fa-money tam-24 icon-reorder tooltips" data-original-title="Pagada Parcialmente" data-placement="bottom" style="margin-top: -3px;color: #b96c3e;"></span>
-                                        <br>Abonada
+                                        <span class="fa fa-money tam-24 icon-reorder tooltips" data-original-title="Pagado Parcialmente" data-placement="bottom" style="margin-top: -3px;color: #b96c3e;"></span>
+                                        <br>Abonado
                                       @elseif($estadoValuacion[$i] == 4)
-                                        <span class="fa fa-money tam-24 icon-reorder tooltips" data-original-title="Pagada Completamente" data-placement="bottom" style="margin-top: -3px;color: #6a954d;"></span>
-                                        <br>Pagada
+                                        <span class="fa fa-money tam-24 icon-reorder tooltips" data-original-title="Pagado Completamente" data-placement="bottom" style="margin-top: -3px;color: #6a954d;"></span>
+                                        <br>Pagado
                                       @endif
                                     </td>
                                     @if(Auth::user()->rol_Usuario == 'administrador')

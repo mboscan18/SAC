@@ -17,7 +17,7 @@
           $aumentoHeader = $aumentoHeader + (($tamContrato-1) * 18);
         }
 
-        $pos_header = 345 + $aumentoHeader;
+        $pos_header = 360 + $aumentoHeader;
         $tam_header = $pos_header - 20;
         $margin_header = $pos_header + 45;
 
@@ -27,7 +27,7 @@
       ?> 
       <style>
          @page { margin-bottom: 135px; margin-top: {{$margin_header}}px }
-         #header { position: fixed; left: 0px; background-color: transparent; top: -{{($pos_header+40)}}px; right: 0px; height: {{$tam_header}}px; }
+         #header { position: fixed; left: 0px; background-color: transparent; top: -{{($pos_header+30)}}px; right: 0px; height: {{$tam_header}}px; }
          #footer { position: fixed; left: 0px; background-color: transparent; bottom: -{{$pos_footer}}px; right: 0px; height: {{$tam_footer}}px; padding-bottom: 20px;}
          #header .page_text:before { content: counter(page) }
       </style>

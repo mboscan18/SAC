@@ -34,7 +34,7 @@
       ?> 
       <style>
          @page { margin-bottom: {{$margin_footer}}px; margin-top: {{$margin_header}}px }
-         #header { position: fixed; left: 0px; background-color: transparent; top: -{{($pos_header+40)}}px; right: 0px; height: {{$tam_header}}px;}
+         #header { position: fixed; left: 0px; background-color: transparent; top: -{{($pos_header+30)}}px; right: 0px; height: {{$tam_header}}px;}
          #footer .page:after { content: counter(page, upper); }
       </style>
   </head>
@@ -304,7 +304,7 @@
 <!--  - - - - - - FIN PIE - - - - - -  -->
 <!--  - - - - - - - - - - - - - - - - - -->
 
-      <br>
+      <br><br>
       <!--  - - - - - - Cabecera de tabla - - - - - -  -->
       <table style="width: 100%" class="fuente tam-8">
           <tr>

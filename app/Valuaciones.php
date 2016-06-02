@@ -237,6 +237,7 @@ class Valuaciones extends Model
         $valuacionIsTrabajada = Valuaciones::valuacionIsTrabajada($valuacion->id);
 
         $factura = $valuacion->factura;
+        
 
         if ($valuacionIsTrabajada > 0) {
             $i=1;
@@ -246,6 +247,29 @@ class Valuaciones extends Model
 
         if ($factura != null) {
             $i = 2;
+
+            $pagos = $factura->pagos;
+            $montoPagado = 0;
+            foreach ($pagos as $key) {
+                $montoPagado = $montoPagado + $key->monto_Pago;
+            }
+
+            $retenciones = $factura->retenciones;
+            $montoFacturado = $factura->monto_Total;
+            $montoRetenciones = 0;
+            foreach ($retenciones as $key) {
+                $montoRetenciones = $montoRetenciones + $key->monto_Retenido;
+            }
+            $montoFactura = $montoFacturado + $montoRetenciones;
+//return $montoPagado;
+
+            if ($montoPagado > 0) {
+                $i = 3;
+
+                if ($montoPagado == $montoFactura) {
+                    $i = 4;
+                }
+            }
         }
 
          return $i;    
