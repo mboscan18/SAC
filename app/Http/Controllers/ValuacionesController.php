@@ -55,7 +55,7 @@ class ValuacionesController extends Controller
         $i = 0;
         foreach ($valuaciones as $key) {
             $estadoValuacion[$i] = Valuaciones::estadoValuacion($key->id);
-            return $estadoValuacion;
+           // return $estadoValuacion;
             $i++;
         }
 
