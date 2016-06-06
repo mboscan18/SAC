@@ -157,9 +157,14 @@ class PagosController extends Controller
      */
     public function store(Request $request)
     {
-        Pagos::create($request->all());
-        Session::flash('message-sucess','Pago Creado Correctamente');
         $valuacion = Session::get('valuacion');
+        try {
+                Pagos::create($request->all());
+          } catch(PDOException $e){
+                Session::flash('message-error','El Pago no pudo ser creado Correctamente. Error: '.$e);
+                return Redirect::to('/PagosBoletin/'.$valuacion);  
+         }
+        Session::flash('message-sucess','Pago Creado Correctamente');
 
         return Redirect::to('/PagosBoletin/'.$valuacion);  
     }
@@ -183,7 +188,37 @@ class PagosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $pago = Pagos::find($id);
+        $valuacion = $pago->factura->valuacion;
+        $factura = $pago->factura;
+        $retenciones = $factura->retenciones;
+        $montoRetenciones = 0;
+        foreach ($retenciones as $key) {
+            $montoRetenciones = $montoRetenciones + $key->monto_Retenido;
+        }
+        $resumenValuacion = Valuaciones::resumenValuacion($valuacion->id);
+        $resumenValuacion->monto_pagado = $resumenValuacion->monto_pagado - $pago->monto_Pago;
+        $resumenValuacion->diferencia_pago = $resumenValuacion->diferencia_pago + $pago->monto_Pago;
+
+        $totalPagar = $montoRetenciones + $factura->monto_Total;
+        $contrato = $valuacion->contrato;
+        $valorContrato = Presupuestos::valorContrato($contrato->id);
+        $datosBancarios = $contrato->empresaProveedor->datosBancarios;
+        $tiposPago = TiposPago::all();
+
+        return view('Pagos.edit')
+                ->with('valorContrato',$valorContrato)
+                ->with('valuacion',$valuacion)
+                ->with('contrato',$contrato)
+                ->with('factura',$factura)
+                ->with('montoRetenciones',$montoRetenciones)
+                ->with('resumenValuacion',$resumenValuacion)
+
+                ->with('datosBancarios',$datosBancarios)
+                ->with('tiposPago',$tiposPago)
+                ->with('pago',$pago)
+                
+                ->render();
     }
 
     /**
@@ -195,7 +230,15 @@ class PagosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $pago = Pagos::find($id);
+        if (($pago->comprobante != null) && ($request->comprobante != null)){
+            \Storage::delete($pago->comprobante);
+        }
+        $pago->fill($request->all());
+        $pago->save();
+        $valuacion = Session::get('valuacion');
+        Session::flash('message-sucess','Pago Actualizado Correctamente');
+        return Redirect::to('/PagosBoletin/'.$valuacion);  
     }
 
     /**

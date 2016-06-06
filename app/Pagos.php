@@ -9,6 +9,7 @@ use SAC\Presupuestos;
 use SAC\Valuaciones;
 use SAC\RetencionesContrato;
 use DB;
+use Carbon\Carbon;
 
 class Pagos extends Model
 {
@@ -30,15 +31,15 @@ class Pagos extends Model
 	protected $dates = ['deleted_at'];	
 
 
-    public function setLogoAttribute($comprobante){
+    public function setComprobanteAttribute($comprobante){
         if(! empty($comprobante)){
-            $name = 'PAGO-'
+            $name = '\'PAGO-'
                     .$this->attributes['nroComprobante'].'-'
                     .Carbon::now()->timestamp.'-'
                     .Carbon::now()->second.'-'
-                    .$logo->getClientOriginalName();
+                    .$comprobante->getClientOriginalName().'\'';
             $this->attributes['comprobante'] = $name;
-            \Storage::disk('local')->put($name, \File::get($logo));
+            \Storage::disk('local')->put($name, \File::get($comprobante));
         }
     }	
 
