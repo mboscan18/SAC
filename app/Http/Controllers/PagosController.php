@@ -14,6 +14,7 @@ use Redirect;
 use DB;
 
 use SAC\Http\Requests;
+use SAC\Http\Requests\PagosRequest;
 use SAC\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\Guard;
 
@@ -155,7 +156,7 @@ class PagosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PagosRequest $request)
     {
         $valuacion = Session::get('valuacion');
         try {
@@ -228,7 +229,7 @@ class PagosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PagosRequest $request, $id)
     {
         $pago = Pagos::find($id);
         if (($pago->comprobante != null) && ($request->comprobante != null)){
@@ -249,6 +250,27 @@ class PagosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $pago = Pagos::find($id);
+        $valuacion = $pago->factura->valuacion->id;
+        if ($pago->comprobante != null){
+            \Storage::delete($pago->comprobante);
+        }
+        $pago->delete();
+        Session::flash('message-sucess','Pago Eliminado Correctamente');
+        return Redirect::to('/PagosBoletin/'.$valuacion);  
+    }
+
+
+    public function deleteFile($id)
+    {
+    //    return $request['logo'];
+        $pago = Pagos::find($id);
+        if ($pago->comprobante != null){
+            DB::table('Pagos')
+                ->where('id', $id)
+                ->update(['comprobante' => null, 'usuario' => $this->auth->user()->id]);
+            \Storage::delete($pago->comprobante);
+        }
+        return Redirect::to('/Pagos/'.$id.'/edit');
     }
 }

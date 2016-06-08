@@ -190,6 +190,7 @@ Route::get('CrearPago/{idBoletin}','PagosController@crearPago');
 Route::get('PagosProyecto/{idProyecto}','PagosController@pagosProyecto');
 Route::get('PagosContrato/{idContrato}','PagosController@pagosContrato');
 Route::get('PagosBoletin/{idBoletin}','PagosController@pagosBoletin');
+Route::get('deleteFilePago/{id}','PagosController@deleteFile');
 
 /* 
 |--------------------------------------------------------------------------

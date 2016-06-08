@@ -108,7 +108,7 @@
 		{!!Form::label('total','Monto del Pago:')!!}
 		<div class="input-group">
 		  <span class="input-group-addon" id="monto_total_Moneda">{{$valuacion->contrato->moneda->symbol}}</span>
-		  <input id="monto_Total" name="monto_Pago" type="text" class="form-control" autofocus placeholder="Monto del Pago" style="background-color: #d4e2ed; color: #20374a" >
+		  <input id="monto_Total" value="{{$pago->monto_Pago}}" name="monto_Pago" type="text" class="form-control" autofocus placeholder="Monto del Pago" style="background-color: #d4e2ed; color: #20374a" >
 		</div>
 		<div style="text-align: center;">
 			{!!Form::label('total','El monto del pago no puede ser mayor que el Monto Restante por Pagar.',['id'=>'MsjCantPasada',  'class'=>' tam-14'])!!}

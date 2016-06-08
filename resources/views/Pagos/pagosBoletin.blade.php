@@ -137,7 +137,7 @@
 							          	@if($datos->comprobante == null)
 							          		&nbsp; &nbsp; &nbsp; &nbsp;-
 							          	@else
-							          		<img src="{!!URL::asset('/archivos/'.$datos->comprobante)!!}" alt="Comprobante de Pago" style="width:50px;"/>
+                            <a href="{!!URL::asset('/archivos/'.$datos->comprobante)!!}" target="_blank">Comprobante</a>
 							          	@endif	
 							          </td>
 							          <td>{{$datos->tipoPago->descripcion}}</td>

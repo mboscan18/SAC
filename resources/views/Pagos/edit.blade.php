@@ -120,8 +120,10 @@
                               </div>
                             @else
                                 <div class="col-lg-12" style="text-align: center">
-                                    <img src="{!!URL::asset('archivos/'.$pago->comprobante)!!}" alt="" style="height:100px;"/>
-                                    
+                                    <br>
+                                    <a href="{!!URL::asset('/archivos/'.$pago->comprobante)!!}" class="icon-reorder tooltips " data-original-title="Ver Comprobante" data-placement="top" style=" text-align: center; font-size: 65px" target="_blank">
+                                        <i class="fa fa-file fa-2x"></i>
+                                    </a>
                                     <br><br>
                                     <div class="col-lg-6" style="text-align: right">
                                       {!!Form::label('foto','Comprobante de Pago:')!!}
@@ -130,7 +132,7 @@
                                         <img src="{!!URL::asset('img/icon_delete.png')!!}" alt="" style="width:25px; "/>
                                     </a>
                                     <div class="col-lg-5 icon-reorder tooltips" data-original-title="Editar Comprobante" data-placement="top">
-                                      {!!Form::file('comprobante',['accept' => 'image/*'])!!}
+                                      {!!Form::file('comprobante',['accept' => '*'])!!}
                                     </div>
                                 </div>  
                             @endif  

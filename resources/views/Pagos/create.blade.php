@@ -15,7 +15,6 @@
 @endsection
 
   @section('content')
-                @include('alerts.request')
             <!-- page start-->
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="panel panel-primary">
@@ -107,6 +106,7 @@
                         <div class="col-lg-12 col-md-12 col-sm-12"><br></div> 
                       
                       {!!Form::open(['route'=>'Pagos.store', 'method'=>'POST','files' => true])!!}
+                          
                           @include('Pagos.form.pagos')
 
                           <div class="form-group row" >
@@ -115,7 +115,7 @@
                                 {!!Form::label('foto','Foto del Comprobante (Opcional):')!!}
                               </div>
                               <div class="col-lg-6">
-                                {!!Form::file('comprobante',['accept' => 'image/*'])!!}
+                                {!!Form::file('comprobante',['accept' => '*'])!!}
                               </div>
                           </div>
 

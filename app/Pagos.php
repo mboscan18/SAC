@@ -8,12 +8,12 @@ use SAC\Contratos;
 use SAC\Presupuestos;
 use SAC\Valuaciones;
 use SAC\RetencionesContrato;
+use SAC\Facturas;
 use DB;
 use Carbon\Carbon;
 
 class Pagos extends Model
 {
-    use SoftDeletes;
 
     protected $table="Pagos"; 
 
@@ -28,16 +28,27 @@ class Pagos extends Model
 								'usuario', 				// Es el usuario que agrega la entrada en la tabla.
 							];
 
-	protected $dates = ['deleted_at'];	
 
 
     public function setComprobanteAttribute($comprobante){
         if(! empty($comprobante)){
-            $name = '\'PAGO-'
-                    .$this->attributes['nroComprobante'].'-'
-                    .Carbon::now()->timestamp.'-'
-                    .Carbon::now()->second.'-'
-                    .$comprobante->getClientOriginalName().'\'';
+            $factura = Facturas::find($this->attributes['factura_id']);
+            $codProyecto = $factura->valuacion->contrato->proyecto->cod_Proyecto;
+            $codContrato = $factura->valuacion->contrato->nro_Contrato;
+            $numValuacion = $factura->valuacion->nro_Boletin;
+
+            $codProyecto = str_replace(chr(47), "-", $codProyecto);
+            $codContrato = str_replace(chr(47), "-", $codContrato);
+            $numValuacion = str_replace(chr(47), "-", $numValuacion);
+            $name = 'Proyecto-('
+                    .$codProyecto
+                    .')_Contrato-('
+                    .$codContrato
+                    .')_Valuacion-('
+                    .$numValuacion
+                    .')_Pago-('
+                    .$this->attributes['nroComprobante'].')_'
+                    .$comprobante->getClientOriginalName();
             $this->attributes['comprobante'] = $name;
             \Storage::disk('local')->put($name, \File::get($comprobante));
         }
@@ -151,3 +162,5 @@ class Pagos extends Model
         return $this->belongsTo('SAC\DatosBancarios', 'datosBancarios_id');
     }
 }
+
+

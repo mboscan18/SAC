@@ -87,6 +87,9 @@
 		<div class="col-lg-8 col-md-8 col-sm-8">
 			<div style="height: 2px; background-color: #182e3f; width: 100%"></div>
 		</div>
+
+		
+
 		<div class="row " style="background-color: #95aec2; margin-left: 0px; margin-right: 0px">
 			<div class="col-lg-6 col-md-6 col-sm-6 round-input" style="text-align: right">
 				<b>Monto Restante por Pagar:</b>
@@ -99,7 +102,10 @@
 	</div> 
 </div> 
 
-<div class="col-lg-12 col-md-12 col-sm-12" ><br></div>
+<div class="col-lg-12 col-md-12 col-sm-12" >
+	<br>
+	<div>@include('alerts.request')</div>
+</div>
 
 <div class="row">
 
@@ -108,7 +114,7 @@
 		{!!Form::label('total','Monto del Pago:')!!}
 		<div class="input-group">
 		  <span class="input-group-addon" id="monto_total_Moneda">{{$valuacion->contrato->moneda->symbol}}</span>
-		  <input id="monto_Total" name="monto_Pago" type="text" class="form-control" autofocus placeholder="Monto del Pago" style="background-color: #d4e2ed; color: #20374a" >
+		  <input id="monto_Total"  name="monto_Pago" type="text" class="form-control" autofocus placeholder="Monto del Pago" style="background-color: #d4e2ed; color: #20374a" >
 		</div>
 		<div style="text-align: center;">
 			{!!Form::label('total','El monto del pago no puede ser mayor que el Monto Restante por Pagar.',['id'=>'MsjCantPasada',  'class'=>' tam-14'])!!}
