@@ -146,6 +146,7 @@ Route::get('Boletines/{contrato}','ValuacionesController@showValuacion');
 Route::get('BoletinValuacion/{id_valuacion}/{tipoReporte}','ValuacionesController@generarBoletinValuacion');
 Route::get('ValuacionesDeleted', 'ValuacionesController@showDeletes');
 Route::get('RestoreValuacion/{id}', 'ValuacionesController@restore');
+Route::get('PagosBoletinValuacion/{idBoletin}','ValuacionesController@pagosBoletin');
 
 Route::get('OpcionesValuacion/{id_valuacion}','ValuacionesController@opcionesValuacion');
 Route::get('FirmarValuacion/{id_valuacion}','ValuacionesController@firmarValuacion');

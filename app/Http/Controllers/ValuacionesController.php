@@ -86,9 +86,42 @@ class ValuacionesController extends Controller
         return view('Valuaciones.valuacionesContrato', compact('contrato','valuaciones','nroBoletin','IVA','valorContrato','estadoValuacion'));     
     }
 
-    public function firmarValuacion($id_valuacion)
+    public function pagosBoletin($idBoletin)
     {
+        $valuacion = Valuaciones::find($idBoletin);
+        $contrato = $valuacion->contrato;
+        $factura = $valuacion->factura;
+        if ($factura){
+            $pagos = $factura->pagos;
+        }else{
+            $pagos = [];
+        }
 
+        $pagos = null;
+        $retenciones = null;
+        $resumenValuacion = null;
+        $montoRetenciones = 0;
+        if($factura != null){
+            $pagos = $valuacion->factura->pagos;
+            $retenciones = $factura->retenciones;
+            foreach ($retenciones as $key) {
+                $montoRetenciones = $montoRetenciones + $key->monto_Retenido;
+            }
+        }
+            $resumenValuacion = Valuaciones::resumenValuacion($idBoletin);
+
+        $valorContrato = Presupuestos::valorContrato($contrato->id);
+
+        return view('Valuaciones.pagosValuacion')
+                ->with('valorContrato',$valorContrato)
+                ->with('valuacion',$valuacion)
+                ->with('contrato',$contrato)
+                ->with('pagos',$pagos)
+                
+                ->with('resumenValuacion',$resumenValuacion)
+                ->with('factura',$factura)
+                ->with('montoRetenciones',$montoRetenciones)
+                ->render();
     }
 
     public function opcionesValuacion($id_valuacion)
@@ -96,6 +129,22 @@ class ValuacionesController extends Controller
         $valuacion = Valuaciones::find($id_valuacion);
         $contrato = Contratos::find($valuacion->contrato->id);
         $valorContrato = Presupuestos::valorContrato($valuacion->contrato->id);
+
+        $factura = $valuacion->factura;
+        $pagos = null;
+        $retenciones = null;
+        $resumenValuacion = null;
+        $montoRetenciones = 0;
+        if($factura != null){
+            $pagos = $valuacion->factura->pagos;
+            $retenciones = $factura->retenciones;
+            foreach ($retenciones as $key) {
+                $montoRetenciones = $montoRetenciones + $key->monto_Retenido;
+            }
+            $resumenValuacion = Valuaciones::resumenValuacion($id_valuacion);
+        }
+
+
         
         $valuacionIsTrabajada = Valuaciones::valuacionIsTrabajada($id_valuacion);
         $valuacionIsFirmada = Valuaciones::valuacionIsFirmada($id_valuacion);
@@ -140,6 +189,11 @@ class ValuacionesController extends Controller
                 ->with('anticipoIsTrabajado',$anticipoIsTrabajado)
                 ->with('descuentoIsTrabajado',$descuentoIsTrabajado)
                 ->with('valuacionIsTrabajada',$valuacionIsTrabajada)
+                ->with('pagos',$pagos)
+                
+                ->with('resumenValuacion',$resumenValuacion)
+                ->with('factura',$factura)
+                ->with('montoRetenciones',$montoRetenciones)
                 
                 ->render();
     }

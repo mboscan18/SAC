@@ -1,47 +1,43 @@
 @extends('layouts.principal')
-@section('page-title', 'Opciones del Boletín')
-
+  @section('page-title', 'Pagos del Boletín')
+ 
 @section('titulo')  
-    <h3 class="page-header"><i class="icon_building"></i>Opciones del Boletín</h3>
+    <h3 class="page-header"><img alt="" src="{!!URL::asset('/img/icon_project_big.png')!!}" style="width: 35px"> Pagos del Boletín</h3>
 @endsection
 @section('lugar')
-     </li><li><img alt="" src="{!!URL::asset('/img/icon_project_small.png')!!}" style="width: 15px"><a href="{!!URL::to('ProyectosUsuario/'.Auth::user()->id)!!}"> Proyectos</a></li>
+   </li><li><img alt="" src="{!!URL::asset('/img/icon_project_small.png')!!}" style="width: 15px"><a href="{!!URL::to('ProyectosUsuario/'.Auth::user()->id)!!}"> Proyectos</a></li>
     <li><i class="fa fa-gears"></i> <a href="{!!URL::to('OpcionesProyecto/'.$valuacion->contrato->proyecto->id)!!}"> Opciones del Proyecto</a></li>
     <li><img alt="" src="{!!URL::asset('/img/icon_contrato_small.png')!!}" style="width: 15px"><a href="{!!URL::to('/Contrato/'.$valuacion->contrato->proyecto->id)!!}"> Contratos</a></li>
     <li><i class="fa fa-gears"></i><a href="{!!URL::to('/OpcionesContrato/'.$valuacion->contrato->id)!!}"> Opciones del Contrato</a></li>
    <li><img alt="" src="{!!URL::asset('/img/icon_contrato_small.png')!!}" style="width: 15px"><a href="{!!URL::to('/Boletines/'.$valuacion->contrato->id)!!}"> Valuaciones </a></li>
-   <li><i class="fa fa-gears"></i> Opciones del Boletín</li>
+   <li><i class="fa fa-gears"></i><a href="{!!URL::to('/OpcionesValuacion/'.$valuacion->id)!!}">Opciones del Boletín</a></li>
+   <li><i class="fa fa-gears"></i> Partidas Trabajadas</li>
 @endsection
 @section('accion')
 @endsection
 
-    @section('content')
+  @section('content')
         @include('alerts.messages')
-        @include('alerts.errors')
-        @include('alerts.info')
-        @include('alerts.warnings')
 
-        <?php
-            Session::put('valuacion',$valuacion);
-        ?>
-        <!-- page start-->
-        <div class="col-lg-12 col-md-12 col-sm-12">
-              <div class="panel panel-primary">
-                  <div class="panel-heading " style="background-color: #1a2732; color: #9cd5eb;">
+
+
+          <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="panel panel-primary">
+            	<div class="panel-heading" style="background-color: #1a2732; color: #9cd5eb">
                         <div class="col-lg-9 col-md-9 col-sm-12">
-                            Opciones del Boletín 
+                            Pagos Sobre el Boletín
                         </div>
-                        <a href="{!!URL::to('/Boletines/'.$valuacion->contrato->id)!!}" >
-                          <div class="col-lg-3 col-md-3 col-sm-12 fa fa-arrow-left" style="text-align: right; padding-top: 10px">
+                        <a href="{!!URL::to('/OpcionesValuacion/'.$valuacion->id)!!}" >
+                          <div class="col-lg-3 col-md-3 col-sm-12 fa fa-arrow-left" style="text-align: right; padding-top: 10px;">
                              <span class="font">
-                                Volver a Valuaciones
+                                Volver a Opciones del Boletines
                               </span>
                           </div>
                         </a>
-                      </div>
-                  <div class="panel-body" >
+                    </div>
+                <div class="panel-body" >
 
-                      <div id="Cabecera">
+                		<div id="Cabecera">
                           <div class="col-lg-10 col-md-10 col-sm-10">
                               <div class="col-lg-3 col-md-3 col-sm-3">
                                   <b class="tam-12-5">PROYECTO: </b>
@@ -106,6 +102,7 @@
                                 {{date('d-m-Y', strtotime($valuacion->fecha_Inicio_Periodo))}} {{date('d-m-Y', strtotime($valuacion->fecha_Fin_Periodo))}}
                           </div>
 
+                          
                           @if($factura != null)
                           <div class="col-lg-12 col-md-12 col-sm-12"><br></div>
 
@@ -218,202 +215,45 @@
 
                       <div class="col-lg-12 col-md-12 col-sm-12"><br><br></div>
                       <div class="col-lg-12 col-md-12 col-sm-12">
-                          <h4 class="">Opciones del Boletín</h4>
-                      </div>   
+                          <h4 class="">Pagos Realizados</h4>
+                      </div>
                       <div style="background-color: #688a7e; height: 16px" class="col-lg-12 col-md-12 col-sm-12"></div>
                       <div class="col-lg-12 col-md-12 col-sm-12"><br></div>
 
-
-                          <a href="{!!URL::to('/Valuaciones/'.$valuacion->id.'/edit')!!}"> 
-                      <div class=" col-lg-4 col-md-4 col-sm-12 col-xs-12" style="text-align: center">
-                          <div class="info-box blue-bg" style="text-align:center;  vertical-align: middle;">
-                            <div class=" col-lg-4 col-md-4 col-sm-4 col-xs-4" style="margin-left: -5%;  vertical-align: middle;">
-                                <img alt="" src="{!!URL::asset('/img/valuaciones.png')!!}" style="height: 95px;">
-                            </div>
-                            <div class=" col-lg-8 col-md-8 col-sm-8 col-xs-8" style="margin-left: 3%">
-                                <div class="count" >Boletín</div>
-                                <div class="title" >Información del Boletín</div> 
-                            </div>
-                          </div>
-                            <div class=" botn col-lg-12" style="margin-top: -40px; width: 100%;">
-                                <span class="glyphicon glyphicon-ok tam-18" style="margin-top: -3px;color: #6a954d;"></span> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;
-                                <span class="" style="">Ver Información del Boletín</span>
-                            </div>
-                      </div>
-                          </a> 
-
-                      <div class=" col-lg-4 col-md-4 col-sm-12 col-xs-12" style="text-align: center">
-                          <div class="info-box blue-bg" style="text-align:center">
-                            <div class=" col-lg-4 col-md-4 col-sm-4 col-xs-4" style="margin-left: -5%;  vertical-align: middle;">
-                                <img alt="" src="{!!URL::asset('/img/icon_contrato.png')!!}" style="height: 85px;">
-                            </div>
-                            <div class=" col-lg-8 col-md-8 col-sm-8 col-xs-8" style="margin-left: 4%">
-                                <div class="count" >Adelantos</div>
-                                <div class="title" >Anticipos y Adelantos</div> 
-                            </div>
-                          </div>
-                          @if($anticipoIsTrabajado > 0)
-                            <a href="{!!URL::to('/Anticipo/'.$valuacion->id)!!}"> 
-                            <div class=" botn col-lg-12" style="margin-top: -40px; width: 100%;">
-                                  <span class="glyphicon glyphicon-ok tam-18" style="margin-top: -3px;color: #6a954d;"></span> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;
-                                  <span class="" style="">Ver Anticipos y Adelantos</span>
-                              </div>
-                            </a> 
-                          @else
-                            <a href="{!!URL::to('/Anticipo/'.$valuacion->id)!!}"> 
-                            <div class="botn " style="margin-top: -40px; width: 100%">
-                                Ver Anticipos y Adelantos
-                            </div>
-                            </a> 
-                          @endif
-                      </div>
-
-                      <div class=" col-lg-4 col-md-4 col-sm-12 col-xs-12" style="text-align: center; ">
-                          <div class="info-box blue-bg" style="text-align:center;  vertical-align: middle;">
-                            <div class=" col-lg-4 col-md-4 col-sm-4 col-xs-4" style="margin-left: -8%;  vertical-align: middle;">
-                                <img alt="" src="{!!URL::asset('/img/presupuesto.png')!!}" style="height: 85px;">
-                            </div>
-                            <div class=" col-lg-8 col-md-8 col-sm-8 col-xs-8" style="margin-left: 4%">
-                                <div class="count" >Partidas</div>
-                                <div class="title" >Partidas trabajadas en el Período</div> 
-                            </div>
-                          </div>
-                           
-                          @if($detalleIsTrabajado > 0)
-                            <a  href="{!!URL::to('/DetalleValuacion/'.$valuacion->id.'/null')!!}" style="padding-right: 0px"> 
-                              <div class=" botn col-lg-12" style="margin-top: -40px; width: 100%;">
-                                  <span class="glyphicon glyphicon-ok tam-18" style="margin-top: -3px;color: #6a954d;"></span> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;
-                                  <span class="" style="">Ver Partidas Trabajadas</span>
-                              </div>
-                            </a> 
-                          @else
-                            <a href="{!!URL::to('/DetalleValuacion/'.$valuacion->id.'/null')!!}"> 
-                            <div class="botn " style="margin-top: -40px; width: 100%">
-                                Ver Partidas Trabajadas
-                            </div>
-                            </a> 
-                          @endif
-                      </div>
-
-                      <div class="col-lg-12 col-md-12 col-sm-12"><br><br></div>
-                      @if($valuacion->lista != 'S')
-                        <div class="col-lg-2 col-md-2 col-sm-2"><br><br></div>
-                      @endif
-
-                      <div class=" col-lg-4 col-md-4 col-sm-12 col-xs-12" style="text-align: center">
-                          <div class="info-box blue-bg" style="text-align:center;  vertical-align: middle;">
-                            <div class=" col-lg-4 col-md-4 col-sm-4 col-xs-4" style="margin-left: -8%;  vertical-align: middle;">
-                                <img alt="" src="{!!URL::asset('/img/presupuesto.png')!!}" style="height: 85px;">
-                            </div>
-                            <div class=" col-lg-8 col-md-8 col-sm-8 col-xs-8" style="margin-left: 4%">
-                                <div class="count" >Descuentos</div>
-                                <div class="title" >Descuentos y Amortizaciones</div> 
-                            </div>
-                          </div>
-                          @if($descuentoIsTrabajado > 0)
-                            <a  href="{!!URL::to('/Descuento/'.$valuacion->id)!!}" style="padding-right: 0px"> 
-                              <div class=" botn col-lg-12" style="margin-top: -40px; width: 100%;">
-                                  <span class="glyphicon glyphicon-ok tam-18" style="margin-top: -3px;color: #6a954d;"></span> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;
-                                  <span class="" style="">Ver Descuentos y Amortizaciones</span>
-                              </div>
-                            </a> 
-                          @else
-                            <a href="{!!URL::to('/Descuento/'.$valuacion->id)!!}"> 
-                            <div class="botn " style="margin-top: -40px; width: 100%">
-                                Ver Descuentos y Amortizaciones
-                            </div>
-                            </a> 
-                          @endif
-
-                          </a> 
-                      </div>
-                      @if($valuacion->lista == 'S')
-                      <div class=" col-lg-4 col-md-4 col-sm-12 col-xs-12" style="text-align: center">
-                          <div class="info-box blue-bg" style="text-align:center;  vertical-align: middle;">
-                            <div class=" col-lg-4 col-md-4 col-sm-4 col-xs-4" style="margin-left: -8%;  vertical-align: middle;">
-                                <img alt="" src="{!!URL::asset('/img/icon_creditCard.png')!!}" style="height: 85px;">
-                            </div>
-                            <div class=" col-lg-8 col-md-8 col-sm-8 col-xs-8" style="margin-left: 4%">
-                                <div class="count" >Pagos</div>
-                                <div class="title" >Pagos sobre el Boletín</div> 
-                            </div>
-                          </div>
-                          @if($pagos != null)
-                            <a  href="{!!URL::to('/PagosBoletinValuacion/'.$valuacion->id)!!}" style="padding-right: 0px"> 
-                              <div class=" botn col-lg-12" style="margin-top: -40px; width: 100%;">
-                                  <span class="glyphicon glyphicon-ok tam-18" style="margin-top: -3px;color: #6a954d;"></span> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;
-                                  <span class="" style="">Ver Pagos Realizados</span>
-                              </div>
-                            </a> 
-                          @else
-                            <a href="{!!URL::to('/PagosBoletinValuacion/'.$valuacion->id)!!}"> 
-                            <div class="botn " style="margin-top: -40px; width: 100%">
-                                Ver Pagos Realizados
-                            </div>
-                            </a> 
-                          @endif
-
-                          </a> 
-                      </div>
-                      @endif
-                      <div class=" col-lg-4 col-md-4 col-sm-12 col-xs-12" style="text-align: center">
-                          <div class="info-box red-bg" style="text-align:center;  vertical-align: middle;">
-                            <div class=" col-lg-4 col-md-4 col-sm-4 col-xs-4" style="margin-left: -5%;  vertical-align: middle;">
-                                <img alt="" src="{!!URL::asset('/img/icon_contrato.png')!!}" style="height: 85px;">
-                            </div>
-                            <div class=" col-lg-8 col-md-8 col-sm-8 col-xs-8" style="margin-left: 4%">
-                                <div class="count" >Boletín</div>
-                                <div class="title" >Imprimir Boletín de Valuación</div> 
-                            </div>
-                          </div>
-                          @if($valuacionIsTrabajada > 0)
-                            <a  data-toggle="collapse" href="#TipoBoletin" aria-expanded="false" aria-controls="TipoBoletin" > 
-                              <div class=" botn col-lg-12" style="margin-top: -40px; width: 100%;">
-                                  <span class="glyphicon glyphicon-ok tam-18" style="margin-top: -3px;color: #6a954d;"></span> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;
-                                  <span class="" style="">Generar Boletín de Valuacion</span>
-                              </div>
-                            </a> 
-                          @else
-                            <a data-toggle="collapse" href="#TipoBoletin" aria-expanded="false" aria-controls="TipoBoletin" > 
-                            <div class="botn " style="margin-top: -40px; width: 100%">
-                                Generar Boletín de Valuacion
-                            </div>
-                            </a> 
-                          @endif
-                          </a>
-                          <div class="collapse" id="TipoBoletin">
-                            <div class="well" style="height: 115px">
-                                <div class=" col-lg-6 col-md-6 col-sm-12 col-xs-12" style="text-align: center">
-                                      <a href="{!!URL::to('/BoletinValuacion/'.$valuacion->id.'/1')!!}" target="_blank" > 
-                                      <div class="cajita danger icon-reorder tooltips" style="text-align:center;"  data-original-title="Imprimir solo partidas Trabajadas" data-placement="bottom">
-                                          <div class="title" >Partidas Trabajadas</div> 
-                                      </div>
-                                      </a> 
-                                  </div>
-                                  <div class=" col-lg-6 col-md-6 col-sm-12 col-xs-12" style="text-align: center">
-                                      <a href="{!!URL::to('/BoletinValuacion/'.$valuacion->id.'/2')!!}" target="_blank"  > 
-                                      <div class="cajita danger icon-reorder tooltips" style="text-align:center; " data-original-title="Imprimir todas las Partidas" data-placement="bottom">
-                                          <div class="title" >Todas las Partidas</div> 
-                                      </div>
-                                      </a> 
-                                  </div>
-                            </div>
-                          </div> 
-                      </div>
-
-
-                  </div>
-              </div>
-
-        </div>
-
- 
-<!-- Button trigger modal -->     
-
+	              		<div class="datoBancario">
+							<table class="table" id="tabla_Proyectos">
+					      		<thead>
+					      			<th>Comprobante</th>
+							        <th>Tipo de Pago</th>
+							        <th>Nro Comprobante</th>
+							        <th>Fecha Emision</th>
+							        <th>Monto Pagado</th>	
+						      	</thead>
+						        <tbody>
+						      @foreach($pagos as $datos)
+							      <tr>
+							          <td>
+							          	@if($datos->comprobante == null)
+							          		&nbsp; &nbsp; &nbsp; &nbsp;-
+							          	@else
+                            <a href="{!!URL::asset('/archivos/'.$datos->comprobante)!!}" target="_blank">Comprobante</a>
+							          	@endif	
+							          </td>
+							          <td>{{$datos->tipoPago->descripcion}}</td>
+							          <td>{{$datos->nroComprobante}}</td>
+							          <td>{{date('d-m-Y', strtotime($datos->fechaEmision))}}</td>
+							          <td>{{number_format($datos->monto_Pago, 2, ',','.')}}</td>
+							      </tr>
+						      @endforeach
+						        </tbody>
+						    </table>
+						</div>
+                </div>
+            </div>
+          </div>
+            <!-- page start-->
+              
             <!-- page end-->
-
-    
-    @endsection
-
-    @section('scripts')  
-    @endsection
+	@endsection
+	@section('scripts')
+	@endsection

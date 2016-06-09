@@ -152,9 +152,9 @@
 						            	@if((Auth::user()->rol_Usuario == 'administrador') || (Auth::user()->rol_Usuario == 'contador'))
 							          		<td class=" col-lg-1" style="text-align: center">
 												<div  style="; text-align: center">
-							                        	<div class="icon-reorder tooltips" data-original-title="Ver Opciones" data-placement="bottom"  >
+							                        	<div class="icon-reorder tooltips" data-original-title="Editar Pago" data-placement="bottom"  >
 													<a class="btn btn-primary" href="{!!URL::to('/Pagos/'.$datos->id.'/edit')!!}" style="text-align: center; ">
-							                        		<i class="fa fa-gears"></i>
+							                        		<i class="fa fa-pencil"></i>
 							                    	</a>
 							                        	</div>
 							                    </div>
