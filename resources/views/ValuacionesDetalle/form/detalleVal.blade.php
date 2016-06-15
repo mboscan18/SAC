@@ -54,7 +54,7 @@
 			<option  value=null >Seleccione un Centro de Costo</option>
             @foreach($cc as $option)
                 <option  value="{{$option->id}}">
-                    {{$option->cod_CC}}
+                    {{$option->cod_CC}} - {{$option->descripcion_CC}}
                 </option>
             @endforeach
         </select>

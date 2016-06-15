@@ -67,7 +67,7 @@
 						<option  value=null >Seleccione un Centro de Costo</option>
 			            @foreach($cc as $option)
 			                <option  value="{{$option->id}}">
-			                    {{$option->cod_CC}}
+			                    {{$option->cod_CC}} - {{$option->descripcion_CC}}
 			                </option>
 			            @endforeach
 			        </select>
@@ -75,12 +75,12 @@
 					<select class="form-control" name="cc_id" id="cc_id_edit">
 			            @foreach($cc as $option)
 			            	@if($detalle->cc_id == $option->id)
-			                	<option  value="{{$option->id}}">{{$option->cod_CC}}</option>
+			                	<option  value="{{$option->id}}">{{$option->cod_CC}} - {{$option->descripcion_CC}}</option>
 			                @endif	
 			            @endforeach
 			            @foreach($cc as $option)
 			                @if($detalle->cc_id != $option->id)
-			                	<option  value="{{$option->id}}">{{$option->cod_CC}}</option>
+			                	<option  value="{{$option->id}}">{{$option->cod_CC}} - {{$option->descripcion_CC}}</option>
 			                @endif
 			            @endforeach
 			            <option  value=null >Ningún Centro de Costo</option>
