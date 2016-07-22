@@ -81,8 +81,13 @@ class PagosController extends Controller
                 
                 foreach ($boletines as $key) {
                     if ($key->factura != null) {
-                        $resumenPagosPendientes[$i] = Valuaciones::resumenValuacionExtended($key->id);
-                        $i++;
+
+                        $temp = Valuaciones::resumenValuacionExtended($key->id);
+
+                        if($temp->diferencia_pago > 5){
+                            $resumenPagosPendientes[$i] = $temp;
+                            $i++;
+                        }
                     }
                 }
             }
