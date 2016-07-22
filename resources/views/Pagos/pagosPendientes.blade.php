@@ -20,7 +20,10 @@
 	              		<div class="datoBancario">
 							<table class="table" id="tabla_Proyectos">
 					      		<thead>
+					      			<th>Administrador</th>
+					      			<th>Cod. Proyecto</th>
 					      			<th>Proyecto</th>
+					      			<th>Cod. Contrato</th>
 					      			<th>Contrato</th>
 							        <th>Proveedor</th>
 					      			<th>Nro Boletín</th>
@@ -33,7 +36,10 @@
 						        <tbody>
 						      @foreach($resumenPagosPendientes as $datos)
 							      <tr>
+							          <td>{{$datos->usuario}}</td>
+							          <td>{{$datos->codProyecto}}</td>
 							          <td>{{$datos->nombreProyecto}}</td>
+							          <td>{{$datos->codContrato}}</td>
 							          <td>{{$datos->nombreContrato}}</td>
 							          <td>{{$datos->nombreProveedor}}</td>
 							          <td>{{$datos->nro_Boletin}}</td>

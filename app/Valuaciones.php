@@ -271,14 +271,17 @@ class Valuaciones extends Model
         }
 
         $retenciones = $valuacion->contrato->retenciones;
-
+        $usuario = $valuacion->contrato->proyecto->user->nombre_Usuario.' '.$valuacion->contrato->proyecto->user->apellido_Usuario;
 
 
         $jD =   '{ "idValuacion":"'.$valuacion->id.
+                '", "usuario":"'.$usuario.
                 '", "idContrato":"'.$valuacion->contrato->id.
+                '", "codContrato":"'.$valuacion->contrato->nro_Contrato.
                 '", "nombreContrato":"'.$valuacion->contrato->descripcion.
                 '", "nombreProveedor":"'.$valuacion->contrato->empresaProveedor->nombre_Empresa.
                 '", "idProyecto":"'.$valuacion->contrato->proyecto->id.
+                '", "codProyecto":"'.$valuacion->contrato->proyecto->cod_Proyecto.
                 '", "nombreProyecto":"'.$valuacion->contrato->proyecto->nombre_Proyecto.
                 '", "fechaPago":"'.$valuacion->factura->fecha_Emision.
                 '", "nro_Boletin":"'.$valuacion->nro_Boletin.
