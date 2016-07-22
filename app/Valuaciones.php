@@ -272,13 +272,7 @@ class Valuaciones extends Model
 
         $retenciones = $valuacion->contrato->retenciones;
 
-        $fechaPagoBoletin = date('d-m-Y', strtotime($valuacion->factura->fecha_Emision));
-        $fechaActual = date('d-m-Y');
 
-        $date1 = date_create($fechaActual);
-        $date2 = date_create($fechaPagoBoletin);
-
-        $diasMora = date_diff($date1, $date2);
 
         $jD =   '{ "idValuacion":"'.$valuacion->id.
                 '", "idContrato":"'.$valuacion->contrato->id.
@@ -286,7 +280,6 @@ class Valuaciones extends Model
                 '", "nombreProveedor":"'.$valuacion->contrato->empresaProveedor->nombre_Empresa.
                 '", "idProyecto":"'.$valuacion->contrato->proyecto->id.
                 '", "nombreProyecto":"'.$valuacion->contrato->proyecto->nombre_Proyecto.
-                '", "diasMora":"'.$diasMora->format('%R%a días').
                 '", "fechaPago":"'.$valuacion->factura->fecha_Emision.
                 '", "nro_Boletin":"'.$valuacion->nro_Boletin.
                 '", "nro_Valuacion":"'.$valuacion->nro_Valuacion.
@@ -313,10 +306,24 @@ class Valuaciones extends Model
 
             $neto_Pagar = $monto_Valuado + $IVA + $monto_Anticipo + $monto_Adelanto - $monto_Amortizado - $monto_Descuentos - $acumRetenciones;
             $diferencia_pago = $neto_Pagar - $monto_pagado;
+        
+        $fechaPagoBoletin = date('d-m-Y', strtotime($valuacion->factura->fecha_Emision));
+        $fechaActual = date('d-m-Y');
+
+        $date1 = date_create($fechaActual);
+        $date2 = date_create($fechaPagoBoletin);
+
+        $Mora = date_diff($date2, $date1);
+        $diasMora = $Mora->format('%a días');
+
+        if ($diferencia_pago == 0) {
+           $diasMora = 0;
+        }
 
         $jF =   '","anticipo":"'.$estadoAnticipo.
                 '","adelantos":"'.$monto_Adelanto.
                 '","descuentos":"'.$monto_Descuentos.
+                '", "diasMora":"'.$diasMora.
                 '","neto_Pagar":"'.$neto_Pagar.
                 '","monto_pagado":"'.$monto_pagado.
                 '","diferencia_pago":"'.$diferencia_pago.'"}';  
