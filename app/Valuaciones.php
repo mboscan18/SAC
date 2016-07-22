@@ -224,6 +224,155 @@ class Valuaciones extends Model
         }
 	}	
 
+  public static function resumenValuacionExtended($id_valuacion)
+  {
+    $valuacion = Valuaciones::find($id_valuacion); 
+
+        $detallesValuacion = $valuacion->detallesValuacion;
+        $monto_Valuado = 0;
+        foreach ($detallesValuacion as $key) {
+            $monto_Valuado = $monto_Valuado + $key->monto;
+        }
+
+        $descuentos = $valuacion->descuentos;
+        $monto_Descuentos = 0;
+        $monto_Amortizado = 0;
+        foreach ($descuentos as $key) {
+            if ($key->tipo_Deduccion == 1) {
+                $monto_Amortizado = $monto_Amortizado + $key->monto_Deduccion;
+            }elseif ($key->tipo_Deduccion == 2) {
+                $monto_Descuentos = $monto_Descuentos + $key->monto_Deduccion;
+            }
+        }
+
+        $adelantos = $valuacion->anticipos;
+        $monto_Adelanto = 0;
+        $monto_Anticipo = 0;
+        foreach ($adelantos as $key) {
+            if ($key->tipo_Anticipo == 1) {
+                $monto_Anticipo = $monto_Anticipo + $key->monto_Anticipo;
+            }elseif ($key->tipo_Anticipo == 2) {
+                $monto_Adelanto = $monto_Adelanto + $key->monto_Anticipo;
+            }
+        }
+        $estadoAnticipo = $monto_Anticipo - $monto_Amortizado;
+
+        $IVA = ($monto_Valuado * $valuacion->IVA) / 100;
+        $factura = $valuacion->factura;
+        //return $factura;
+      //  $retencionesAplicadas = 0;
+            $monto_pagado = 0;
+        if ($factura != null) {
+            $retencionesAplicadas = $factura->retenciones;
+            $pagos = $factura->pagos;
+            foreach ($pagos as $pago) {
+                $monto_pagado = $monto_pagado + $pago->monto_Pago;
+            }
+        }
+
+        $retenciones = $valuacion->contrato->retenciones;
+
+        $fechaPagoBoletin = date('d-m-Y', strtotime($valuacion->factura->fecha_Emision));
+        $fechaActual = date('d-m-Y');
+
+        $date1 = date_create($fechaActual);
+        $date2 = date_create($fechaPagoBoletin);
+
+        $diasMora = date_diff($date1, $date2);
+
+        $jD =   '{ "idValuacion":"'.$valuacion->id.
+                '", "idContrato":"'.$valuacion->contrato->id.
+                '", "nombreContrato":"'.$valuacion->contrato->descripcion.
+                '", "nombreProveedor":"'.$valuacion->contrato->empresaProveedor->nombre_Empresa.
+                '", "idProyecto":"'.$valuacion->contrato->proyecto->id.
+                '", "nombreProyecto":"'.$valuacion->contrato->proyecto->nombre_Proyecto.
+                '", "diasMora":"'.$diasMora->format('%R%a días').
+                '", "fechaPago":"'.$valuacion->factura->fecha_Emision.
+                '", "nro_Boletin":"'.$valuacion->nro_Boletin.
+                '", "nro_Valuacion":"'.$valuacion->nro_Valuacion.
+                '", "periodo_inicio":"'.$valuacion->fecha_Inicio_Periodo.
+                '", "periodo_fin":"'.$valuacion->fecha_Fin_Periodo.
+                '", "monto_Valuado":"'.$monto_Valuado.
+                '", "monto_IVA":"'.$IVA;
+
+        $jR = array();
+        $acumRetenciones = 0;
+        $i = 0;
+        foreach ($retenciones as $retencion) {
+            $montoRetenido = 0;
+            foreach ($retencionesAplicadas as $retencionAplicada) {
+                if ($retencionAplicada->retenciones_id == $retencion->retenciones_id) {
+                    $montoRetenido = $retencionAplicada->monto_Retenido;
+                }
+            }
+            $jR[$i] = '","retencion_'.$i.'":"'.$montoRetenido;
+            $i++;
+
+            $acumRetenciones = $acumRetenciones + $montoRetenido;
+        }
+
+            $neto_Pagar = $monto_Valuado + $IVA + $monto_Anticipo + $monto_Adelanto - $monto_Amortizado - $monto_Descuentos - $acumRetenciones;
+            $diferencia_pago = $neto_Pagar - $monto_pagado;
+
+        $jF =   '","anticipo":"'.$estadoAnticipo.
+                '","adelantos":"'.$monto_Adelanto.
+                '","descuentos":"'.$monto_Descuentos.
+                '","neto_Pagar":"'.$neto_Pagar.
+                '","monto_pagado":"'.$monto_pagado.
+                '","diferencia_pago":"'.$diferencia_pago.'"}';  
+
+        $j1 = $jD;
+
+
+
+
+
+
+
+
+        foreach ($jR as $key) {
+            $j1 = $j1.$key;
+        }
+
+        $j1 = $j1.$jF;
+
+        for ($i = 0; $i <= 31; ++$i) { 
+            $j1 = str_replace(chr($i), "", $j1); 
+        }
+        $j1 = str_replace(chr(127), "", $j1);
+
+        if (0 === strpos(bin2hex($j1), 'efbbbf')) {
+           $j1 = substr($j1, 3);
+        }
+        $json = json_decode( $j1 );
+
+        $error = json_last_error();
+        //return $j1;
+        switch(json_last_error()) {
+            case JSON_ERROR_NONE:
+                return $json;
+            break;
+            case JSON_ERROR_DEPTH:
+                return ' - Excedido tamaño máximo de la pila';
+            break;
+            case JSON_ERROR_STATE_MISMATCH:
+                return ' - Desbordamiento de buffer o los modos no coinciden';
+            break;
+            case JSON_ERROR_CTRL_CHAR:
+                return ' - Encontrado carácter de control no esperado';
+            break;
+            case JSON_ERROR_SYNTAX:
+                return ' - Error de sintaxis, JSON mal formado';
+            break;
+            case JSON_ERROR_UTF8:
+                return ' - Caracteres UTF-8 malformados, posiblemente están mal codificados';
+            break;
+            default:
+                return ' - Error desconocido';
+            break;
+        }
+  } 
+
     /*
      * Devuelve 0 si la valuacion no ha sido trabajada
      * Devuelve 1 si la valuacion no ha sido enviada a pagar

@@ -55,6 +55,45 @@ class PagosController extends Controller
                 ->render();
     }
 
+    public function pagosPendientes()
+    {
+        $allproyectos = Proyectos::all();
+
+
+        $j = 0;
+        for ($i=0; $i < sizeof($allproyectos); $i++) { 
+           if($i != 5){
+                $proyectos[$j] = $allproyectos[$i];
+                $j++;
+           }
+        }
+
+        $resumenPagosPendientes = array();
+        $i = 0;
+
+        foreach ($proyectos as $proy) {
+            $contratos = $proy->contratos;
+        //return $contratos;
+
+            foreach ($contratos as $contra) {
+                $boletines = $contra->valuaciones;
+        //return $boletines;
+                
+                foreach ($boletines as $key) {
+                    if ($key->factura != null) {
+                        $resumenPagosPendientes[$i] = Valuaciones::resumenValuacionExtended($key->id);
+                        $i++;
+                    }
+                }
+            }
+        }
+        //return $resumenPagosPendientes;
+        return view('Pagos.pagosPendientes')
+                ->with('resumenPagosPendientes',$resumenPagosPendientes)
+                ->render();
+
+    }
+
     public function pagosProyecto($idProyecto)
     {
         $proyecto = Proyectos::find($idProyecto);

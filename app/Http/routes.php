@@ -188,6 +188,7 @@ Route::get('RestoreDescuentos/{id}', 'DescuentosController@restore');
 */
 Route::resource('Pagos','PagosController');
 Route::get('CrearPago/{idBoletin}','PagosController@crearPago');
+Route::get('PagosPendientes','PagosController@pagosPendientes');
 Route::get('PagosProyecto/{idProyecto}','PagosController@pagosProyecto');
 Route::get('PagosContrato/{idContrato}','PagosController@pagosContrato');
 Route::get('PagosBoletin/{idBoletin}','PagosController@pagosBoletin');

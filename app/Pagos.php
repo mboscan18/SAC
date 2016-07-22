@@ -40,15 +40,7 @@ class Pagos extends Model
             $codProyecto = str_replace(chr(47), "-", $codProyecto);
             $codContrato = str_replace(chr(47), "-", $codContrato);
             $numValuacion = str_replace(chr(47), "-", $numValuacion);
-            $name = 'Proyecto-('
-                    .$codProyecto
-                    .')_Contrato-('
-                    .$codContrato
-                    .')_Valuacion-('
-                    .$numValuacion
-                    .')_Pago-('
-                    .$this->attributes['nroComprobante'].')_'
-                    .$comprobante->getClientOriginalName();
+            $name = $comprobante->getClientOriginalName();
             $this->attributes['comprobante'] = $name;
             \Storage::disk('local')->put($name, \File::get($comprobante));
         }
