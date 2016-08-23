@@ -114,6 +114,9 @@ class FacturasController extends Controller
      */
     public function store(Request $request)
     {
+        //return Input::get('retenciones');
+        //return Input::get('porcentaje');
+        //return Input::get('monto_Retenido');
         $valuacion = Valuaciones::find(Input::get('valuacion'));
         $valuacion->lista = 'S';
         $valuacion->save();

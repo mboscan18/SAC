@@ -9,6 +9,7 @@ jQuery(document).ready(function(){
 
         // Si cambia el estado del CheckBOX
         $('#retencion_'+i).change(function() {
+            
             calcularMontoTotal();
         });
 
@@ -37,28 +38,36 @@ function calcularMontoTotal()
         var tipoRetencion = $('#tipoRetencion_'+i).val() * 1;
         var porcentaje = $('#porcentaje_'+i).val() * 1;
         var sustraendo = $('#sustraendo_'+i).val() * 1;
-        if ($('#retencion_'+i).is(":checked")) {
-            if (tipoRetencion == 1) {
+        if (tipoRetencion == 1) {
                 var porc = (monto_Valuado * porcentaje)/100;
             }else{
                 var porc = (monto_IVA * porcentaje)/100;
             }
-                var montoretencion = porc - sustraendo;
+        if ($('#retencion_'+i).is(":checked")) {
+           
+            var montoretencion = porc - sustraendo;
             $('#montoRetenido_'+i+'_hidden').val(montoretencion);
             $('#montoRetenido_'+i).val(montoretencion.formatMoney(2, ',', '.'));
 
             montoTotalRetenciones = montoTotalRetenciones + montoretencion;
+
+            $('#porcentaje_'+i).prop('disabled', false);
+            $('#sustraendo_'+i).prop('disabled', false);
+            $('#montoRetenido_'+i).prop('disabled', false);
+            $('#montoRetenido_'+i+'_hidden').prop('disabled', false);
+
             $('#estado_OK'+i).css('display', 'block');
             $('#estado_NOK'+i).css('display', 'none');
         }else{
-            if (tipoRetencion == 1) {
-                var porc = (monto_Valuado * porcentaje)/100;
-            }else{
-                var porc = (monto_IVA * porcentaje)/100;
-            }
-                var montoretencion = porc + sustraendo;
+            
+            var montoretencion = porc - sustraendo;
             $('#montoRetenido_'+i+'_hidden').val(montoretencion);
             $('#montoRetenido_'+i).val(montoretencion.formatMoney(2, ',', '.'));
+
+            $('#porcentaje_'+i).prop('disabled', true);
+            $('#sustraendo_'+i).prop('disabled', true);
+            $('#montoRetenido_'+i).prop('disabled', true);
+            $('#montoRetenido_'+i+'_hidden').prop('disabled', true);
 
             $('#estado_OK'+i).css('display', 'none');
             $('#estado_NOK'+i).css('display', 'block');
