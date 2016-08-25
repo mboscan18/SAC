@@ -271,7 +271,7 @@ class Valuaciones extends Model
         }
 
         $retenciones = $valuacion->contrato->retenciones;
-        $usuario = $valuacion->contrato->proyecto->user->nombre_Usuario.' '.$valuacion->contrato->proyecto->user->apellido_Usuario;
+        $usuario = $valuacion->factura->user->nombre_Usuario.' '.$valuacion->factura->user->apellido_Usuario;
 
 
         $jD =   '{ "idValuacion":"'.$valuacion->id.
@@ -319,7 +319,7 @@ class Valuaciones extends Model
         $Mora = date_diff($date2, $date1);
         $diasMora = $Mora->format('%a días');
 
-        if ($diferencia_pago == 0) {
+        if ($diferencia_pago >= 0) {
            $diasMora = 0;
         }
 
