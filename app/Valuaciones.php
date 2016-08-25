@@ -319,7 +319,7 @@ class Valuaciones extends Model
         $Mora = date_diff($date2, $date1);
         $diasMora = $Mora->format('%a días');
 
-        if ($date1 > $date2) {
+        if ($date1 <= $date2) {
             $diasMora = 0;
         }
 
