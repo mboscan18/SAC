@@ -1,5 +1,5 @@
 @extends('layouts.principal')
-  @section('page-title', 'Boletines')
+  @section('page-title', 'Pagos Pendientes')
  
 @section('titulo')  
     <h3 class="page-header"><img alt="" src="{!!URL::asset('/img/icon_project_big.png')!!}" style="width: 35px"> Boletines</h3>
