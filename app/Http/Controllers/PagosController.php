@@ -59,10 +59,10 @@ class PagosController extends Controller
     {
         $allproyectos = Proyectos::all();
 
-
         $j = 0;
+        //return $allproyectos[2];
         for ($i=0; $i < sizeof($allproyectos); $i++) { 
-           if($i != 5){
+           if(($i != 5) && ($i != 0) && ($i != 1)){
                 $proyectos[$j] = $allproyectos[$i];
                 $j++;
            }

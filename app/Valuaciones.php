@@ -320,11 +320,11 @@ class Valuaciones extends Model
         $diasMora = $Mora->format('%a días');
 
         if ($date1 <= $date2) {
-            $diasMora = 0;
+            $diasMora = '0 dias';
         }
 
         if ($diferencia_pago == 0) {
-           $diasMora = 0;
+           $diasMora = '0 dias';
         }
 
         $jF =   '","anticipo":"'.$estadoAnticipo.
