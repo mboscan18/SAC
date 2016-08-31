@@ -96,10 +96,19 @@ class Contratos extends Model
         $faltante_Pagar = $estadoPagosContrato[2];
         $faltante_Enviar_Pagar = $monto_PagarContrato - $enviado_Pagar;
 
+        $st_codContrato = $contrato->nro_Contrato;
+        $codContrato = str_replace(chr(34), "''", $st_codContrato);
+        
+        $st_nombreContrato = $contrato->descripcion.'';
+        $nombreContrato = str_replace(chr(34), "''", $st_nombreContrato);
+        
+        $st_nombreProveedor = $contrato->empresaProveedor->nombre_Empresa.'';
+        $nombreProveedor = str_replace(chr(34), "''", $st_nombreProveedor);
+
         $j1 =   '{"id":"'.$contrato->id.
-                '","nro_contrato":"'.$contrato->nro_Contrato.
-                '","nombre_contratista":"'.$contrato->empresaProveedor->nombre_Empresa.
-                '","descripcion_Contrato":"'.$contrato->descripcion.
+                '","nro_contrato":"'.$codContrato.
+                '","nombre_contratista":"'.$nombreProveedor.
+                '","descripcion_Contrato":"'.$nombreContrato.
                 '","valor_Contrato":"'.$valor_Contrato.
                 '","monto_Pagar_Contrato":"'.$monto_PagarContrato.
                 '","enviado_Pagar_Contrato":"'.$enviado_Pagar.

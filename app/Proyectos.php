@@ -93,9 +93,17 @@ class Proyectos extends Model
             $porcentaje_Ejecutado = ($enviado_Pagar_Proyecto * 100) / $monto_Pagar_Proyecto;
         }
 
+
+        
+        $st_codProyecto = $proyecto->cod_Proyecto.'';
+        $codProyecto = str_replace(chr(34), "''", $st_codProyecto);
+        
+        $st_nombreProyecto = $proyecto->nombre_Proyecto.'';
+        $nombreProyecto = str_replace(chr(34), "''", $st_nombreProyecto);
+
         $j1 =   '{"id":"'.$proyecto->id.
-                '","cod_Proyecto":"'.$proyecto->cod_Proyecto.
-                '","nombre_Proyecto":"'.$proyecto->nombre_Proyecto.
+                '","cod_Proyecto":"'.$codProyecto.
+                '","nombre_Proyecto":"'.$nombreProyecto.
                 '","porcentaje_Ejecutado":"'.$porcentaje_Ejecutado.
                 '","valor_Proyecto":"'.$valor_Proyecto.
                 '","monto_Pagar_Proyecto":"'.$monto_Pagar_Proyecto.
