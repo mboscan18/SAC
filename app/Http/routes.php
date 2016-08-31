@@ -22,6 +22,7 @@ Route::get('Residente','FontController@Residente');
 Route::get('Contador','FontController@Contador');
 Route::get('Supervisor','FontController@Supervisor');
 Route::get('Administrador','FontController@Administrador');
+Route::get('Home','FontController@Home');
 Route::resource('Log', 'LogController');
 
 /*

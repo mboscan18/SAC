@@ -161,4 +161,9 @@ class Proyectos extends Model
         return $this->hasMany('SAC\Contratos', 'cod_Proyecto');
     }
 
+    public function asignacionesProyecto()
+    {
+        return $this->hasMany('SAC\AsignacionProyectos', 'proyecto_id');
+    }
+
 }

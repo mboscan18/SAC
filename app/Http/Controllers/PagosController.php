@@ -8,6 +8,7 @@ use SAC\Contratos;
 use SAC\Valuaciones;
 use SAC\Presupuestos;
 use SAC\TiposPago;
+use SAC\User;
 use SAC\Pagos;
 use Session;
 use Redirect;
@@ -57,16 +58,38 @@ class PagosController extends Controller
 
     public function pagosPendientes()
     {
-        $allproyectos = Proyectos::all();
+
+        if (($this->auth->user()->rol_Usuario == 'supervisor') || ($this->auth->user()->rol_Usuario == 'administrador')){
+            $allproyectos = Proyectos::all();
+            if (!$allproyectos){
+                Session::flash('message-error','No hay Proyectos cargados en el Sistema.');
+                return Redirect::to('/Home/');
+            }
+        }else{
+            $user = User::find($this->auth->user()->id);
+            $asignaciones = $user->asignacionesProyecto;
+            if ($asignaciones){
+                $allproyectos = array();
+                $i = 0;
+                foreach ($asignaciones as $key) {
+                    $allproyectos[$i] = $key->proyecto;
+                    $i++;
+                }
+            }else{
+                Session::flash('message-error','Usted no Administra ningún Proyecto.');
+                return Redirect::to('/Home/');
+            }
+        }
 
         $j = 0;
         //return $allproyectos[2];
         for ($i=0; $i < sizeof($allproyectos); $i++) { 
-           if(($i != 5) && ($i != 0) && ($i != 1)){
+           if(($i != 0) && ($i != 1)){
                 $proyectos[$j] = $allproyectos[$i];
                 $j++;
            }
         }
+
 
         $resumenPagosPendientes = array();
         $i = 0;
@@ -74,17 +97,19 @@ class PagosController extends Controller
         foreach ($proyectos as $proy) {
             $contratos = $proy->contratos;
         //return $contratos;
-
+           // echo "Proy: ".$proy->id."<br>";
             foreach ($contratos as $contra) {
                 $boletines = $contra->valuaciones;
+           // echo "&nbsp; &nbsp; &nbsp; Contra: ".$contra->id."<br>";
         //return $boletines;
                 
                 foreach ($boletines as $key) {
                     if ($key->factura != null) {
 
+           // echo "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Boletin: ".$key->id."<br>";
                         $temp = Valuaciones::resumenValuacionExtended($key->id);
-
-                        if($temp->diferencia_pago > 5){
+                        $us = $this->auth->user()->nombre_Usuario.' '.$this->auth->user()->apellido_Usuario;
+                        if(($temp->diferencia_pago > 5) && (strcmp($temp->usuario, $us))){
                             $resumenPagosPendientes[$i] = $temp;
                             $i++;
                         }

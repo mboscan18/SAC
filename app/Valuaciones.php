@@ -273,16 +273,30 @@ class Valuaciones extends Model
         $retenciones = $valuacion->contrato->retenciones;
         $usuario = $valuacion->factura->user->nombre_Usuario.' '.$valuacion->factura->user->apellido_Usuario;
 
+        $st_codContrato = $valuacion->contrato->nro_Contrato;
+        $codContrato = str_replace(chr(34), "''", $st_codContrato);
+        
+        $st_nombreContrato = $valuacion->contrato->descripcion.'';
+        $nombreContrato = str_replace(chr(34), "''", $st_nombreContrato);
+        
+        $st_codProyecto = $valuacion->contrato->proyecto->cod_Proyecto.'';
+        $codProyecto = str_replace(chr(34), "''", $st_codProyecto);
+        
+        $st_nombreProveedor = $valuacion->contrato->empresaProveedor->nombre_Empresa.'';
+        $nombreProveedor = str_replace(chr(34), "''", $st_nombreProveedor);
+
+        $st_nombreProyecto = $valuacion->contrato->proyecto->nombre_Proyecto.'';
+        $nombreProyecto = str_replace(chr(34), "''", $st_nombreProyecto);
 
         $jD =   '{ "idValuacion":"'.$valuacion->id.
                 '", "usuario":"'.$usuario.
                 '", "idContrato":"'.$valuacion->contrato->id.
-                '", "codContrato":"'.$valuacion->contrato->nro_Contrato.
-                '", "nombreContrato":"'.$valuacion->contrato->descripcion.
-                '", "nombreProveedor":"'.$valuacion->contrato->empresaProveedor->nombre_Empresa.
+                '", "codContrato":"'.$codContrato.
+                '", "nombreContrato":"'.$nombreContrato.
+                '", "nombreProveedor":"'.$nombreProveedor.
                 '", "idProyecto":"'.$valuacion->contrato->proyecto->id.
-                '", "codProyecto":"'.$valuacion->contrato->proyecto->cod_Proyecto.
-                '", "nombreProyecto":"'.$valuacion->contrato->proyecto->nombre_Proyecto.
+                '", "codProyecto":"'.$codProyecto.
+                '", "nombreProyecto":"'.$nombreProyecto.
                 '", "fechaPago":"'.$valuacion->factura->fecha_Emision.
                 '", "nro_Boletin":"'.$valuacion->nro_Boletin.
                 '", "nro_Valuacion":"'.$valuacion->nro_Valuacion.

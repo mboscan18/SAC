@@ -12,13 +12,14 @@
 
   @section('content')
         @include('alerts.messages')
-
           <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="panel panel-primary">
-            
+            <div class="panel-heading " style="background-color: #1a2732; color: #9cd5eb;">
+                       Pagos Pendientes
+                  </div>
                 <div class="panel-body" >
 	              		<div class="datoBancario">
-							<table class="table" id="tabla_Proyectos">
+							<table class="table" id="tabla_Proyectos" style="overflow-x: scroll;">
 					      		<thead>
 					      			<th>Administrador</th>
 					      			<th>Cod. Proyecto</th>

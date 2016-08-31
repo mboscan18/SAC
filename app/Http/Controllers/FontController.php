@@ -24,6 +24,19 @@ class FontController extends Controller
     }
 
 
+    public function Home()
+    {
+        if ($this->auth->user()->rol_Usuario == 'administrador') {
+            return view('indexAdministrador');
+        }elseif ($this->auth->user()->rol_Usuario == 'supervisor') {
+            return view('indexSupervisor');
+        }elseif ($this->auth->user()->rol_Usuario == 'residente') {
+            return view('indexResidente');
+        }elseif ($this->auth->user()->rol_Usuario == 'contador') {
+            return view('indexContador');
+        }
+    }
+
 	public function Residente()
     {
         return view('indexResidente');

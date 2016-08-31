@@ -89,4 +89,9 @@ class User extends Model implements AuthenticatableContract,
     {
         return $this->hasMany('SAC\Presupuestos', 'usuario');
     }
+
+    public function asignacionesProyecto()
+    {
+        return $this->hasMany('SAC\AsignacionProyectos', 'usuario_id');
+    }
 }

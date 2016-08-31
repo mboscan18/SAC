@@ -62,7 +62,7 @@ class AsignacionProyectos extends Model
         return $this->belongsTo('SAC\Proyectos', 'proyecto_id');
     }					
 
-	public function usuario()
+	public function administrador()
     {
         return $this->belongsTo('SAC\User', 'usuario_id');
     }
