@@ -272,6 +272,7 @@ class Valuaciones extends Model
 
         $retenciones = $valuacion->contrato->retenciones;
         $usuario = $valuacion->factura->user->nombre_Usuario.' '.$valuacion->factura->user->apellido_Usuario;
+        $usuario_id = $valuacion->factura->user->id;
 
         $st_codContrato = $valuacion->contrato->nro_Contrato;
         $codContrato = str_replace(chr(34), "''", $st_codContrato);
@@ -289,6 +290,7 @@ class Valuaciones extends Model
         $nombreProyecto = str_replace(chr(34), "''", $st_nombreProyecto);
 
         $jD =   '{ "idValuacion":"'.$valuacion->id.
+                '", "usuario_id":"'.$usuario_id.
                 '", "usuario":"'.$usuario.
                 '", "idContrato":"'.$valuacion->contrato->id.
                 '", "codContrato":"'.$codContrato.

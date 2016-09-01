@@ -107,7 +107,7 @@ class PagosController extends Controller
            // echo "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Boletin: ".$key->id."<br>";
                         $temp = Valuaciones::resumenValuacionExtended($key->id);
                         $us = $this->auth->user()->nombre_Usuario.' '.$this->auth->user()->apellido_Usuario;
-                        if(($temp->diferencia_pago > 5) && (strcmp($temp->usuario, $us))){
+                        if(($temp->diferencia_pago > 5) && ($temp->usuario_id == $this->auth->user()->id)){
                             $resumenPagosPendientes[$i] = $temp;
                             $i++;
                         }
