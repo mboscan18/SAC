@@ -59,7 +59,10 @@ class Proyectos extends Model
         }
 
         return $resumenProyecto;
+        
     }
+
+    
 
     /*
      *  Devuelve los totales de un Proyecto

@@ -153,6 +153,73 @@ class Contratos extends Model
         }    
     }
 
+    /*
+     * Devuelve Todos los contratos del Sistema
+     */ 
+    public static function reporteContrato($idcontrato)
+    {
+        $contrato = Contratos::find($idcontrato);
+        $boletines = $contrato->valuaciones;
+        $usuario = '';
+        if ($boletines) {
+            foreach ($boletines as $key) {
+                $usuario = $key->user->nombre_Usuario.' '.$key->user->apellido_Usuario;
+            }
+        }else{
+           $usuario = $contrato->user->nombre_Usuario.' '.$contrato->user->apellido_Usuario;
+        }
+        
+        $st_codContrato = $contrato->nro_Contrato;
+        $codContrato = str_replace(chr(34), "''", $st_codContrato);
+
+        $st_codProyecto = $contrato->proyecto->cod_Proyecto.'';
+        $codProyecto = str_replace(chr(34), "''", $st_codProyecto);
+
+        $st_nombreProveedor = $contrato->empresaProveedor->nombre_Empresa.'';
+        $nombreProveedor = str_replace(chr(34), "''", $st_nombreProveedor);
+
+        $j1 =   '{"cod_Proyecto":"'.$codProyecto.
+                '","id_Contrato":"'.$contrato->id.
+                '","cod_Contrato":"'.$codContrato.
+                '","nombre_Proveedor":"'.$nombreProveedor.
+                '","usuario":"'.$usuario.'"}';
+
+        for ($i = 0; $i <= 31; ++$i) { 
+            $j1 = str_replace(chr($i), "", $j1); 
+        }
+        $j1 = str_replace(chr(127), "", $j1);
+
+        if (0 === strpos(bin2hex($j1), 'efbbbf')) {
+           $j1 = substr($j1, 3);
+        }
+        $json = json_decode( $j1 );
+
+        $error = json_last_error();
+     //   return $j1;
+        switch(json_last_error()) {
+            case JSON_ERROR_NONE:
+                return $json;
+            break;
+            case JSON_ERROR_DEPTH:
+                return ' - Excedido tamaño máximo de la pila';
+            break;
+            case JSON_ERROR_STATE_MISMATCH:
+                return ' - Desbordamiento de buffer o los modos no coinciden';
+            break;
+            case JSON_ERROR_CTRL_CHAR:
+                return ' - Encontrado carácter de control no esperado';
+            break;
+            case JSON_ERROR_SYNTAX:
+                return ' - Error de sintaxis, JSON mal formado';
+            break;
+            case JSON_ERROR_UTF8:
+                return ' - Caracteres UTF-8 malformados, posiblemente están mal codificados';
+            break;
+            default:
+                return ' - Error desconocido';
+            break;
+        }    
+    }
 
     /*  
      *  Relaciones con otras Tablas

@@ -79,6 +79,7 @@ Route::get('ProyectosUsuario/{user}', 'ProyectosController@showProyectos');
 Route::get('OpcionesProyecto/{id_proyecto}', 'ProyectosController@opcionesProyecto');
 Route::get('ProyectosDeleted', 'ProyectosController@showDeletes');
 Route::get('RestoreProyecto/{id}', 'ProyectosController@restore');
+Route::get('ContratosSAC', 'ProyectosController@contratosSac');
 
 /*
 |--------------------------------------------------------------------------

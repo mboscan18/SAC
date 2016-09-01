@@ -36,12 +36,29 @@
                             </div>
                             <div class=" col-lg-8 col-md-8 col-sm-8 col-xs-8" style="margin-left: 4%">
                                 <div class="count" >Pagos Pendientes</div>
-                                <div class="title" >Ver Pagos todos los Pagos Pendientes</div> 
+                                <div class="title" >Ver todos los Pagos Pendientes</div> 
                             </div>
                           </div>
                           <a href="{!!URL::to('PagosPendientes')!!}"> 
                           <div class="botn " style="margin-top: -40px; width: 100%">
-                              Ver Pagos todos los Pagos Pendientes
+                              Ver todos los Pagos Pendientes
+                          </div>
+                          </a> 
+                      </div>
+
+                      <div class=" col-lg-6 col-md-6 col-sm-12 col-xs-12" style="text-align: center">
+                          <div class="info-box blue-bg" style="text-align:center">
+                            <div class=" col-lg-4 col-md-4 col-sm-4 col-xs-4" style="margin-left: -5%;  vertical-align: middle;">
+                                <img alt="" src="{!!URL::asset('/img/icon_contrato.png')!!}" style="height: 85px;">
+                            </div>
+                            <div class=" col-lg-8 col-md-8 col-sm-8 col-xs-8" style="margin-left: 4%">
+                                <div class="count" >Contratos Sistema</div>
+                                <div class="title" >Ver todos los Contratos</div> 
+                            </div>
+                          </div>
+                          <a href="{!!URL::to('ContratosSAC')!!}"> 
+                          <div class="botn " style="margin-top: -40px; width: 100%">
+                              Ver todos los Contratos del Sistema
                           </div>
                           </a> 
                       </div>

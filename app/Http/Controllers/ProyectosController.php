@@ -4,6 +4,7 @@ namespace SAC\Http\Controllers;
 
 use Illuminate\Http\Request;
 use SAC\Proyectos;
+use SAC\Contratos;
 use SAC\Empresas;
 use SAC\CentrosCosto;
 use SAC\AsignacionProyectos;
@@ -79,6 +80,28 @@ class ProyectosController extends Controller
         return Redirect::to('/ProyectosDeleted');
         
 
+    }
+
+    /*
+     *  Devuelve los contratos del sistema
+     */
+    public static function contratosSac()
+    {
+        $proyectos = Proyectos::all();
+        $i = 0;
+        $contratosSac = array();
+        foreach ($proyectos as $proyecto) {
+            $contratos = $proyecto->contratos;
+            foreach ($contratos as $key) {
+                $contratosSac[$i] = Contratos::reporteContrato($key->id);
+                $i++;
+            }
+        }
+
+       // return $contratosSac;
+        return view('Reportes.contratosSAC')
+                ->with('contratosSac',$contratosSac)
+                ->render();
     }
 
     /**
