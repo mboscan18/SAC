@@ -111,7 +111,11 @@ class PagosController extends Controller
                                 $resumenPagosPendientes[$i] = $temp;
                                 $i++;
                             }else{
-                                if ($this->auth->user()->id == $temp->usuario_id) {
+                                $us = $this->auth->user()->nombre_Usuario.' '.$this->auth->user()->apellido_Usuario;
+                                echo 'jason: '.$temp->usuario_id.' - '.$temp->usuario.'<br>';
+                                echo 'autht: '.$this->auth->user()->id.' - '.$us.'<br>';
+                                if (($this->auth->user()->id == $temp->usuario_id) || ($us == $temp->usuario)) {
+                                    echo "entro<br>";
                                     $resumenPagosPendientes[$i] = $temp;
                                     $i++;
                                 }
