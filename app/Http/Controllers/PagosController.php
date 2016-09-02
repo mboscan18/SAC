@@ -106,10 +106,16 @@ class PagosController extends Controller
 
            // echo "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Boletin: ".$key->id."<br>";
                         $temp = Valuaciones::resumenValuacionExtended($key->id);
-                        $us = $this->auth->user()->nombre_Usuario.' '.$this->auth->user()->apellido_Usuario;
-                        if(($temp->diferencia_pago > 5) && ($temp->usuario_id == $this->auth->user()->id)){
-                            $resumenPagosPendientes[$i] = $temp;
-                            $i++;
+                        if(($temp->diferencia_pago > 5) ){
+                            if (($this->auth->user()->rol_Usuario == 'supervisor') || ($this->auth->user()->rol_Usuario == 'administrador')){
+                                $resumenPagosPendientes[$i] = $temp;
+                                $i++;
+                            }else{
+                                if ($this->auth->user()->id == $temp->usuario_id) {
+                                    $resumenPagosPendientes[$i] = $temp;
+                                    $i++;
+                                }
+                            }
                         }
                     }
                 }

@@ -269,4 +269,9 @@ class Contratos extends Model
         return $this->hasMany('SAC\Valuaciones', 'contrato_id');
     }
 
+    public function ordenServicio()
+    {
+        return $this->hasMany('SAC\OrdenServicio', 'contrato_id');
+    }
+
 }
