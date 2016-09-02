@@ -87,6 +87,7 @@ class PagosController extends Controller
                 $j++;
            }
         }
+        //return $proyectos;
 
 
         $resumenPagosPendientes = array();
@@ -95,16 +96,16 @@ class PagosController extends Controller
         foreach ($proyectos as $proy) {
             $contratos = $proy->contratos;
         //return $contratos;
-           // echo "Proy: ".$proy->id."<br>";
+            echo "Proy: ".$proy->id."<br>";
             foreach ($contratos as $contra) {
                 $boletines = $contra->valuaciones;
-           // echo "&nbsp; &nbsp; &nbsp; Contra: ".$contra->id."<br>";
+            echo "&nbsp; &nbsp; &nbsp; Contra: ".$contra->id."<br>";
         //return $boletines;
                 
                 foreach ($boletines as $key) {
                     if ($key->factura != null) {
 
-           // echo "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Boletin: ".$key->id."<br>";
+            echo "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Boletin: ".$key->id."<br>";
                         $temp = Valuaciones::resumenValuacionExtended($key->id);
                         if(($temp->diferencia_pago > 5) ){
                             if (($this->auth->user()->rol_Usuario == 'supervisor') || ($this->auth->user()->rol_Usuario == 'administrador')){
