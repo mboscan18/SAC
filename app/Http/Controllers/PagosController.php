@@ -106,18 +106,21 @@ class PagosController extends Controller
                     if ($key->factura != null) {
 
             //echo "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Boletin: ".$key->id;
-            echo "Boletin: ".$key->id."&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;";
+            //echo "Boletin: ".$key->id."&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;";
                         $temp = Valuaciones::resumenValuacionExtended($key->id);
-                        if(($temp->diferencia_pago > 5) ){
+                                $us = $this->auth->user()->nombre_Usuario.' '.$this->auth->user()->apellido_Usuario;
+                                echo 'Boletin: '.$key->id.'&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; jason: '.$temp->usuario_id.' - '.$temp->usuario.'&nbsp; &nbsp; / &nbsp; &nbsp;';
+                                echo 'autht: '.$this->auth->user()->id.' - '.$us.'<br>';
+                        if(($temp->diferencia_pago > 1) ){
                             if (($this->auth->user()->rol_Usuario == 'supervisor') || ($this->auth->user()->rol_Usuario == 'administrador')){
                                 $resumenPagosPendientes[$i] = $temp;
                                 $i++;
                             }else{
-
-                                $us = $this->auth->user()->nombre_Usuario.' '.$this->auth->user()->apellido_Usuario;
-                                echo '<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; jason: '.$temp->usuario_id.' - '.$temp->usuario.'&nbsp; &nbsp; / &nbsp; &nbsp;';
-                                echo 'autht: '.$this->auth->user()->id.' - '.$us.'<br>';
-                                if (($this->auth->user()->id == $temp->usuario_id) || ($us == $temp->usuario)) {
+                                $us_A_St = $this->auth->user()->nombre_Usuario.' '.$this->auth->user()->apellido_Usuario;
+                                $us_A_Id = strval($this->auth->user()->id);
+                                $us_J_St = strval($temp->usuario);
+                                $us_J_Id = strval($temp->usuario_id);
+                                if ($us_A_Id === $us_J_Id) {
                                     echo "entro - ".$key->id."<br>";
                                     $resumenPagosPendientes[$i] = $temp;
                                     $i++;
@@ -128,6 +131,7 @@ class PagosController extends Controller
                 }
             }
         }
+        return;
         //return $resumenPagosPendientes;
         return view('Pagos.pagosPendientes')
                 ->with('resumenPagosPendientes',$resumenPagosPendientes)
