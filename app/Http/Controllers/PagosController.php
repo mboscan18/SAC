@@ -79,13 +79,18 @@ class PagosController extends Controller
             }
         }
 
+        $proyectos = array();
         $j = 0;
-        //return $allproyectos[2];
+        //return $allproyectos;
         for ($i=0; $i < sizeof($allproyectos); $i++) { 
-           if(($i != 0) && ($i != 1)){
-                $proyectos[$j] = $allproyectos[$i];
-                $j++;
-           }
+            if (($this->auth->user()->rol_Usuario == 'supervisor') || ($this->auth->user()->rol_Usuario == 'administrador')) {
+               if(($i != 0) && ($i != 1)){
+                    $proyectos[$j] = $allproyectos[$i];
+                    $j++;
+               }
+            }else{
+                $proyectos[$i] = $allproyectos[$i];
+            }
         }
         //return $proyectos;
 
@@ -108,20 +113,19 @@ class PagosController extends Controller
             //echo "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Boletin: ".$key->id;
             //echo "Boletin: ".$key->id."&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;";
                         $temp = Valuaciones::resumenValuacionExtended($key->id);
-                                $us = $this->auth->user()->nombre_Usuario.' '.$this->auth->user()->apellido_Usuario;
-                                echo 'Boletin: '.$key->id.'&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; jason: '.$temp->usuario_id.' - '.$temp->usuario.'&nbsp; &nbsp; / &nbsp; &nbsp;';
-                                echo 'autht: '.$this->auth->user()->id.' - '.$us.'<br>';
+                        //echo "Proy: {$temp->codProyecto} | Cont: {$temp->codContrato} | Bol: {$temp->nro_Boletin} | Dif: {$temp->diferencia_pago} | User: {$temp->usuario}<br>";
                         if(($temp->diferencia_pago > 1) ){
                             if (($this->auth->user()->rol_Usuario == 'supervisor') || ($this->auth->user()->rol_Usuario == 'administrador')){
                                 $resumenPagosPendientes[$i] = $temp;
                                 $i++;
                             }else{
-                                $us_A_St = $this->auth->user()->nombre_Usuario.' '.$this->auth->user()->apellido_Usuario;
-                                $us_A_Id = strval($this->auth->user()->id);
-                                $us_J_St = strval($temp->usuario);
-                                $us_J_Id = strval($temp->usuario_id);
-                                if ($us_A_Id === $us_J_Id) {
-                                    echo "entro - ".$key->id."<br>";
+                                $us = $this->auth->user()->nombre_Usuario.' '.$this->auth->user()->apellido_Usuario;
+                              //  echo 'Boletin: '.$key->id.'&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; jason: '.$temp->usuario_id.' - '.$temp->usuario.'&nbsp; &nbsp; / &nbsp; &nbsp;';
+                               // echo 'autht: '.$this->auth->user()->id.' - '.$us.'<br>';
+                                $us_A_Id = (Int)($this->auth->user()->id);
+                                $us_J_Id = (Int)($temp->usuario_id);
+                                if ($us_A_Id == $us_J_Id) {
+                                    //echo "entro - ".$key->id."<br>";
                                     $resumenPagosPendientes[$i] = $temp;
                                     $i++;
                                 }
@@ -131,7 +135,7 @@ class PagosController extends Controller
                 }
             }
         }
-        return;
+        //return;
         //return $resumenPagosPendientes;
         return view('Pagos.pagosPendientes')
                 ->with('resumenPagosPendientes',$resumenPagosPendientes)
