@@ -96,22 +96,23 @@ class PagosController extends Controller
         foreach ($proyectos as $proy) {
             $contratos = $proy->contratos;
         //return $contratos;
-            echo "Proy: ".$proy->id."<br>";
+            //echo "Proy: ".$proy->id."<br>";
             foreach ($contratos as $contra) {
                 $boletines = $contra->valuaciones;
-            echo "&nbsp; &nbsp; &nbsp; Contra: ".$contra->id."<br>";
+            //echo "&nbsp; &nbsp; &nbsp; Contra: ".$contra->id."<br>";
         //return $boletines;
                 
                 foreach ($boletines as $key) {
                     if ($key->factura != null) {
 
-            echo "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Boletin: ".$key->id."<br>";
+            //echo "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Boletin: ".$key->id."<br>";
                         $temp = Valuaciones::resumenValuacionExtended($key->id);
                         if(($temp->diferencia_pago > 5) ){
                             if (($this->auth->user()->rol_Usuario == 'supervisor') || ($this->auth->user()->rol_Usuario == 'administrador')){
                                 $resumenPagosPendientes[$i] = $temp;
                                 $i++;
                             }else{
+
                                 $us = $this->auth->user()->nombre_Usuario.' '.$this->auth->user()->apellido_Usuario;
                                 echo 'jason: '.$temp->usuario_id.' - '.$temp->usuario.'<br>';
                                 echo 'autht: '.$this->auth->user()->id.' - '.$us.'<br>';
