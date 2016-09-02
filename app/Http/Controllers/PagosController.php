@@ -105,7 +105,8 @@ class PagosController extends Controller
                 foreach ($boletines as $key) {
                     if ($key->factura != null) {
 
-            //echo "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Boletin: ".$key->id."<br>";
+            //echo "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Boletin: ".$key->id;
+            echo "Boletin: ".$key->id."&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;";
                         $temp = Valuaciones::resumenValuacionExtended($key->id);
                         if(($temp->diferencia_pago > 5) ){
                             if (($this->auth->user()->rol_Usuario == 'supervisor') || ($this->auth->user()->rol_Usuario == 'administrador')){
@@ -114,10 +115,10 @@ class PagosController extends Controller
                             }else{
 
                                 $us = $this->auth->user()->nombre_Usuario.' '.$this->auth->user()->apellido_Usuario;
-                                echo 'jason: '.$temp->usuario_id.' - '.$temp->usuario.'<br>';
+                                echo '<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; jason: '.$temp->usuario_id.' - '.$temp->usuario.'&nbsp; &nbsp; / &nbsp; &nbsp;';
                                 echo 'autht: '.$this->auth->user()->id.' - '.$us.'<br>';
                                 if (($this->auth->user()->id == $temp->usuario_id) || ($us == $temp->usuario)) {
-                                    echo "entro<br>";
+                                    echo "entro - ".$key->id."<br>";
                                     $resumenPagosPendientes[$i] = $temp;
                                     $i++;
                                 }
