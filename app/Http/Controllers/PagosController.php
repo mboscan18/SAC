@@ -83,14 +83,7 @@ class PagosController extends Controller
         $j = 0;
         //return $allproyectos;
         for ($i=0; $i < sizeof($allproyectos); $i++) { 
-            if (($this->auth->user()->rol_Usuario == 'supervisor') || ($this->auth->user()->rol_Usuario == 'administrador')) {
-               if(($i != 0) && ($i != 1)){
-                    $proyectos[$j] = $allproyectos[$i];
-                    $j++;
-               }
-            }else{
-                $proyectos[$i] = $allproyectos[$i];
-            }
+            $proyectos[$i] = $allproyectos[$i];
         }
         //return $proyectos;
 
