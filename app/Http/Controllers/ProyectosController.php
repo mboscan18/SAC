@@ -47,9 +47,12 @@ class ProyectosController extends Controller
             $proyectos = array();
             $i = 0;
             foreach ($asignaciones as $key) {
-                $proyectos[$i] = $key->proyecto;
-                $i++;
+                if ($key->proyecto) {
+                    $proyectos[$i] = $key->proyecto;
+                    $i++;
+                }
             }
+            // return $proyectos;
         }       
         return view('Proyectos.index',compact('proyectos'));
     }

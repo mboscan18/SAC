@@ -610,4 +610,12 @@ class ContratosController extends Controller
         Session::flash('message-sucess','Contrato Eliminado Correctamente');
         return Redirect::to('/Contrato/'.$contrato->cod_Proyecto);
     }
+
+    public function revert_LastOrdenServicio($id_contrato)
+    {
+        $contrato = Contratos::find($id_contrato);
+        $contrato->delete();
+        Session::flash('message-sucess','Contrato Eliminado Correctamente');
+        return Redirect::to('/Contrato/'.$contrato->cod_Proyecto);
+    }
 }

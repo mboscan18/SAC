@@ -70,8 +70,10 @@ class PagosController extends Controller
                 $allproyectos = array();
                 $i = 0;
                 foreach ($asignaciones as $key) {
-                    $allproyectos[$i] = $key->proyecto;
-                    $i++;
+                    if ($key->proyecto) {
+                        $allproyectos[$i] = $key->proyecto;
+                        $i++;
+                    }
                 }
             }else{
                 Session::flash('message-error','Usted no Administra ningún Proyecto.');
