@@ -165,8 +165,117 @@
 
    ?>
 
+<!--  - - - - - - PIE - - - - - -  -->
+<!--  - - - - - - - - - - - - - - - - -  -->
 
+   <div id="footer">
+    <?php
+          $montoPagarIdeal = $MontoActualIdeal + $diferenciaAdelantosValuacion;
+          $diferenciaMontoPagar = $montoPagarIdeal - $montoPagarValuacion;
+          if ($diferenciaMontoPagar < 1) {
+            $montoPagarValuacion = $montoPagarValuacion + $diferenciaMontoPagar;
+          }
+      ?>
+      <table style="width: 100%; page-break-inside: avoid;" class=" fuente tam-9">
+          <tr>
+              <td style="width: 9%; padding-right: 5px; text-align: right" class=" tabla fuente tam-9">
+                  <table style="width: 100%;">
+                      <tr>
+                          <td></td>
+                          <td class=" fuente tam-9 tabla-sin-borde-bottom" style="text-align: center">
+                            Fecha de Pago:
+                          </td>
+                      </tr>
+                      <tr>
+                          <td class=" fuente tam-9" style="text-align: center">
+                            {{date('d-m-Y', strtotime($valuacion->fecha_Pago))}}
+                          </td>
+                      </tr>
+                  </table>
+              </td>
+              <td style="width: 11%; text-align: center" class="tabla fuente tam-9 tabla-sin-borde-right ">
+                  VALOR DEL CONTRATO SIN IVA
+              </td>
+              <th style="width: 17%; text-align: center" class="tabla fuente tam-12 tabla-sin-borde-left ">
+                  {{number_format($valorContrato, 2, ',','.')}}
+              </th>
+              <td style="width: 8%; text-align: center" class="tabla fuente tam-9 tabla-sin-borde-right ">
+                  AVANCE FÍSICO:
+              </td>
+              <th style="width: 6%; text-align: center" class="tabla fuente tam-12 tabla-sin-borde-left ">
+                  {{number_format($valuacion->avance_fisico, 2, ',','.')}}%
+              </th>
+              <td style="width: 8%; text-align: center" class="tabla fuente tam-9 tabla-sin-borde-right ">
+                  AVANCE FINANCIERO:
+              </td>
+              <th style="width: 6%; text-align: center" class="tabla fuente tam-12 tabla-sin-borde-left ">
+                  {{number_format($valuacion->avance_financiero, 2, ',','.')}}%
+              </th>
+              <td style="width: 17.5%; text-align: center; background-color: #c6d9f1" class="tabla fuente tam-9">
+                  MONTO NETO A PAGAR EN EL PRESENTE PERIODO SIN IVA:
+              </td>
+              <th style="width: 17.5%; text-align: center; background-color: #c6d9f1" class="tabla fuente tam-12">
+                  {{number_format($montoPagarValuacion, 2, ',','.')}}
+              </th>
+          </tr> 
+      </table>
+      <table style="width: 100%" >
+          <tr>
+              @foreach($firmantes_cliente as $firmante) 
+                  @if($contador == $nro_firmas-1) 
+                      <td style="text-align: left; width: {{$porcentaje_posicion}}%; padding-left: 5px" class="fuente tabla tam-9 tabla-sin-borde-top">
+                        {{$firmante->accion}}<br>
+                        {{$firmante->firmante->nombre}} {{$firmante->firmante->apellido}}<br>
+                        @if($firmante->empresa == 1)
+                            {{$valuacion->contrato->proyecto->empresa->nombre_Empresa}}
+                        @else
+                            {{$valuacion->contrato->empresaProveedor->nombre_Empresa}}
+                        @endif
+                      </td>
+                  @else    
+                      <td style="text-align: left; width: {{$porcentaje_posicion}}%; padding-left: 5px" class="fuente tabla tam-9 tabla-sin-borde-right tabla-sin-borde-top">
+                        {{$firmante->accion}}<br>
+                        {{$firmante->firmante->nombre}} {{$firmante->firmante->apellido}}<br>
+                        @if($firmante->empresa == 1)
+                            {{$valuacion->contrato->proyecto->empresa->nombre_Empresa}}
+                        @else
+                            {{$valuacion->contrato->empresaProveedor->nombre_Empresa}}
+                        @endif
+                      </td>
+                  @endif    
+                  <?php $contador++?>
+              @endforeach 
+              @foreach($firmantes_proveedor as $firmante) 
+                  @if($contador == $nro_firmas-1) 
+                      <td style="text-align: left; width: {{$porcentaje_posicion}}%; padding-left: 5px" class="fuente tabla tam-9 tabla-sin-borde-top">
+                        {{$firmante->accion}}<br>
+                        {{$firmante->firmante->nombre}} {{$firmante->firmante->apellido}}<br>
+                        @if($firmante->empresa == 1)
+                            {{$valuacion->contrato->proyecto->empresa->nombre_Empresa}}
+                        @else
+                            {{$valuacion->contrato->empresaProveedor->nombre_Empresa}}
+                        @endif
+                      </td>
+                  @else    
+                      <td style="text-align: left; width: {{$porcentaje_posicion}}%; padding-left: 5px" class="fuente tabla tam-9 tabla-sin-borde-right tabla-sin-borde-top">
+                        {{$firmante->accion}}<br>
+                        {{$firmante->firmante->nombre}} {{$firmante->firmante->apellido}}<br>
+                        @if($firmante->empresa == 1)
+                            {{$valuacion->contrato->proyecto->empresa->nombre_Empresa}}
+                        @else
+                            {{$valuacion->contrato->empresaProveedor->nombre_Empresa}}
+                        @endif
+                      </td>
+                  @endif    
+                  <?php $contador++?>
+              @endforeach 
+          </tr>
+      </table> 
+   </div>
+<!--  - - - - - - FIN PIE - - - - - -  -->
+<!--  - - - - - - - - - - - - - - - - - -->
 
+   
       <table style="width: 100%" class="fuente tam-9">
           <thead>
             <tr >
@@ -206,20 +315,11 @@
             </tr>    
           </thead>       
       </table>
-    <?php
-        $Total_PrecioTotal = 0;
-        $Total_MontoEjecutado = 0;
-        $Total_MontoAcumulado = 0;
-        $Total_MontoAnterior = 0;
-    ?>  
+     
     @foreach($acumuladosPartida as $datos)
     <?php
         $cantAnterior = $datos->CantidadAcumulada - $datos->CantidadTrabajada;
         $montoAnterior = $datos->MontoAcumulado - $datos->MontoTrabajado;
-        $Total_MontoEjecutado = $Total_MontoEjecutado + $datos->MontoTrabajado;
-        $Total_MontoAcumulado = $Total_MontoAcumulado + $datos->MontoAcumulado;
-        $Total_MontoAnterior = $Total_MontoAnterior + $montoAnterior;
-        $Total_PrecioTotal = $Total_PrecioTotal + $datos->PrecioTotal;
     ?>
       <table style="width: 100%; page-break-inside: avoid;" class="fuente tam-9">
           <tbody>
@@ -271,15 +371,7 @@
     @endforeach
     <?php
         
-        $MontoActualIdeal = $Total_PrecioTotal - $Total_MontoAnterior;
-        $diferenciaMontoActual = $MontoActualIdeal - $Total_MontoEjecutado;
-        $diferenciaMontoTotal = $Total_PrecioTotal - $Total_MontoAcumulado;
-        if ($diferenciaMontoActual < 1) {
-          $Total_MontoEjecutado = $Total_MontoEjecutado + $diferenciaMontoActual;
-        }
-        if ($diferenciaMontoTotal < 1) {
-          $Total_MontoAcumulado = $Total_MontoAcumulado + $diferenciaMontoTotal;
-        }
+        
     ?>
       <table style="width: 100%; page-break-inside: avoid;" class=" fuente tam-9">
           <tbody>
@@ -320,19 +412,7 @@
           </tbody>
       </table>
 
-      <?php
-          $IVA_Total_MontoAnterior = (($Total_MontoAnterior/100) * $IVA);
-          $IVA_Total_MontoEjecutado = (($Total_MontoEjecutado/100) * $IVA);
-          $IVA_Total_MontoAcumulado = (($Total_MontoAcumulado/100) * $IVA);
-
-          $Total_MontoAnterior_conIVA = $IVA_Total_MontoAnterior + $Total_MontoAnterior;
-          $Total_MontoEjecutado_conIVA = $IVA_Total_MontoEjecutado + $Total_MontoEjecutado;
-          $Total_MontoAcumulado_conIVA = $IVA_Total_MontoAcumulado + $Total_MontoAcumulado;
-
-          $Total_MontoEjecutado_conIVA_Neto = $Total_MontoEjecutado_conIVA + $montoAnticiposValuacion + $montoAdelantosValuacion;
-          $Total_MontoEjecutado_conIVA_Neto_Anterior = $Total_MontoAnterior_conIVA + $montoAnticiposValuacion_Anterior + $montoAdelantosValuacion_Anterior;
-          $Total_MontoAcumulado_conIVA_Neto = $Total_MontoAcumulado_conIVA + $montoAnticiposTotal + $montoAdelantosTotal;
-      ?>
+      
        <table style="width: 100%; page-break-inside: avoid;" class=" fuente tam-9">
           <tr>
             <td style="width: 70%; padding-top: 5px" class="tabla tabla-sin-borde-right "></td>
@@ -631,115 +711,7 @@
           </tr> 
       </table>
     
-  <!--  - - - - - - PIE - - - - - -  -->
-<!--  - - - - - - - - - - - - - - - - -  -->
-
-   <div id="footer">
-    <?php
-          $montoPagarIdeal = $MontoActualIdeal + $diferenciaAdelantosValuacion;
-          $diferenciaMontoPagar = $montoPagarIdeal - $montoPagarValuacion;
-          if ($diferenciaMontoPagar < 1) {
-            $montoPagarValuacion = $montoPagarValuacion + $diferenciaMontoPagar;
-          }
-      ?>
-      <table style="width: 100%; page-break-inside: avoid;" class=" fuente tam-9">
-          <tr>
-              <td style="width: 9%; padding-right: 5px; text-align: right" class=" tabla fuente tam-9">
-                  <table style="width: 100%;">
-                      <tr>
-                          <td></td>
-                          <td class=" fuente tam-9 tabla-sin-borde-bottom" style="text-align: center">
-                            Fecha de Pago:
-                          </td>
-                      </tr>
-                      <tr>
-                          <td class=" fuente tam-9" style="text-align: center">
-                            {{date('d-m-Y', strtotime($valuacion->fecha_Pago))}}
-                          </td>
-                      </tr>
-                  </table>
-              </td>
-              <td style="width: 11%; text-align: center" class="tabla fuente tam-9 tabla-sin-borde-right ">
-                  VALOR DEL CONTRATO SIN IVA
-              </td>
-              <th style="width: 17%; text-align: center" class="tabla fuente tam-12 tabla-sin-borde-left ">
-                  {{number_format($valorContrato, 2, ',','.')}}
-              </th>
-              <td style="width: 8%; text-align: center" class="tabla fuente tam-9 tabla-sin-borde-right ">
-                  AVANCE FÍSICO:
-              </td>
-              <th style="width: 6%; text-align: center" class="tabla fuente tam-12 tabla-sin-borde-left ">
-                  {{number_format($valuacion->avance_fisico, 2, ',','.')}}%
-              </th>
-              <td style="width: 8%; text-align: center" class="tabla fuente tam-9 tabla-sin-borde-right ">
-                  AVANCE FINANCIERO:
-              </td>
-              <th style="width: 6%; text-align: center" class="tabla fuente tam-12 tabla-sin-borde-left ">
-                  {{number_format($valuacion->avance_financiero, 2, ',','.')}}%
-              </th>
-              <td style="width: 17.5%; text-align: center; background-color: #c6d9f1" class="tabla fuente tam-9">
-                  MONTO NETO A PAGAR EN EL PRESENTE PERIODO SIN IVA:
-              </td>
-              <th style="width: 17.5%; text-align: center; background-color: #c6d9f1" class="tabla fuente tam-12">
-                  {{number_format($montoPagarValuacion, 2, ',','.')}}
-              </th>
-          </tr> 
-      </table>
-      <table style="width: 100%" >
-          <tr>
-              @foreach($firmantes_cliente as $firmante) 
-                  @if($contador == $nro_firmas-1) 
-                      <td style="text-align: left; width: {{$porcentaje_posicion}}%; padding-left: 5px" class="fuente tabla tam-9 tabla-sin-borde-top">
-                        {{$firmante->accion}}<br>
-                        {{$firmante->firmante->nombre}} {{$firmante->firmante->apellido}}<br>
-                        @if($firmante->empresa == 1)
-                            {{$valuacion->contrato->proyecto->empresa->nombre_Empresa}}
-                        @else
-                            {{$valuacion->contrato->empresaProveedor->nombre_Empresa}}
-                        @endif
-                      </td>
-                  @else    
-                      <td style="text-align: left; width: {{$porcentaje_posicion}}%; padding-left: 5px" class="fuente tabla tam-9 tabla-sin-borde-right tabla-sin-borde-top">
-                        {{$firmante->accion}}<br>
-                        {{$firmante->firmante->nombre}} {{$firmante->firmante->apellido}}<br>
-                        @if($firmante->empresa == 1)
-                            {{$valuacion->contrato->proyecto->empresa->nombre_Empresa}}
-                        @else
-                            {{$valuacion->contrato->empresaProveedor->nombre_Empresa}}
-                        @endif
-                      </td>
-                  @endif    
-                  <?php $contador++?>
-              @endforeach 
-              @foreach($firmantes_proveedor as $firmante) 
-                  @if($contador == $nro_firmas-1) 
-                      <td style="text-align: left; width: {{$porcentaje_posicion}}%; padding-left: 5px" class="fuente tabla tam-9 tabla-sin-borde-top">
-                        {{$firmante->accion}}<br>
-                        {{$firmante->firmante->nombre}} {{$firmante->firmante->apellido}}<br>
-                        @if($firmante->empresa == 1)
-                            {{$valuacion->contrato->proyecto->empresa->nombre_Empresa}}
-                        @else
-                            {{$valuacion->contrato->empresaProveedor->nombre_Empresa}}
-                        @endif
-                      </td>
-                  @else    
-                      <td style="text-align: left; width: {{$porcentaje_posicion}}%; padding-left: 5px" class="fuente tabla tam-9 tabla-sin-borde-right tabla-sin-borde-top">
-                        {{$firmante->accion}}<br>
-                        {{$firmante->firmante->nombre}} {{$firmante->firmante->apellido}}<br>
-                        @if($firmante->empresa == 1)
-                            {{$valuacion->contrato->proyecto->empresa->nombre_Empresa}}
-                        @else
-                            {{$valuacion->contrato->empresaProveedor->nombre_Empresa}}
-                        @endif
-                      </td>
-                  @endif    
-                  <?php $contador++?>
-              @endforeach 
-          </tr>
-      </table> 
-   </div>
-<!--  - - - - - - FIN PIE - - - - - -  -->
-<!--  - - - - - - - - - - - - - - - - - -->
+  
   </body>
 
 </html>

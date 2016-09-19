@@ -367,6 +367,45 @@ class ValuacionesController extends Controller
             return Redirect::to('/FirmasContrato/'.$valuacion->contrato_id);
         }
 
+        $Total_PrecioTotal = 0;
+        $Total_MontoEjecutado = 0;
+        $Total_MontoAcumulado = 0;
+        $Total_MontoAnterior = 0;
+
+        foreach($acumuladosPartida as $datos){
+            $cantAnterior = $datos->CantidadAcumulada - $datos->CantidadTrabajada;
+            $montoAnterior = $datos->MontoAcumulado - $datos->MontoTrabajado;
+            $Total_MontoEjecutado = $Total_MontoEjecutado + $datos->MontoTrabajado;
+            $Total_MontoAcumulado = $Total_MontoAcumulado + $datos->MontoAcumulado;
+            $Total_MontoAnterior = $Total_MontoAnterior + $montoAnterior;
+            $Total_PrecioTotal = $Total_PrecioTotal + $datos->PrecioTotal;
+            
+        }
+
+        $MontoActualIdeal = $Total_PrecioTotal - $Total_MontoAnterior;
+        $diferenciaMontoActual = $MontoActualIdeal - $Total_MontoEjecutado;
+        $diferenciaMontoTotal = $Total_PrecioTotal - $Total_MontoAcumulado;
+        if ($diferenciaMontoActual < 1) {
+          $Total_MontoEjecutado = $Total_MontoEjecutado + $diferenciaMontoActual;
+        }
+        if ($diferenciaMontoTotal < 1) {
+          $Total_MontoAcumulado = $Total_MontoAcumulado + $diferenciaMontoTotal;
+        }
+
+        $IVA_Total_MontoAnterior = (($Total_MontoAnterior/100) * $IVA);
+          $IVA_Total_MontoEjecutado = (($Total_MontoEjecutado/100) * $IVA);
+          $IVA_Total_MontoAcumulado = (($Total_MontoAcumulado/100) * $IVA);
+
+          $Total_MontoAnterior_conIVA = $IVA_Total_MontoAnterior + $Total_MontoAnterior;
+          $Total_MontoEjecutado_conIVA = $IVA_Total_MontoEjecutado + $Total_MontoEjecutado;
+          $Total_MontoAcumulado_conIVA = $IVA_Total_MontoAcumulado + $Total_MontoAcumulado;
+
+          $Total_MontoEjecutado_conIVA_Neto = $Total_MontoEjecutado_conIVA + $montoAnticiposValuacion + $montoAdelantosValuacion;
+          $Total_MontoEjecutado_conIVA_Neto_Anterior = $Total_MontoAnterior_conIVA + $montoAnticiposValuacion_Anterior + $montoAdelantosValuacion_Anterior;
+          $Total_MontoAcumulado_conIVA_Neto = $Total_MontoAcumulado_conIVA + $montoAnticiposTotal + $montoAdelantosTotal;
+    
+    
+
         $pdf = \PDF::loadHTML(
             view('Reportes.boletinValuacion')
                 ->with('valuacion',$valuacion)
@@ -408,6 +447,27 @@ class ValuacionesController extends Controller
 
                 ->with('firmantes_cliente',$firmantes_cliente)
                 ->with('firmantes_proveedor',$firmantes_proveedor)
+
+                ->with('Total_PrecioTotal',$Total_PrecioTotal)
+                ->with('Total_MontoEjecutado',$Total_MontoEjecutado)
+                ->with('Total_MontoAcumulado',$Total_MontoAcumulado)
+                ->with('Total_MontoAnterior',$Total_MontoAnterior)                
+
+                ->with('MontoActualIdeal',$MontoActualIdeal)
+                ->with('diferenciaMontoActual',$diferenciaMontoActual)
+                ->with('diferenciaMontoTotal',$diferenciaMontoTotal)
+
+                ->with('IVA_Total_MontoAnterior',$IVA_Total_MontoAnterior)
+                ->with('IVA_Total_MontoEjecutado',$IVA_Total_MontoEjecutado)
+                ->with('IVA_Total_MontoAcumulado',$IVA_Total_MontoAcumulado)
+
+                ->with('Total_MontoAnterior_conIVA',$Total_MontoAnterior_conIVA)
+                ->with('Total_MontoEjecutado_conIVA',$Total_MontoEjecutado_conIVA)
+                ->with('Total_MontoAcumulado_conIVA',$Total_MontoAcumulado_conIVA)
+
+                ->with('Total_MontoEjecutado_conIVA_Neto',$Total_MontoEjecutado_conIVA_Neto)
+                ->with('Total_MontoEjecutado_conIVA_Neto_Anterior',$Total_MontoEjecutado_conIVA_Neto_Anterior)
+                ->with('Total_MontoAcumulado_conIVA_Neto',$Total_MontoAcumulado_conIVA_Neto)
                 ->render()
             );
 
