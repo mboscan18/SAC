@@ -118,7 +118,6 @@
                                                 <div class="trash icon-reorder tooltips" style="text-align:center;" data-toggle="modal" data-target="#Eliminar" data-original-title="Eliminar Orden de Servicio {{$i+1}}" data-placement="bottom">
                                                     <div class="title" ><i class="fa fa-trash fa-3x"></i></div> 
                                                 </div>
-                                                
                                             </div>
 
                                             <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="Eliminar" class="modal fade ">
