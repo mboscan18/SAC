@@ -106,13 +106,58 @@
                                   <?php $tam = (90*($nroAdendum+1))-(($nroAdendum+1)*5); ?>
                                   <div class="well" style="height: {{$tam}}px">
                                     <?php for ($i=0; $i < ($nroAdendum+1); $i++) { ?>
-                                      <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center">
-                                            <a href="{!!URL::to('/OrdenDeServicioAdendum/'.$contrato->id.'/'.$i)!!}" target="_blank" > 
-                                            <div class="cajita2 danger icon-reorder tooltips" style="text-align:center; "  data-original-title="Imprimir Orden de Servicio {{$i+1}}" data-placement="left">
-                                                <div class="title" >Imprimir Orden de Servicio {{$i+1}}</div> 
+                                        @if($i == $nroAdendum)
+                                            <div class=" col-lg-10 col-md-10 col-sm-10 col-xs-10" style="text-align: center">
+                                                <a href="{!!URL::to('/OrdenDeServicioAdendum/'.$contrato->id.'/'.$i)!!}" target="_blank" > 
+                                                <div class="cajita2 danger icon-reorder tooltips" style="text-align:center; "  data-original-title="Imprimir Orden de Servicio {{$i+1}}" data-placement="left">
+                                                    <div class="title" >Imprimir Orden de Servicio {{$i+1}}</div> 
+                                                </div>
+                                                </a> 
                                             </div>
-                                            </a> 
-                                        </div>
+                                            <div class=" col-lg-2 col-md-2 col-sm-2 col-xs-2" style="text-align: center; ">
+                                                <div class="trash icon-reorder tooltips" style="text-align:center;" data-toggle="modal" data-target="#Eliminar" data-original-title="Eliminar Orden de Servicio {{$i+1}}" data-placement="bottom">
+                                                    <div class="title" ><i class="fa fa-trash fa-3x"></i></div> 
+                                                </div>
+                                                
+                                            </div>
+
+                                            <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="Eliminar" class="modal fade ">
+                                                <div class="modal-dialog " role="document">
+                                                    <div class="modal-content">
+                                                        <div class="panel-heading" style="background-color: #1a2732; color: #9cd5eb; text-align: left; height: 40px; padding-top: 6px">
+                                                            <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                                                            <h4 class="modal-title">Eliminar Orden de Servicio</h4>
+                                                        </div>
+                                                        <div class="modal-body" style="text-align: left">
+                                                          <strong>¿Está seguro que quiere Eliminar la Orden de Servicio?</strong> <br><br>
+                                                          Al eliminar la Orden de Servicio se eliminará la aprobación de los siguientes elementos: <br><br>
+                                                          &nbsp; &nbsp; &nbsp; &nbsp; - Precios y Cantidades de las Partidas<br>
+                                                          &nbsp; &nbsp; &nbsp; &nbsp; - Condiciones de la Orden de Servicio<br>
+                                                          &nbsp; &nbsp; &nbsp; &nbsp; - Monto del Contrato<br>
+                                                            <div class="col-lg-12 col-md-12 col-sm-12"><br></div>    
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <div class="col-lg-6 col-md-6 col-sm-6" style="text-align:center">
+                                                                <button type="button" class="boton boton-danger" data-dismiss="modal" style="width:100%"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar</button>
+                                                            </div>
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 ">
+                                                              <a href="{!!URL::to('/EliminarFirmadoContrato/'.$contrato->id)!!}"  class="boton col-lg-6 col-md-6 col-sm-6" style="width:100%; text-align: center">
+                                                                <i class="fa fa-trash-o fa-lg"></i> Eliminar
+                                                              </a>
+                                                            </div>
+                                                      </div> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @else
+                                            <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center">
+                                                <a href="{!!URL::to('/OrdenDeServicioAdendum/'.$contrato->id.'/'.$i)!!}" target="_blank" > 
+                                                <div class="cajita2 danger icon-reorder tooltips" style="text-align:center; "  data-original-title="Imprimir Orden de Servicio {{$i+1}}" data-placement="left">
+                                                    <div class="title" >Imprimir Orden de Servicio {{$i+1}}</div> 
+                                                </div>
+                                                </a> 
+                                            </div>
+                                        @endif
                                     <?php } ?>
                                   </div>
                                 </div> <!-- Fin del Collapse -->

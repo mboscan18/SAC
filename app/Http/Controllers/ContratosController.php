@@ -305,6 +305,35 @@ class ContratosController extends Controller
         
     }
 
+    public function eliminarFirmado($id_contrato)
+    {
+        $contrato = Contratos::find($id_contrato);
+        $nroAdendum = OrdenServicio::ordenAdendum($id_contrato);
+        $ordenServicio = OrdenServicio::ordenServicio($id_contrato, $nroAdendum);
+        $partidasFirmadas = VariacionPresupuesto::partidasFirmadas($id_contrato, $nroAdendum);
+
+    
+
+        if($nroAdendum >= 0){
+
+            $ordenServicio->delete();
+
+            foreach ($partidasFirmadas as $partidaFirmada) {
+
+                $partidaFirmada->delete();
+
+            }
+
+            Session::flash('message-sucess','Orden de Servicio Eliminada Correctamente.');
+
+        }else{
+            Session::flash('message-sucess','No hay Orden de Servicio Firmada.');
+        }
+
+        return Redirect::to('/OpcionesContrato/'.$id_contrato);
+        
+    }
+
     public function otrosReportes($id_contrato){
 
 

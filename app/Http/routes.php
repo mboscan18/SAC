@@ -96,6 +96,7 @@ Route::get('OrdenDeServicio/{contrato}', 'ContratosController@generarOrdenServic
 Route::get('OtrosReportes/{id_contrato}', 'ContratosController@otrosReportes');
 Route::get('ContratosDeleted', 'ContratosController@showDeletes');
 Route::get('RestoreContrato/{id}', 'ContratosController@restore');
+Route::get('EliminarFirmadoContrato/{id_contrato}', 'ContratosController@eliminarFirmado');
 
 Route::get('Adendum/{id_contrato}', 'ContratosController@adendumContrato');
 Route::get('Adendum/EditContrato/{id_contrato}', 'ContratosController@adendumEditarContrato');
