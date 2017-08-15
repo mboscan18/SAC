@@ -42,7 +42,8 @@ class FacturasController extends Controller
         $valuacion = Valuaciones::find($id_valuacion);
         $contrato = Contratos::find($valuacion->contrato_id);
         $valorContrato = Presupuestos::valorContrato($valuacion->contrato_id);
-        $retencionesContrato = RetencionesContrato::retencionesContrato($valuacion->contrato_id);
+       // $retencionesContrato = RetencionesContrato::retencionesContrato($valuacion->contrato_id);
+        $retencionesContrato = $contrato->retenciones;
 
         $detallesValuacion = $valuacion->detallesValuacion;
         $monto_Valuado = 0;
@@ -228,6 +229,15 @@ class FacturasController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $factura = Facturas::find($id);
+        $retencionesFactura = $factura->retenciones;
+
+        foreach ($retencionesFactura as $key) {
+            $key->delete();
+        }
+        $factura->delete();
+        $valuacion = Session::get('valuacion');
+        Session::flash('message-sucess','Envío de Pago cancelado Correctamente');
+        return Redirect::to('/OpcionesValuacion/'.$valuacion->id);  
     }
 }

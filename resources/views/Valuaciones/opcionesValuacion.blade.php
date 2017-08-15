@@ -401,6 +401,68 @@
                           </div> 
                       </div>
 
+                      @if(($valuacion->lista == 'S') && ($estadoValuacion == 2))
+                      <div class="col-lg-12 col-md-12 col-sm-12"><br><br></div>
+                      <div class="col-lg-4 col-md-4 col-sm-4"><br><br></div>
+
+                      <div class=" col-lg-4 col-md-4 col-sm-12 col-xs-12" style="text-align: center">
+                          <div class="info-box blue-bg" style="text-align:center;  vertical-align: middle;">
+                            <div class=" col-lg-4 col-md-4 col-sm-4 col-xs-4" style="margin-left: -8%;  vertical-align: middle;">
+                                <img alt="" src="{!!URL::asset('/img/icon_config.png')!!}" style="height: 85px;">
+                            </div>
+                            <div class=" col-lg-8 col-md-8 col-sm-8 col-xs-8" style="margin-left: 4%">
+                                <div class="count" >Opciones</div>
+                                <div class="title" >Más opciones sobre el Boletín</div> 
+                            </div>
+                          </div>
+                            <a data-toggle="collapse" href="#OpcionesBoletin" aria-expanded="false" aria-controls="OpcionesBoletin" > 
+                            <div class="botn " style="margin-top: -40px; width: 100%">
+                                Ver Opciones
+                            </div>
+                            </a> 
+                          </a>
+                          <div class="collapse" id="OpcionesBoletin">
+                            <div class="well" style="height: 115px">
+                                <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center">
+                                      <a href="" data-toggle="modal" data-target="#Eliminar" style="text-align: center;"  id="eliminarFactura">
+                                      <div class="cajita blue-bg icon-reorder tooltips" style="text-align:center;"  data-original-title="Imprimir solo partidas Trabajadas" data-placement="bottom">
+                                          <div class="title" >Cancelar envío a pago del Boletín</div> 
+                                      </div>
+                                    </a>
+
+                                            <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="Eliminar" class="modal fade ">
+                                                <div class="modal-dialog " role="document">
+                                                    <div class="modal-content">
+                                                        <div class="panel-heading" style="background-color: #1a2732; color: #9cd5eb; text-align: left; height: 40px; padding-top: 6px">
+                                                            <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                                                            <h4 class="modal-title">Eliminar Envío de Pago</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                          <strong>¿Está seguro que quiere eliminar el envío a pago del boletín?</strong> <br><br>
+                                                          Al eliminarlo podrá volver a editar la valuación.<br><br>
+                                                            <div class="col-lg-12 col-md-12 col-sm-12"><br></div>    
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <div class="col-lg-6 col-md-6 col-sm-6" style="text-align:center">
+                                                                <button type="button" class="boton boton-danger" data-dismiss="modal" style="width:100%"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar</button>
+                                                            </div>
+                                                            {!!Form::open(['route'=>['Facturas.destroy', $valuacion->factura], 'method' => 'DELETE'])!!}
+                                                            <div class="col-lg-6 col-md-6 col-sm-6" style="text-align:center">
+                                                                <button href="" type="submit" class="boton" style="text-align: center; width:100%">
+                                                                    <i class="fa fa-trash-o"></i> Eliminar
+                                                                </button>
+                                                            </div>
+                                                            {!!Form::close()!!}
+                                                      </div> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                  </div>
+                            </div>
+                          </div> 
+                      </div>
+                      @endif
+
 
                   </div>
               </div>

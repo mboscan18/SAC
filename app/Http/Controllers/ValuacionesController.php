@@ -144,6 +144,7 @@ class ValuacionesController extends Controller
             $resumenValuacion = Valuaciones::resumenValuacion($id_valuacion);
         }
 
+        $estadoValuacion = Valuaciones::estadoValuacion($id_valuacion);
 
         
         $valuacionIsTrabajada = Valuaciones::valuacionIsTrabajada($id_valuacion);
@@ -185,6 +186,7 @@ class ValuacionesController extends Controller
                 ->with('valorContrato',$valorContrato)
 
                 ->with('valuacion',$valuacion)
+                ->with('estadoValuacion',$estadoValuacion)
                 ->with('detalleIsTrabajado',$detalleIsTrabajado)
                 ->with('anticipoIsTrabajado',$anticipoIsTrabajado)
                 ->with('descuentoIsTrabajado',$descuentoIsTrabajado)

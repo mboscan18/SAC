@@ -8,7 +8,6 @@ use DB;
 
 class RetencionesFactura extends Model
 {
-    use SoftDeletes;
     
     protected $table="RetencionesFactura"; 
 
@@ -21,7 +20,6 @@ class RetencionesFactura extends Model
 								'usuario', 					// Es el usuario que agrega la entrada en la tabla.
 							];
 
-	protected $dates = ['deleted_at'];	
 
 	/*	
 	 *	Consultas Estáticas

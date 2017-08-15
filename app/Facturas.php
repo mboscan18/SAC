@@ -8,7 +8,6 @@ use DB;
 
 class Facturas extends Model
 {
-    use SoftDeletes;
     
     protected $table="Recibo_Factura"; 
 
@@ -22,7 +21,6 @@ class Facturas extends Model
 								'usuario', 			// Es el usuario que agrega la entrada en la tabla.
 							];
 
-	protected $dates = ['deleted_at'];	
 
     /*  
      *  Consultas Estáticas
@@ -34,7 +32,6 @@ class Facturas extends Model
          $data = DB::table('Recibo_Factura')
              ->select('*')
              ->where('valuacion_id', $valuacion)
-             ->whereNull('deleted_at')
              ->get();
 
              $response = Facturas::find($data[0]->id);
