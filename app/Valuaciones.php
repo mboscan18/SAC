@@ -44,6 +44,73 @@ class Valuaciones extends Model
     /*
      * Devuelve todas las valuaciones de un contrato ordenando por numero de Boletin
      */ 
+    public static function valorValuacion($id_valuacion)
+    {
+        $valuacion = Valuaciones::find($id_valuacion);
+        $detallesValuacion = $valuacion->detallesValuacion;
+        $monto_Valuado = 0;
+        foreach ($detallesValuacion as $key) {
+            $monto_Valuado = $monto_Valuado + $key->monto;
+        }
+
+        $descuentos = $valuacion->descuentos;
+        $monto_Descuentos = 0;
+        foreach ($descuentos as $key) {
+            $monto_Descuentos = $monto_Descuentos + $key->monto_Deduccion;
+        }
+
+        $adelantos = $valuacion->anticipos;
+        $monto_Adelanto = 0;
+        foreach ($adelantos as $key) {
+            $monto_Adelanto = $monto_Adelanto + $key->monto_Anticipo;
+        }
+
+        $IVA = $valuacion->IVA;
+        $monto_Neto = $monto_Valuado;
+        $monto_IVA = ($monto_Neto * $IVA) / 100;
+        $monto_Total = $monto_Neto + $monto_IVA + $monto_Adelanto - $monto_Descuentos;   
+
+        $j1 =   '{ "id":"'.$valuacion->id.
+                '", "nro_Boletin":"'.$valuacion->nro_Boletin.
+                '", "nro_Valuacion":"'.$valuacion->nro_Valuacion.
+                '", "monto_Valuado":"'.$monto_Valuado.
+                '", "monto_IVA":"'.$monto_IVA.
+                '","monto_Descuentos":"'.$monto_Descuentos.
+                '","monto_Adelanto":"'.$monto_Adelanto.
+                '","monto_Total":"'.$monto_Total.'"}';
+
+        $json = json_decode( $j1 );
+
+        $error = json_last_error();
+        //return $j1;
+        switch(json_last_error()) {
+            case JSON_ERROR_NONE:
+                return $json;
+            break;
+            case JSON_ERROR_DEPTH:
+                return ' - Excedido tamaño máximo de la pila';
+            break;
+            case JSON_ERROR_STATE_MISMATCH:
+                return ' - Desbordamiento de buffer o los modos no coinciden';
+            break;
+            case JSON_ERROR_CTRL_CHAR:
+                return ' - Encontrado carácter de control no esperado';
+            break;
+            case JSON_ERROR_SYNTAX:
+                return ' - Error de sintaxis, JSON mal formado';
+            break;
+            case JSON_ERROR_UTF8:
+                return ' - Caracteres UTF-8 malformados, posiblemente están mal codificados';
+            break;
+            default:
+                return ' - Error desconocido';
+            break;
+        }        
+    }
+
+    /*
+     * Devuelve todas las valuaciones de un contrato ordenando por numero de Boletin
+     */ 
     public static function valuaciones($contrato)
     {
          $data = DB::table('Valuacion')

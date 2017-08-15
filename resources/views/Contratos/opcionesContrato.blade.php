@@ -24,11 +24,11 @@
         <div class="col-lg-12 col-md-12 col-sm-12">
               <div class="panel panel-primary">
                   <div class="panel-heading " style="background-color: #1a2732; color: #9cd5eb;">
-                        <div class="col-lg-9 col-md-9 col-sm-12">
+                        <div class="col-lg-9 col-md-9 col-sm-6 col-xs-6 ">
                             Opciones del Contrato
                         </div>
                         <a href="{!!URL::to('/Contrato/'.$contrato->proyecto->id)!!}" >
-                          <div class="col-lg-3 col-md-3 col-sm-12 fa fa-arrow-left" style="text-align: right; padding-top: 10px;">
+                          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 fa fa-arrow-left" style="text-align: right; padding-top: 10px;">
                              <span class="font">
                                 Volver a Contratos
                               </span>
@@ -38,48 +38,71 @@
                   <div class="panel-body" >
 
                       <div id="Cabecera">
-                          <div class="col-lg-10 col-md-10 col-sm-10">
-                              <div class="col-lg-3 col-md-3 col-sm-3">
-                                  <b class="tam-12-5">PROYECTO: </b>
-                              </div>
-                              <div class="col-lg-9 col-md-9 col-sm-9">
-                                  <p class="tam-12-5">{{strtoupper($contrato->proyecto->nombre_Proyecto)}}</p>
-                              </div>
-                              <div class="col-lg-3 col-md-3 col-sm-3">
-                                  <b class="tam-12-5">OBJETO DEL CONTRATO: </b>
-                              </div>
-                              <div class="col-lg-9 col-md-9 col-sm-9">
-                                  <p class="tam-12-5">{{strtoupper($contrato->descripcion)}}</p>
-                              </div>
-                              <div class="col-lg-3 col-md-3 col-sm-3" style="height: 28px;">
-                                  <b class="tam-12-5">EMPRESA CLIENTE: </b>
-                              </div>
-                              <div class="col-lg-9 col-md-9 col-sm-9" style="height: 28px;">
-                                <div class="col-lg-2 col-md-2 col-sm-2" style="text-align: center">
-                                    <img src="{!!URL::asset('/archivos/'.$contrato->proyecto->empresa->logo)!!}" alt="" style="height: 25px;"/>
-                                </div>
-                                <div class="col-lg-10 col-md-10 col-sm-10">
-                                    {{$contrato->proyecto->empresa->nombre_Empresa}}
-                                </div>
-                              </div>
-                              <div class="col-lg-3 col-md-3 col-sm-3" style="height: 28px;">
-                                  <b class="tam-12-5">EMPRESA CONTRATISTA: </b>
-                              </div>
-                              <div class="col-lg-9 col-md-9 col-sm-9" style="height: 28px;">
-                                <div class="col-lg-2 col-md-2 col-sm-2" style="text-align: center">
-                                    <img src="{!!URL::asset('/archivos/'.$contrato->empresaProveedor->logo)!!}" alt="" style="height: 25px"/>
-                                </div>
-                                <div class="col-lg-10 col-md-10 col-sm-10">
-                                    {{$contrato->empresaProveedor->nombre_Empresa}}
-                                </div>
-                              </div>
+                          <div class="col-lg-12 col-md-12 col-sm-12">
+
+                                  <div class="col-lg-12 col-md-6 col-sm-6" style="text-align: right;">
+                                      <div class="col-lg-12 col-md-12 col-sm-12">
+                                          <b class="tam-12-5">VALOR DEL CONTRATO: </b> <p>{{$contrato->moneda->symbol}} {{number_format($valorContrato, 2, ',', '.')}}</p>
+                                      </div>
+                                  </div>
+
+                                  <div class="col-lg-12 col-md-6 col-sm-6">
+                                      <div class="col-lg-2 col-md-12 col-sm-12" style="margin-left: -15px">
+                                          <b class="tam-12-5">PROYECTO: </b>
+                                      </div>
+                                      <div class="col-lg-2 col-md-12 col-sm-12">
+                                          <b class="tam-12-5">Cod. </b><p class="tam-12-5">{{$contrato->proyecto->cod_Proyecto}}</p>
+                                      </div>
+                                      <div class="col-lg-8 col-md-12 col-sm-12">
+                                          <b class="tam-12-5">Desc. </b><p class="tam-12-5">{{strtoupper($contrato->proyecto->nombre_Proyecto)}}</p>
+                                      </div>
+                                  </div>
+
+                                  <div style="background-color: #1a2732; height: 2px" class="col-lg-12 col-md-12 col-sm-12"></div>
+                                  <div class="col-lg-12 col-md-12 col-sm-12"><br></div>
+                                  
+                                  <div class="col-lg-12 col-md-6 col-sm-6">
+                                      <div class="col-lg-2 col-md-12 col-sm-12" style="margin-left: -15px">
+                                          <b class="tam-12-5">CONTRATO: </b>
+                                      </div>
+                                      <div class="col-lg-2 col-md-12 col-sm-12">
+                                          <b class="tam-12-5">Cod. </b><p class="tam-12-5">{{$contrato->nro_Contrato}}</p>
+                                      </div>
+                                      <div class="col-lg-8 col-md-12 col-sm-12">
+                                          <b class="tam-12-5">Desc. </b><p class="tam-12-5">{{strtoupper($contrato->descripcion)}}</p>
+                                      </div>
+                                  </div>
+
+                                  <div style="background-color: #1a2732; height: 2px" class="col-lg-12 col-md-12 col-sm-12"></div>
+                                  <div class="col-lg-12 col-md-12 col-sm-12"><br></div>
+
+                                  <div class="col-lg-6 col-md-6 col-sm-6">
+                                      <div class="col-lg-12 col-md-12 col-sm-12" style="margin-left: -15px">
+                                          <b class="tam-12-5">EMPRESA CLIENTE: </b>
+                                      </div>
+                                      <div class="col-lg-12 col-md-12 col-sm-12" >
+                                          <img src="{!!URL::asset('/archivos/'.$contrato->proyecto->empresa->logo)!!}" alt="" style="height: 25px;"/>
+                                      </div> 
+                                      <div class="col-lg-12 col-md-12 col-sm-12">
+                                          <p >{{$contrato->proyecto->empresa->nombre_Empresa}}</p>
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-6 col-md-6 col-sm-6">
+                                      <div class="col-lg-12 col-md-12 col-sm-12" style="margin-left: -15px">
+                                          <b class="tam-12-5">EMPRESA CONTRATISTA: </b>
+                                      </div>
+                                      <div class="col-lg-12 col-md-12 col-sm-12" >
+                                          <img src="{!!URL::asset('/archivos/'.$contrato->empresaProveedor->logo)!!}" alt="" style="height: 25px;"/>
+                                      </div> 
+                                      <div class="col-lg-12 col-md-12 col-sm-12">
+                                          <p >{{$contrato->empresaProveedor->nombre_Empresa}}</p>
+                                      </div>
+                                  </div>
+
+                                  <div style="background-color: #1a2732; height: 2px" class="col-lg-12 col-md-12 col-sm-12"></div>
+                                  
                           </div>
-                          <div class="col-lg-2 col-md-2 col-sm-2" style="text-align: center">
-                                <b class="tam-12-5">NRO DEL CONTRATO: </b><br>
-                                {{$contrato->nro_Contrato}}<br><br>
-                                <b class="tam-12-5">VALOR DEL CONTRATO: </b><br>
-                                {{$contrato->moneda->symbol}} {{number_format($valorContrato, 2, ',', '.')}}
-                          </div>
+                          
                       </div>  <!-- Fin Cabecera -->
 
                       <div class="col-lg-12 col-md-12 col-sm-12"><br><br></div>

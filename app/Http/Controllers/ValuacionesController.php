@@ -181,6 +181,8 @@ class ValuacionesController extends Controller
             Session::flash('origen',1);
         }
 
+        $valorValuacion = Valuaciones::valorValuacion($id_valuacion);
+
          return view('Valuaciones.opcionesValuacion')
                 ->with('contrato',$contrato)
                 ->with('valorContrato',$valorContrato)
@@ -196,6 +198,7 @@ class ValuacionesController extends Controller
                 ->with('resumenValuacion',$resumenValuacion)
                 ->with('factura',$factura)
                 ->with('montoRetenciones',$montoRetenciones)
+                ->with('valorValuacion',$valorValuacion)
                 
                 ->render();
     }
