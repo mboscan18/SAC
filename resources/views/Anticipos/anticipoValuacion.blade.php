@@ -25,19 +25,19 @@
 
       @else
           <input type="hidden" id="sw" value="1">
-          <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="detalleEdit" class="modal fade ">
+          <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="anticipoEdit" class="modal fade ">
             <div class="modal-dialog " role="document">
                 <div class="modal-content">
                     <div class="panel-heading" style="background-color: #1a2732; color: #9cd5eb;">
                         <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-                        <h4 class="modal-title">Editar Movimiento de Partida</h4>
+                        <h4 class="modal-title">Editar Adelanto</h4>
                     </div>
 
                       
                     <div class="modal-body">
                         @include('alerts.request')
-                        {!!Form::model($detalle,['id'=>'form_datalle', 'route'=>['DetallesValuacion.update',$detalle],'method'=>'PUT'])!!}
-                            @include('ValuacionesDetalle.form.detalleValEdit')
+                        {!!Form::model($anticipo,['id'=>'form_datalle', 'route'=>['Anticipos.update',$anticipo],'method'=>'PUT'])!!}
+                            @include('Anticipos.form.anticiposEdit')
                             <div id="submitAddDetalle_EDIT">
                                 <div class="col-lg-6 col-md-6 col-sm-6" style="text-align:center">
                                     <button type="button" class="boton boton-danger" data-dismiss="modal" style="width:100%"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar</button>
@@ -46,11 +46,6 @@
                                     <button type="submit" class="boton" style="width:100%"><i class="icon_floppy"></i> Guardar</button>
                                 </div>
                             </div>  
-                            <div id="submitAddDetalleDisabel_EDIT">
-                                <div class="col-lg-12 col-md-12 col-sm-12" style="text-align:center">
-                                    <button type="button" class="boton boton-danger" data-dismiss="modal" style="width:100%"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar</button>
-                                </div>
-                            </div>
                             </div>
                         {!!Form::close()!!}
 
@@ -195,7 +190,7 @@
                                       @if((Auth::user()->rol_Usuario == 'administrador') || (Auth::user()->rol_Usuario == 'residente'))
                                         <td class="col-lg-1 col-md-1" style="text-align: center">
                                             <div class="icon-reorder tooltips col-lg-6 col-md-6" data-original-title="Editar" data-placement="bottom" style="; text-align: center">
-                                                <a href="{!!URL::to('/Anticipo/'.$valuacion->id.'/'.$datos->id)!!}" class="editarPartida" style="text-align: center;"  id="editardetalle_{{$datos->id}}">
+                                                <a href="{!!URL::to('/Anticipos/'.$datos->id.'/edit')!!}" class="editarAnticipo" style="text-align: center;"  id="editarAnticipo_{{$datos->id}}">
                                                     <img alt="" src="{!!URL::asset('/img/icon_edit.png')!!}" style="height: 30px; width: 30px">
                                                 </a>
                                             </div>

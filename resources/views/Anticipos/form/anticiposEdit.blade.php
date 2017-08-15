@@ -10,7 +10,7 @@
 	</div>
 	<div class="col-lg-4 col-md-4 col-sm-4" >
 		<b>{{$valuacion->contrato->moneda->symbol}}</b> {!!Form::label('periodo',number_format($valorContrato, 2, ',', '.'),[ 'id'=>''])!!}
-		  {!!Form::hidden('ValorContrato',$valorContrato,['id'=>'ValorContrato'])!!}
+		  {!!Form::hidden('ValorContrato',$valorContrato,['id'=>'ValorContrato_EDIT'])!!}
 
 	</div>
 	<div class="col-lg-2 col-md-2 col-sm-2" >
@@ -22,12 +22,11 @@
 	</div>
 	<div class="form-group col-lg-4 col-md-4 col-sm-4" >
 		<b>{{$valuacion->contrato->moneda->symbol}}</b> {!!Form::label('cant',number_format($montoFaltante, 2, ',', '.'),[ 'id'=>''])!!}
-		  {!!Form::hidden('montoFaltantePagar',$montoFaltante,['id'=>'montoFaltantePagar'])!!}
+		  {!!Form::hidden('montoFaltantePagar',$montoFaltante,['id'=>'montoFaltantePagar_EDIT'])!!}
 	</div>
 	<div class="col-lg-2 col-md-2 col-sm-2" >
 		{!!Form::label('periodo',number_format($porcentajeFaltante, 2, ',',''),[ 'id'=>''])!!} {!!Form::label('periodo','%',[ 'id'=>''])!!}
 	</div>
-	
 </div>
 	<br>
 
@@ -49,22 +48,22 @@
 	<div class="form-group col-lg-6 col-md-6 col-sm-6 round-input">
 		{!!Form::label('periodo','Porcentaje del Adelanto:')!!}
 		<div class="input-group">
-		  <span class="input-group-addon" id="porcentaje_Anticipo_symbol">&nbsp;%&nbsp;</span>
-		  <input id="porcentaje_Anticipo_form" name="" type="text" class="form-control" onkeypress="return justNumbers(event);" placeholder="Porcentaje del Adelanto" style="background-color: #d4e2ed; color: #20374a" >
-		  {!!Form::hidden('porcentaje_Anticipo',null,['id'=>'porcentaje_Anticipo'])!!}
+		  <span class="input-group-addon" id="porcentaje_Anticipo_symbol_EDIT">&nbsp;%&nbsp;</span>
+		  <input id="porcentaje_Anticipo_form_EDIT" name="" type="text" class="form-control" onkeypress="return justNumbers(event);" placeholder="Porcentaje del Adelanto" style="background-color: #d4e2ed; color: #20374a" >
+		  {!!Form::hidden('porcentaje_Anticipo',null,['id'=>'porcentaje_Anticipo_EDIT'])!!}
 		</div>
 	</div>	
 	<div class="form-group col-lg-6 col-md-6 col-sm-6 round-input">
 		{!!Form::label('periodo','Monto del Adelanto:')!!}
 		<div class="input-group">
-		  <span class="input-group-addon" id="monto_Anticipo_Moneda">{{$valuacion->contrato->moneda->symbol}}</span>
-		  <input id="monto_Anticipo_form" name="" type="text" class="form-control" onkeypress="return justNumbers(event);" placeholder="Monto del Adelanto" style="background-color: #d4e2ed; color: #20374a" >
-		  {!!Form::hidden('monto_Anticipo',null,['id'=>'monto_Anticipo'])!!}
+		  <span class="input-group-addon" id="monto_Anticipo_Moneda_EDIT">{{$valuacion->contrato->moneda->symbol}}</span>
+		  <input id="monto_Anticipo_form_EDIT" name="" type="text" class="form-control" onkeypress="return justNumbers(event);" placeholder="Monto del Adelanto" style="background-color: #d4e2ed; color: #20374a" >
+		  {!!Form::hidden('monto_Anticipo',null,['id'=>'monto_Anticipo_EDIT'])!!}
 
 		</div>
 	</div>
 	<div style="text-align: center;">
-		{!!Form::label('total','El monto del Adelanto no puede ser mayor que el Monto Faltante por Pagar.',['id'=>'MsjCantPasada',  'class'=>' tam-14'])!!}
+		{!!Form::label('total','El monto del Adelanto no puede ser mayor que el Monto Faltante por Pagar.',['id'=>'MsjCantPasada_EDIT',  'class'=>' tam-14'])!!}
 	</div>	
 </div>
 

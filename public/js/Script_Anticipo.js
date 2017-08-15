@@ -1,5 +1,9 @@
 // Scripts de la ventana Anticipo
 jQuery(document).ready(function(){
+
+    /* 
+     *  Para el modal de Agregar
+    */ 
     $('#porcentaje_Anticipo_form').bind('change keydown keyup',function(){
         var valorContrato = $('#ValorContrato').val() * 1;
         var montoFaltante = $('#montoFaltantePagar').val() * 1;
@@ -44,8 +48,63 @@ jQuery(document).ready(function(){
         }
     });
 
+    /* 
+     *  Para el modal de Editar
+    */
+    $('#porcentaje_Anticipo_form_EDIT').bind('change keydown keyup',function(){
+        var valorContrato = $('#ValorContrato_EDIT').val() * 1;
+        var montoFaltante = $('#montoFaltantePagar_EDIT').val() * 1;
+        var porcentaje = this.value * 1;
+        $('#porcentaje_Anticipo_EDIT').val(porcentaje);
 
+        calcularMontoAnticipoEDIT(porcentaje, valorContrato);
+        if($('#monto_Anticipo_EDIT').val() > montoFaltante){
+            $('#monto_Anticipo_form_EDIT').css('background-color','#e29e9e');
+            $('#monto_Anticipo_Moneda_EDIT').css('background-color','#ffcdcd');
+            $('#porcentaje_Anticipo_form_EDIT').css('background-color','#e29e9e');
+            $('#porcentaje_Anticipo_symbol_EDIT').css('background-color','#ffcdcd');
+            $('#MsjCantPasada_EDIT').css('display', 'block');
+        }else{
+            $('#monto_Anticipo_form_EDIT').css('background-color','#d4e2ed');
+            $('#monto_Anticipo_Moneda_EDIT').css('background-color','#f3f3f3');
+            $('#porcentaje_Anticipo_form_EDIT').css('background-color','#d4e2ed');
+            $('#porcentaje_Anticipo_symbol_EDIT').css('background-color','#f3f3f3');
+            $('#MsjCantPasada_EDIT').css('display', 'none');
+        }
+    });
+
+    $('#monto_Anticipo_form_EDIT').bind('change keydown keyup',function(){
+        var valorContrato = $('#ValorContrato_EDIT').val() * 1;
+        var montoFaltante = $('#montoFaltantePagar_EDIT').val() * 1;
+        var monto = this.value * 1;
+        $('#monto_Anticipo_EDIT').val(monto);
+
+        calcularPorcentajeAnticipoEDIT(monto, valorContrato);
+        if($('#monto_Anticipo_EDIT').val() > montoFaltante){
+            $('#monto_Anticipo_form_EDIT').css('background-color','#e29e9e');
+            $('#monto_Anticipo_Moneda_EDIT').css('background-color','#ffcdcd');
+            $('#porcentaje_Anticipo_form_EDIT').css('background-color','#e29e9e');
+            $('#porcentaje_Anticipo_symbol_EDIT').css('background-color','#ffcdcd');
+            $('#MsjCantPasada_EDIT').css('display', 'block');
+        }else{
+            $('#monto_Anticipo_form_EDIT').css('background-color','#d4e2ed');
+            $('#monto_Anticipo_Moneda_EDIT').css('background-color','#f3f3f3');
+            $('#porcentaje_Anticipo_form_EDIT').css('background-color','#d4e2ed');
+            $('#porcentaje_Anticipo_symbol_EDIT').css('background-color','#f3f3f3');
+            $('#MsjCantPasada_EDIT').css('display', 'none');
+        }
+    });
+
+    /* 
+     *  Inicializacions globales
+    */
+    $('#porcentaje_Anticipo_form_EDIT').val($('#porcentaje_Anticipo_EDIT').val() * 1);
+    $('#monto_Anticipo_form_EDIT').val($('#monto_Anticipo_EDIT').val() * 1);
     $('#MsjCantPasada').css('display', 'none');
+    $('#MsjCantPasada_EDIT').css('display', 'none');
+    if($('#sw').val() == "1"){
+        $('#anticipoEdit').modal('show'); 
+    }
     
 });
 
@@ -71,6 +130,32 @@ function calcularPorcentajeAnticipo(monto, valorContrato)
 
     if( !$('#monto_Anticipo_form').val()){
         $('#porcentaje_Anticipo_form').val("");
+    };
+    
+}
+
+function calcularMontoAnticipoEDIT(porcentaje, valorContrato)
+{
+    var monto = (porcentaje/100) * valorContrato;
+    console.log(monto);
+    $('#monto_Anticipo_EDIT').val(monto);
+    $('#monto_Anticipo_form_EDIT').val(monto.formatMoney(2, ',', '.'));
+
+    if( !$('#porcentaje_Anticipo_form_EDIT').val()){
+        $('#monto_Anticipo_form_EDIT').val("");
+    };
+}
+
+function calcularPorcentajeAnticipoEDIT(monto, valorContrato)
+{
+    
+    var porcentaje = (monto*100) / valorContrato;
+    console.log(porcentaje);
+    $('#porcentaje_Anticipo_EDIT').val(porcentaje);
+    $('#porcentaje_Anticipo_form_EDIT').val(porcentaje.formatMoney(2, ',', '.'));
+
+    if( !$('#monto_Anticipo_form_EDIT').val()){
+        $('#porcentaje_Anticipo_form_EDIT').val("");
     };
     
 }

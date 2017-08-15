@@ -148,7 +148,54 @@ class AnticiposController extends Controller
      */
     public function edit($id)
     {
-        //
+        $anticipo = Anticipos::find($id);
+        $idValuacion = $anticipo->valuacion_id;
+        $valuacion = Valuaciones::find($idValuacion);
+        $anticipos = Anticipos::anticipo($idValuacion);
+        $valorContrato = Presupuestos::valorContrato($valuacion->contrato_id);
+        $montoEjecutado = Presupuestos::montoEjecutadoContrato($valuacion->contrato_id);
+        $montoAnticipos = Anticipos::totalAnticipo($valuacion->contrato_id,1);
+        $montoAdelantos = Anticipos::totalAnticipo($valuacion->contrato_id,2);
+        $montoAmortizaciones = Descuentos::totalDescuentosHastaPeriodo($valuacion->contrato_id,1,$valuacion->nro_Boletin);
+        $montoDescuentos = Descuentos::totalDescuentosHastaPeriodo($valuacion->contrato_id,2,$valuacion->nro_Boletin);
+
+        $contrato = $valuacion->contrato;
+        $nroAdendum = OrdenServicio::ordenAdendum($contrato->id);
+
+        if ($nroAdendum == -1) {
+            Session::flash('message-info_OS','Debe firmar la Orden de Servicio para poder crear Valuaciones.');
+        }else{
+            if($nroAdendum < $contrato->orden_adendum){
+                Session::flash('message-info_adendum','Debe firmar la Orden de Servicio para hacer valer la información del Adendum.');
+            } 
+        }
+
+        if($nroAdendum < $contrato->orden_adendum){
+                Session::flash('message-warning','firmar-adendum');
+                Session::flash('origen',6);
+            }
+
+        $montoFaltante = $valorContrato - ($montoEjecutado + $montoAnticipos + $montoAdelantos - $montoAmortizaciones - $montoDescuentos);
+        $porcentajeFaltante = ($montoFaltante * 100) / $valorContrato;
+
+        $sw = 1;
+    
+        return view('Anticipos.anticipoValuacion')
+                ->with('contrato',$contrato)
+                ->with('valorContrato',$valorContrato)
+
+                ->with('valuacion',$valuacion)
+                ->with('anticipos',$anticipos)
+                ->with('anticipo',$anticipo)
+                ->with('montoFaltante',$montoFaltante)
+                ->with('porcentajeFaltante',$porcentajeFaltante)
+
+                ->with('montoEjecutado',$montoEjecutado)
+                ->with('montoAnticipos',$montoAnticipos)
+                ->with('montoAdelantos',$montoAdelantos)
+                ->with('sw',$sw)
+                
+                ->render();
     }
 
     /**
@@ -160,7 +207,28 @@ class AnticiposController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $anticipo = Anticipos::find($id);
+        $anticipo->concepto_Anticipo    = Input::get('concepto_Anticipo');
+        $anticipo->porcentaje_Anticipo  = Input::get('porcentaje_Anticipo');
+        $anticipo->monto_Anticipo       = Input::get('monto_Anticipo');
+        $anticipo->tipo_Anticipo        = Input::get('tipo_Anticipo');
+        $anticipo->valuacion_id         = Input::get('valuacion_id');
+        $anticipo->usuario              = Input::get('usuario');
+        $anticipo->save();
+
+        $valuacion = Valuaciones::find(Input::get('valuacion_id'));
+        $avanceFinanciero = Presupuestos::avanceFinanciero($valuacion->contrato_id);
+        $avanceFisico = Presupuestos::avanceFisico($valuacion->contrato_id);
+        $valuacion->avance_financiero = $avanceFinanciero;
+        $valuacion->avance_fisico = $avanceFisico;
+        $valuacion->save();
+
+        if (Input::get('tipo_Anticipo') == 1) {
+            Session::flash('message-sucess','Anticipo Creado Correctamente');
+        }elseif (Input::get('tipo_Anticipo') == 2) {
+            Session::flash('message-sucess','Adelanto de Factura Editado Correctamente');
+        }
+        return Redirect::to('/Anticipo/'.Input::get('valuacion_id'));
     }
 
     /**

@@ -36,6 +36,7 @@ class Descuentos extends Model
          $data = DB::table('Deducciones')
              ->select('*')
              ->where('valuacion_id', $valuacion)
+             ->where('deleted_at', null)
              ->get();
 
          return $data;    

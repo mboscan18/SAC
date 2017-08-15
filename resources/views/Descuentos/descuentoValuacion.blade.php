@@ -17,6 +17,43 @@
 @endsection
 
     @section('content')
+
+        @if($sw == 0) 
+          <input type="hidden" id="sw" value="0">
+        @else
+            <input type="hidden" id="sw" value="1">
+            <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="descuentoEdit" class="modal fade ">
+              <div class="modal-dialog " role="document">
+                  <div class="modal-content">
+                      <div class="panel-heading" style="background-color: #1a2732; color: #9cd5eb;">
+                          <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                          <h4 class="modal-title">Editar Descuento</h4>
+                      </div>
+
+                        
+                      <div class="modal-body">
+                          @include('alerts.request')
+                          {!!Form::model($descuento,['id'=>'form_datalle', 'route'=>['Descuentos.update',$descuento],'method'=>'PUT'])!!}
+                              @include('Descuentos.form.descuentosEdit')
+                              <div id="submitAddDetalle_EDIT">
+                                  <div class="col-lg-6 col-md-6 col-sm-6" style="text-align:center">
+                                      <button type="button" class="boton boton-danger" data-dismiss="modal" style="width:100%"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar</button>
+                                  </div>
+                                  <div class="col-lg-6 col-md-6 col-sm-6" style="text-align:center" >
+                                      <button type="submit" class="boton" style="width:100%"><i class="icon_floppy"></i> Guardar</button>
+                                  </div>
+                              </div>  
+                              </div>
+                          {!!Form::close()!!}
+
+
+
+                      </div>
+                  </div>
+              </div>
+          </div>
+        @endif
+
         @include('alerts.messages')
         @include('alerts.errors')
         @include('alerts.info')
@@ -138,25 +175,53 @@
                                     @elseif($datos->tipo_Deduccion == 2)
                                       <td>Descuento</td>
                                     @endif  
-                                    <td>{{$datos->porcentaje_Deduccion}}</td>
-                                    <td>{{$datos->monto_Deduccion}}</td>
+                                    <td>{{number_format($datos->porcentaje_Deduccion, 2, ',','.')}} %</td>
+                                    <td>{{number_format($datos->monto_Deduccion, 2, ',','.')}}</td>
                                     @if(Auth::user()->rol_Usuario == 'administrador')
                                       <td>
                                        {{$datos->user->nombre_Usuario}} {{$datos->user->apellido_Usuario}} | {{$datos->updated_at}}
                                       </td>
                                   @endif   
                                       @if((Auth::user()->rol_Usuario == 'administrador') || (Auth::user()->rol_Usuario == 'residente'))
-                                        <td class=" col-lg-1" style="text-align: center">
-                                          <div class=" col-lg-1"  style=" text-align: center; ">
-                                            <a href="{!!URL::to('/Valuaciones/'.$datos->id.'/edit')!!}" class="icon-reorder tooltips" data-original-title="Agregar Valuacion de Partidas" data-placement="bottom" style="text-align: center;">
-                                                <img alt="" src="{!!URL::asset('/img/icon_edit.png')!!}" style="height: 30px; width: 30px">
-                                            </a>
-                                          </div>
-                                          <div class=" col-lg-1"  style=" text-align: center; ">
-                                            <a href="{!!URL::to('/Valuaciones/'.$datos->id.'/edit')!!}" class="icon-reorder tooltips" data-original-title="Agregar Orden de Pago" data-placement="bottom" style="text-align: center;">
-                                                <img alt="" src="{!!URL::asset('/img/icon_edit.png')!!}" style="height: 30px; width: 30px">
-                                            </a>
-                                          </div>
+                                        <td>
+                                        <div class="icon-reorder tooltips col-lg-6 col-md-6" data-original-title="Editar" data-placement="bottom" style="; text-align: center">
+                                                <a href="{!!URL::to('/Descuentos/'.$datos->id.'/edit')!!}" class="editarDescuento" style="text-align: center;"  id="editarDescuento_{{$datos->id}}">
+                                                    <img alt="" src="{!!URL::asset('/img/icon_edit.png')!!}" style="height: 30px; width: 30px">
+                                                </a>
+                                            </div>
+                                            <div class="icon-reorder tooltips col-lg-6 col-md-6" data-original-title="Eliminar" data-placement="bottom" style="; text-align: center">
+                                                <a href="" data-toggle="modal" data-target="#Eliminar_{{$datos->id}}" style="text-align: center;"  id="eliminarDescuento">
+                                                    <img alt="" src="{!!URL::asset('/img/icon_delete.png')!!}" style="height: 30px; width: 30px">
+                                                </a>
+                                            </div>
+
+                                            <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="Eliminar_{{$datos->id}}" class="modal fade ">
+                                                <div class="modal-dialog " role="document">
+                                                    <div class="modal-content">
+                                                        <div class="panel-heading" style="background-color: #1a2732; color: #9cd5eb; text-align: left; height: 40px; padding-top: 6px">
+                                                            <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                                                            <h4 class="modal-title">Eliminar Descuento</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                          <strong>¿Está seguro que quiere Eliminar este Descuento?</strong> <br><br>
+                                                          Al eliminarlo se verá afectado el estado de la valuación.<br><br>
+                                                            <div class="col-lg-12 col-md-12 col-sm-12"><br></div>    
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <div class="col-lg-6 col-md-6 col-sm-6" style="text-align:center">
+                                                                <button type="button" class="boton boton-danger" data-dismiss="modal" style="width:100%"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar</button>
+                                                            </div>
+                                                            {!!Form::open(['route'=>['Descuentos.destroy', $datos], 'method' => 'DELETE'])!!}
+                                                            <div class="col-lg-6 col-md-6 col-sm-6" style="text-align:center">
+                                                                <button href="" type="submit" class="boton" style="text-align: center; width:100%">
+                                                                    <i class="fa fa-trash-o"></i> Eliminar
+                                                                </button>
+                                                            </div>
+                                                            {!!Form::close()!!}
+                                                      </div> 
+                                                    </div>
+                                                </div>
+                                            </div>
                                     </td>
                                   @endif
                                   </tbody>
